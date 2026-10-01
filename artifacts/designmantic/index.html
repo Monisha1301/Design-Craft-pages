@@ -21,5 +21,56 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <!-- Selenium Synchronization Module -->
+<div id="sync-practice-section" style="margin: 40px auto; padding: 20px; border: 2px dashed #0284c7; max-width: 600px; text-align: center; border-radius: 8px; font-family: sans-serif; background: #f8fafc;">
+  <h3 style="color: #0f172a; margin-bottom: 8px;">Selenium Synchronization Practice</h3>
+  <p style="color: #64748b; font-size: 14px;">Test elementToBeClickable, visibilityOf, and presenceOfElement</p>
+  
+  <button id="sync-start-btn" disabled style="padding: 10px 20px; background-color: #0284c7; color: white; border: none; border-radius: 6px; cursor: not-allowed;">
+    Initializing Automation Mode (Wait 3s)...
+  </button>
+
+  <div id="sync-loader" style="display: none; margin-top: 15px; color: #d97706; font-weight: bold;">
+    Fetching dynamic templates... please wait (4s)
+  </div>
+
+  <div id="sync-target-container" style="margin-top: 15px;"></div>
+</div>
+
+<script>
+  // 1. Tests elementToBeClickable (Enables button after 3 seconds)
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      const btn = document.getElementById('sync-start-btn');
+      if (btn) {
+        btn.disabled = false;
+        btn.style.cursor = 'pointer';
+        btn.innerText = 'Generate Dynamic Template';
+      }
+    }, 3000);
+  });
+
+  // 2. Tests visibilityOf and presenceOf (Simulates async delay on click)
+  document.addEventListener('click', (e) => {
+    if (e.target && e.target.id === 'sync-start-btn') {
+      const loader = document.getElementById('sync-loader');
+      const container = document.getElementById('sync-target-container');
+      
+      loader.style.display = 'block';
+      container.innerHTML = '';
+
+      setTimeout(() => {
+        loader.style.display = 'none';
+        
+        const card = document.createElement('div');
+        card.id = 'sync-dynamic-card';
+        card.style.cssText = 'padding: 14px; background: #ecfdf5; border: 1px solid #10b981; color: #065f46; font-weight: 600; border-radius: 6px;';
+        card.innerText = 'Template #204 Rendered Successfully!';
+        
+        container.appendChild(card);
+      }, 4000);
+    }
+  });
+</script>
   </body>
 </html>
