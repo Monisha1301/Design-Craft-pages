@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DesignCraft Studio | AI Identity & Brand Architecture Platform</title>
+  <title>DesignCraft Studio | Cloud Brand Architecture & Creative Suite</title>
 
   <!-- High-Resolution Browser Tab & Taskbar SVG Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%234f46e5'/><path d='M25 30 L50 70 L75 30' stroke='white' stroke-width='14' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='50' cy='30' r='8' fill='%2338bdf8'/></svg>">
@@ -21,6 +21,7 @@
       --accent-coral: #f43f5e;
       --accent-amber: #f59e0b;
       --emerald: #10b981;
+      --slate-950: #020617;
       --slate-900: #0f172a;
       --slate-800: #1e293b;
       --slate-700: #334155;
@@ -29,72 +30,82 @@
       --slate-200: #e2e8f0;
       --slate-100: #f1f5f9;
       --slate-50: #f8fafc;
-      --card-border: rgba(226, 232, 240, 0.85);
       --gradient-brand: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
     body { background-color: var(--slate-50); color: var(--slate-900); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; scroll-behavior: smooth; }
 
-    /* Top Ribbon */
-    .top-ribbon { background: linear-gradient(90deg, #1e1b4b, #312e81, #0f172a); color: #e0e7ff; font-size: 13px; font-weight: 600; padding: 10px 24px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; }
-    .ribbon-badge { background: var(--accent-coral); color: #fff; font-size: 11px; padding: 2px 8px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .ribbon-link-btn { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.25); padding: 4px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
-    .ribbon-link-btn:hover { background: rgba(255,255,255,0.22); color: #38bdf8; }
+    /* Top Utility Ribbon */
+    .top-ribbon { background: linear-gradient(90deg, #0f172a, #1e1b4b, #0f172a); color: #cbd5e1; font-size: 13px; font-weight: 600; padding: 10px 24px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .ribbon-tag { background: var(--accent-coral); color: #fff; font-size: 11px; padding: 3px 8px; border-radius: 999px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
+    .ribbon-action-btn { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.25); padding: 5px 14px; border-radius: 6px; font-size: 12px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; font-weight: 600; }
+    .ribbon-action-btn:hover { background: rgba(255,255,255,0.24); color: #38bdf8; }
 
     /* Main Navigation Bar */
-    header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--slate-200); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05); }
-    .nav-container { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; }
-    .brand-logo { font-size: 22px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; color: var(--slate-900); display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .logo-badge { background: var(--gradient-brand); color: #fff; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 16px; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3); }
+    header { background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--slate-200); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05); }
+    .nav-container { max-width: 1320px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; }
+    .brand-logo { font-size: 22px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; color: var(--slate-900); display: flex; align-items: center; gap: 10px; text-decoration: none; cursor: pointer; }
+    .logo-badge { background: var(--gradient-brand); color: #fff; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 16px; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3); }
 
     /* Nav Links & Hover Actions */
-    .nav-menu { display: flex; align-items: center; gap: 10px; list-style: none; }
+    .nav-menu { display: flex; align-items: center; gap: 8px; list-style: none; }
     .nav-item { position: relative; }
     .nav-link { color: var(--slate-700); text-decoration: none; font-weight: 600; font-size: 14px; padding: 8px 14px; border-radius: 8px; transition: all 0.2s; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
     .nav-link:hover { color: var(--primary); background: var(--primary-light); }
 
-    /* Hover Dropdown Menu */
-    .dropdown-content { display: none; position: absolute; top: 100%; left: 0; min-width: 220px; background: #fff; border: 1px solid var(--slate-200); border-radius: 10px; box-shadow: 0 12px 24px -4px rgba(0,0,0,0.12); padding: 8px; z-index: 200; }
-    .nav-item:hover .dropdown-content { display: block; animation: dropdownPop 0.2s ease-out; }
-    @keyframes dropdownPop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-    .dropdown-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; color: var(--slate-700); text-decoration: none; font-size: 13px; font-weight: 500; border-radius: 6px; }
-    .dropdown-item:hover { background: var(--slate-100); color: var(--primary); }
+    /* Multi-Level Hover Dropdown */
+    .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; min-width: 250px; background: #fff; border: 1px solid var(--slate-200); border-radius: 12px; box-shadow: 0 16px 32px -4px rgba(0,0,0,0.12); padding: 10px; z-index: 200; }
+    .nav-item:hover .dropdown-menu { display: block; animation: navPop 0.2s ease-out; }
+    @keyframes navPop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .dropdown-link { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; color: var(--slate-700); text-decoration: none; font-size: 13px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: 0.15s; }
+    .dropdown-link:hover { background: var(--slate-100); color: var(--primary); transform: translateX(3px); }
 
-    /* External Window Switcher Box Button */
-    .btn-tab-switch { background: var(--gradient-brand); color: #fff !important; font-weight: 700 !important; border-radius: 8px; padding: 9px 16px !important; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25); display: inline-flex; align-items: center; gap: 8px; border: none; cursor: pointer; transition: 0.2s; }
-    .btn-tab-switch:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35); }
-    .arrow-icon-box { background: rgba(255,255,255,0.22); width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 11px; }
+    /* Nav Right Action Buttons (Login, Sign Up, Tab Switch) */
+    .nav-auth-group { display: flex; align-items: center; gap: 12px; }
+    .btn-nav-login { background: transparent; border: 1px solid var(--slate-200); color: var(--slate-700); font-weight: 700; font-size: 14px; padding: 8px 18px; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+    .btn-nav-login:hover { background: var(--slate-100); border-color: #cbd5e1; }
+    .btn-nav-signup { background: var(--slate-900); color: #fff; font-weight: 700; font-size: 14px; padding: 9px 20px; border-radius: 8px; border: none; cursor: pointer; transition: 0.2s; }
+    .btn-nav-signup:hover { background: var(--slate-800); transform: translateY(-1px); }
+    
+    .btn-tab-launch { background: var(--gradient-brand); color: #fff !important; font-weight: 700; font-size: 13px; border-radius: 8px; padding: 9px 16px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25); transition: 0.2s; }
+    .btn-tab-launch:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(79, 70, 229, 0.35); }
+    .arrow-box { background: rgba(255,255,255,0.22); width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 11px; }
+
+    /* Modals for Login & Signup */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); z-index: 2000; align-items: center; justify-content: center; }
+    .modal-card { background: #fff; width: 100%; max-width: 440px; border-radius: 16px; padding: 32px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); position: relative; animation: modalPop 0.2s ease-out; }
+    @keyframes modalPop { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    .modal-close-btn { position: absolute; top: 16px; right: 18px; background: #f1f5f9; border: none; font-size: 18px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: 700; }
+    .modal-input { width: 100%; padding: 11px 14px; border: 1px solid var(--slate-200); border-radius: 8px; margin: 8px 0 16px; font-size: 14px; outline: none; }
+    .modal-input:focus { border-color: var(--primary); }
 
     /* Hero Section */
-    .hero-section { background: radial-gradient(100% 100% at 50% 0%, #ede9fe 0%, #f8fafc 100%); padding: 70px 24px 60px; text-align: center; border-bottom: 1px solid var(--slate-200); }
-    .hero-title { font-size: 44px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; line-height: 1.2; margin-bottom: 16px; color: var(--slate-900); }
+    .hero-section { background: radial-gradient(100% 100% at 50% 0%, #ede9fe 0%, #f8fafc 100%); padding: 76px 24px 64px; text-align: center; border-bottom: 1px solid var(--slate-200); }
+    .hero-title { font-size: 46px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; line-height: 1.15; margin-bottom: 16px; color: var(--slate-900); }
     .hero-title span { background: var(--gradient-brand); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero-subtitle { font-size: 17px; color: var(--slate-600); max-width: 680px; margin: 0 auto 32px; }
+    .hero-subtitle { font-size: 17px; color: var(--slate-600); max-width: 720px; margin: 0 auto 32px; }
 
-    /* Interactive Color Palette Swatches (Hover Actions) */
+    /* Live Color Palette Swatches (Hover Actions) */
     .color-swatch-group { display: flex; justify-content: center; gap: 12px; margin-bottom: 30px; }
-    .swatch-circle { width: 34px; height: 34px; border-radius: 50%; cursor: pointer; border: 3px solid #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.15); transition: transform 0.2s, border-color 0.2s; position: relative; }
-    .swatch-circle:hover { transform: scale(1.22); z-index: 10; border-color: var(--slate-900); }
+    .swatch-circle { width: 36px; height: 36px; border-radius: 50%; cursor: pointer; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.2s, border-color 0.2s; position: relative; }
+    .swatch-circle:hover { transform: scale(1.24); z-index: 10; border-color: var(--slate-900); }
     .swatch-indigo { background: #4f46e5; }
     .swatch-cyan { background: #06b6d4; }
     .swatch-rose { background: #f43f5e; }
     .swatch-emerald { background: #10b981; }
     .swatch-amber { background: #f59e0b; }
 
-    /* Main Container */
-    .main-wrapper { max-width: 1280px; margin: 0 auto; padding: 48px 24px; flex: 1; width: 100%; }
-
-    /* Section Headers */
-    .section-head { text-align: center; margin-bottom: 40px; }
-    .section-eyebrow { color: var(--primary); text-transform: uppercase; font-size: 12px; font-weight: 800; letter-spacing: 1px; margin-bottom: 6px; }
-    .section-main-title { font-size: 28px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; }
+    /* Content Layout */
+    .main-wrapper { max-width: 1320px; margin: 0 auto; padding: 48px 24px; flex: 1; width: 100%; }
 
     /* Studio Card */
-    .interactive-card { background: #ffffff; border: 1px solid var(--slate-200); border-radius: 16px; box-shadow: 0 4px 20px -2px rgba(0,0,0,0.04); padding: 36px; margin-bottom: 56px; }
-    .interactive-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start; }
-    
-    .form-group { margin-bottom: 22px; }
+    .interactive-card { background: #ffffff; border: 1px solid var(--slate-200); border-radius: 18px; box-shadow: 0 4px 20px -2px rgba(0,0,0,0.04); padding: 38px; margin-bottom: 56px; }
+    .section-head { text-align: center; margin-bottom: 40px; }
+    .section-eyebrow { color: var(--primary); text-transform: uppercase; font-size: 12px; font-weight: 800; letter-spacing: 1px; margin-bottom: 6px; }
+    .section-main-title { font-size: 30px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; }
+
+    .interactive-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
     .label-text { display: block; font-weight: 700; font-size: 14px; margin-bottom: 8px; color: var(--slate-700); }
     .input-box, .select-box { width: 100%; padding: 12px 16px; border: 1px solid var(--slate-200); border-radius: 10px; font-size: 14px; background: #fff; outline: none; transition: 0.2s; }
     .input-box:focus, .select-box:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
@@ -106,13 +117,13 @@
     .tile-left { display: flex; align-items: center; gap: 12px; }
     .tile-option input { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
 
-    /* Buttons */
+    /* Action Buttons */
     .btn-action { background: var(--primary); color: #fff; font-weight: 700; font-size: 14px; padding: 13px 26px; border-radius: 10px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; transition: 0.2s; }
     .btn-action:hover { background: var(--primary-hover); transform: translateY(-1px); }
     .btn-outline { background: #fff; border: 1px solid var(--slate-200); color: var(--slate-700); padding: 13px 22px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s; }
     .btn-outline:hover { background: var(--slate-100); }
 
-    /* Asynchronous Spinner / Delay Handling */
+    /* Asynchronous Delays / Spinners for WebDriverWait */
     .delay-spinner { display: none; width: 18px; height: 18px; border: 2px solid #ffffff; border-top-color: transparent; border-radius: 50%; animation: spin 0.65s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -120,38 +131,38 @@
     .toast-success { background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; }
 
     /* Mockup Display Box */
-    .mockup-display { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); border-radius: 14px; padding: 40px; color: #fff; text-align: center; box-shadow: 0 16px 32px -8px rgba(30, 27, 75, 0.4); position: relative; overflow: hidden; min-height: 320px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-    .mockup-icon { font-size: 56px; margin-bottom: 12px; }
-    .mockup-title { font-size: 26px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.5px; }
+    .mockup-display { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); border-radius: 16px; padding: 40px; color: #fff; text-align: center; box-shadow: 0 16px 32px -8px rgba(30, 27, 75, 0.4); position: relative; overflow: hidden; min-height: 330px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .mockup-icon { font-size: 58px; margin-bottom: 12px; }
+    .mockup-title { font-size: 26px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; }
     .mockup-badge { display: inline-block; background: rgba(255,255,255,0.15); padding: 4px 14px; border-radius: 999px; font-size: 12px; margin-top: 8px; color: #38bdf8; text-transform: uppercase; font-weight: 700; }
 
     /* Pricing Plans Grid (Selenium Scrolling Target) */
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-bottom: 60px; }
-    .pricing-card { background: #fff; border: 1px solid var(--slate-200); border-radius: 16px; padding: 32px; text-align: center; position: relative; transition: all 0.25s; }
+    .pricing-card { background: #fff; border: 1px solid var(--slate-200); border-radius: 16px; padding: 34px; text-align: center; position: relative; transition: all 0.25s; }
     .pricing-card:hover { transform: translateY(-6px); box-shadow: 0 16px 30px -4px rgba(0,0,0,0.08); border-color: var(--primary); }
     .pricing-card.featured { border: 2px solid var(--primary); background: #faf5ff; }
     .plan-tag { background: var(--primary); color: #fff; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 999px; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); }
-    .plan-price { font-size: 38px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; margin: 18px 0 14px; color: var(--slate-900); }
+    .plan-price { font-size: 40px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; margin: 18px 0 14px; color: var(--slate-900); }
 
     /* Customer Reviews / Testimonials */
     .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 60px; }
-    .testimonial-card { background: #fff; border: 1px solid var(--slate-200); border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+    .testimonial-card { background: #fff; border: 1px solid var(--slate-200); border-radius: 12px; padding: 26px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
     .star-rating { color: #f59e0b; margin-bottom: 12px; }
 
-    /* FAQ Accordion (Selenium click to expand) */
-    .faq-container { max-width: 800px; margin: 0 auto 60px; }
+    /* FAQ Accordion */
+    .faq-container { max-width: 840px; margin: 0 auto 60px; }
     .faq-item { background: #fff; border: 1px solid var(--slate-200); border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
-    .faq-question { padding: 18px 24px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .faq-question { padding: 18px 24px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
     .faq-question:hover { background: var(--slate-50); color: var(--primary); }
     .faq-answer { display: none; padding: 0 24px 20px; font-size: 14px; color: var(--slate-600); }
 
-    /* Deep 5-Column Corporate Footer */
-    footer { background: #0b0f19; color: #94a3b8; border-top: 1px solid #1e293b; padding: 70px 24px 30px; margin-top: auto; }
-    .footer-container { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2.2fr 1fr 1fr 1fr 1.8fr; gap: 40px; }
-    .footer-col h5 { color: #f8fafc; font-size: 15px; font-weight: 800; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 0.5px; }
+    /* 100% Clickable, Deep Corporate Footer */
+    footer { background: var(--slate-950); color: #94a3b8; border-top: 1px solid #1e293b; padding: 74px 24px 34px; margin-top: auto; }
+    .footer-container { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: 2.2fr 1fr 1fr 1fr 1.8fr; gap: 40px; }
+    .footer-col h5 { color: #f8fafc; font-size: 14px; font-weight: 800; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 0.5px; }
     .footer-list { list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 14px; }
-    .footer-list a { color: #94a3b8; text-decoration: none; transition: 0.2s; cursor: pointer; }
-    .footer-list a:hover { color: #38bdf8; transform: translateX(3px); }
+    .footer-item-btn { background: none; border: none; color: #94a3b8; font-size: 14px; text-align: left; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; padding: 2px 0; }
+    .footer-item-btn:hover { color: #38bdf8; transform: translateX(4px); }
     
     .footer-input-group { display: flex; gap: 8px; margin-top: 14px; }
     .footer-input { background: #1e293b; border: 1px solid #334155; color: #fff; padding: 11px 14px; border-radius: 8px; font-size: 13px; width: 100%; outline: none; }
@@ -159,67 +170,118 @@
     .footer-btn { background: var(--primary); color: #fff; border: none; padding: 11px 18px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; }
     .footer-btn:hover { background: var(--primary-hover); }
 
+    /* Footer Feedback Banner */
+    .footer-action-status { background: #1e293b; border: 1px dashed #334155; color: #38bdf8; font-size: 13px; padding: 12px 18px; border-radius: 8px; margin-top: 30px; display: none; }
+
     /* Footer Bottom Bar */
-    .footer-bottom { max-width: 1280px; margin: 50px auto 0; padding-top: 24px; border-top: 1px solid #1e293b; display: flex; justify-content: space-between; align-items: center; font-size: 13px; flex-wrap: wrap; gap: 14px; }
+    .footer-bottom { max-width: 1320px; margin: 50px auto 0; padding-top: 24px; border-top: 1px solid #1e293b; display: flex; justify-content: space-between; align-items: center; font-size: 13px; flex-wrap: wrap; gap: 14px; }
     .scroll-top-btn { background: #1e293b; color: #fff; border: 1px solid #334155; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
     .scroll-top-btn:hover { background: var(--primary); border-color: var(--primary); }
 
-    /* CHILD WINDOW / TAB WORKSPACE STYLES (Used when ?view=studio-sandbox is active) */
-    .sandbox-body { background: #0f172a; color: #fff; padding: 40px; }
-    .sandbox-card { max-width: 900px; margin: 0 auto; background: #1e293b; border-radius: 16px; padding: 36px; border: 1px solid #334155; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+    /* Dedicated Child Window Sandbox Styling */
+    .sandbox-body { background: #0f172a; color: #fff; padding: 36px 20px; min-height: 100vh; }
+    .sandbox-container { max-width: 960px; margin: 0 auto; background: #1e293b; border-radius: 18px; padding: 36px; border: 1px solid #334155; box-shadow: 0 25px 50px rgba(0,0,0,0.4); }
+    .sandbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 24px; }
   </style>
 </head>
 <body>
 
-  <!-- Top Ribbon with Multiple Window-Switching Trigger Points -->
+  <!-- Top Ribbon with Child Window Launchers -->
   <div class="top-ribbon">
-    <span class="ribbon-badge">Live Multi-Tab Sandbox</span>
-    <span>Ready for Selenium <code>driver.switchTo().window(...)</code> automation.</span>
-    <a class="ribbon-link-btn" id="btn-ribbon-child-window" onclick="openStudioChildWindow()">
+    <span class="ribbon-tag">Multi-Tab Sandbox</span>
+    <span>Practicing Selenium <code>driver.switchTo().window(...)</code> and explicit element interactions.</span>
+    <a class="ribbon-action-btn" id="btn-ribbon-child-window" onclick="openStudioChildWindow()">
       Open Isolated Studio Workspace
-      <span class="arrow-icon-box">↗</span>
+      <span class="arrow-box">↗</span>
     </a>
   </div>
 
   <!-- Header Navigation -->
   <header>
     <div class="nav-container">
-      <a href="#" class="brand-logo" id="header-brand-logo">
+      <a href="#" class="brand-logo" id="header-brand-logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
         <span class="logo-badge">DC</span> DesignCraft
       </a>
 
-      <!-- Menu with Hover Actions -->
+      <!-- Menu with Hover Dropdowns -->
       <ul class="nav-menu">
         <li class="nav-item">
-          <a class="nav-link" id="nav-dropdown-products">Services ▾</a>
-          <div class="dropdown-content">
-            <a class="dropdown-item" onclick="scrollToElement('section-studio')">AI Vector Maker <span>⚡</span></a>
-            <a class="dropdown-item" onclick="scrollToElement('section-cards')">Luxury Print Cards <span>✨</span></a>
-            <a class="dropdown-item" onclick="openStudioChildWindow()">Studio Tab Sandbox <span>↗</span></a>
+          <a class="nav-link" id="nav-services-dropdown">Solutions ▾</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-link" onclick="scrollToElement('section-studio')">AI Vector Generator <span>⚡</span></a>
+            <a class="dropdown-link" onclick="scrollToElement('section-cards')">Luxury Print Stationery <span>✨</span></a>
+            <a class="dropdown-link" onclick="openStudioChildWindow()">Open Studio Workspace <span>↗</span></a>
           </div>
         </li>
-        <li class="nav-item"><a class="nav-link" onclick="scrollToElement('section-studio')">Studio</a></li>
-        <li class="nav-item"><a class="nav-link" onclick="scrollToElement('section-cards')">Stationery</a></li>
-        <li class="nav-item"><a class="nav-link" onclick="scrollToElement('section-pricing')">Pricing</a></li>
-        <li class="nav-item"><a class="nav-link" onclick="scrollToElement('section-faq')">FAQ</a></li>
+        <li class="nav-item"><a class="nav-link" id="nav-link-studio" onclick="scrollToElement('section-studio')">Studio</a></li>
+        <li class="nav-item"><a class="nav-link" id="nav-link-cards" onclick="scrollToElement('section-cards')">Print Cards</a></li>
+        <li class="nav-item"><a class="nav-link" id="nav-link-pricing" onclick="scrollToElement('section-pricing')">Pricing</a></li>
+        <li class="nav-item"><a class="nav-link" id="nav-link-faq" onclick="scrollToElement('section-faq')">FAQ</a></li>
       </ul>
 
-      <!-- Dedicated Switch Tab Button with Boxed Arrow -->
-      <button class="btn-tab-switch" id="btn-launch-tab-header" onclick="openStudioChildWindow()">
-        <span>Launch Studio Tab</span>
-        <span class="arrow-icon-box">↗</span>
-      </button>
+      <!-- Auth Controls & Secondary Window Launcher -->
+      <div class="nav-auth-group">
+        <button class="btn-nav-login" id="btn-header-login" onclick="openLoginModal()">Log In</button>
+        <button class="btn-nav-signup" id="btn-header-signup" onclick="openSignupModal()">Get Started</button>
+        <button class="btn-tab-launch" id="btn-launch-tab-header" onclick="openStudioChildWindow()">
+          <span>Launch Tab</span>
+          <span class="arrow-box">↗</span>
+        </button>
+      </div>
     </div>
   </header>
+
+  <!-- Login Modal -->
+  <div id="login-modal" class="modal-overlay">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeModals()">✕</button>
+      <h3 style="font-size:22px; font-weight:800; margin-bottom:6px;">Welcome Back</h3>
+      <p style="font-size:13px; color:var(--slate-500); margin-bottom:20px;">Access your team's vector assets and brand libraries.</p>
+      
+      <label class="label-text" for="login-email">Email Address:</label>
+      <input type="email" id="login-email" class="modal-input" placeholder="qa.tester@domain.com" />
+
+      <label class="label-text" for="login-password">Password:</label>
+      <input type="password" id="login-password" class="modal-input" placeholder="••••••••" />
+
+      <button class="btn-action" id="btn-submit-login" style="width:100%; justify-content:center;" onclick="handleLoginSubmit()">Sign In to Dashboard</button>
+      <div id="login-status-msg" style="display:none; color:var(--emerald); font-weight:700; margin-top:14px; text-align:center; font-size:13px;">✓ Authenticated successfully!</div>
+    </div>
+  </div>
+
+  <!-- Sign Up Modal -->
+  <div id="signup-modal" class="modal-overlay">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeModals()">✕</button>
+      <h3 style="font-size:22px; font-weight:800; margin-bottom:6px;">Create Your Account</h3>
+      <p style="font-size:13px; color:var(--slate-500); margin-bottom:20px;">Deploy high-performance branding in seconds.</p>
+      
+      <label class="label-text" for="signup-name">Full Name:</label>
+      <input type="text" id="signup-name" class="modal-input" placeholder="Monisha Selenium" />
+
+      <label class="label-text" for="signup-email">Work Email:</label>
+      <input type="email" id="signup-email" class="modal-input" placeholder="lead.automation@company.com" />
+
+      <label class="label-text" for="signup-role">Primary Role:</label>
+      <select id="signup-role" class="modal-input" style="margin-bottom:16px;">
+        <option value="qa">QA Automation Engineer</option>
+        <option value="lead">SDET / Test Architect</option>
+        <option value="designer">Brand Designer</option>
+      </select>
+
+      <button class="btn-action" id="btn-submit-signup" style="width:100%; justify-content:center;" onclick="handleSignupSubmit()">Register Account</button>
+      <div id="signup-status-msg" style="display:none; color:var(--emerald); font-weight:700; margin-top:14px; text-align:center; font-size:13px;">✓ Registration completed! Welcome to DesignCraft.</div>
+    </div>
+  </div>
 
   <!-- Hero Section -->
   <section class="hero-section">
     <div style="display:inline-flex; align-items:center; gap:8px; background:var(--primary-light); padding:6px 14px; border-radius:999px; margin-bottom:16px;">
       <span style="width:8px; height:8px; border-radius:50%; background:var(--emerald);"></span>
-      <span style="font-size:12px; font-weight:700; color:var(--primary);">Enterprise Vector Generation Engine v2.4</span>
+      <span style="font-size:12px; font-weight:700; color:var(--primary);">Enterprise Brand Architecture Engine v3.0</span>
     </div>
     <h1 class="hero-title">Architect High-Impact Brand Identities <span>Effortlessly</span></h1>
-    <p class="hero-subtitle">Designed for Selenium WebDriver test frameworks with explicit wait states, nested dropdowns, hover triggers, dialog alerts, and window handles.</p>
+    <p class="hero-subtitle">Equipped with hover states, asynchronous wait conditions, multi-selection checkboxes, JavaScript dialog alerts, and secondary window tab workspaces.</p>
 
     <!-- Color Swatches for Selenium Actions.moveToElement() -->
     <div class="color-swatch-group">
@@ -234,21 +296,21 @@
   <!-- Main Content Wrap -->
   <main class="main-wrapper">
 
-    <!-- SECTION 1: STUDIO CUSTOMIZER (Dropdowns, Radios, Asynchronous Waits) -->
+    <!-- SECTION 1: STUDIO CUSTOMIZER -->
     <section id="section-studio" class="interactive-card">
       <div class="section-head">
-        <span class="section-eyebrow">Interactive Sandbox 01</span>
+        <span class="section-eyebrow">Interactive Studio Sandbox</span>
         <h2 class="section-main-title">Logo & Typography Configurator</h2>
       </div>
 
       <div class="interactive-grid">
         <div>
-          <div class="form-group">
+          <div style="margin-bottom:20px;">
             <label class="label-text" for="studio-brand-input">Business Name (Input Element):</label>
             <input type="text" id="studio-brand-input" class="input-box" value="DesignCraft Enterprise" />
           </div>
 
-          <div class="form-group">
+          <div style="margin-bottom:20px;">
             <label class="label-text" for="studio-industry-dropdown">Industry Category (Select Class Dropdown):</label>
             <select id="studio-industry-dropdown" class="select-box">
               <option value="">-- Choose Category --</option>
@@ -259,62 +321,62 @@
             </select>
           </div>
 
-          <div class="form-group">
+          <div style="margin-bottom:20px;">
             <label class="label-text">Emblem Layout Geometry (Radio Group):</label>
             <div class="tile-group">
               <label class="tile-option">
                 <div class="tile-left">
                   <input type="radio" name="layout-geo" id="radio-geo-horizontal" value="horizontal" checked />
-                  <span><strong>Horizontal Icon + Wordmark</strong> (Standard Header)</span>
+                  <span><strong>Horizontal Icon + Wordmark</strong></span>
                 </div>
                 <span>⚡</span>
               </label>
               <label class="tile-option">
                 <div class="tile-left">
                   <input type="radio" name="layout-geo" id="radio-geo-stacked" value="stacked" />
-                  <span><strong>Stacked Centered Monogram</strong> (Square Avatars)</span>
+                  <span><strong>Stacked Centered Monogram</strong></span>
                 </div>
                 <span>🏛️</span>
               </label>
             </div>
           </div>
 
-          <!-- Asynchronous Wait Button with 1.5s delay -->
+          <!-- 1.5s Asynchronous Wait Simulator for Selenium WebDriverWait -->
           <div style="display:flex; gap:12px; margin-top:28px;">
             <button class="btn-action" id="btn-generate-brand" onclick="simulateServerWait()">
               <span id="async-spinner" class="delay-spinner"></span>
               <span id="btn-generate-text">Generate Brand SVG (1.5s Wait)</span>
             </button>
             <button class="btn-outline" id="btn-open-workspace-tab" onclick="openStudioChildWindow()">
-              Workspace Tab <span class="arrow-icon-box">↗</span>
+              Workspace Tab <span class="arrow-box">↗</span>
             </button>
           </div>
 
           <div id="async-success-toast" class="toast-panel toast-success">
-            ✓ Vector Mockup compiled successfully! Ready for verification.
+            ✓ Vector Mockup compiled successfully! Ready for download.
           </div>
         </div>
 
-        <!-- Live Mockup Display -->
+        <!-- Live Mockup Display Screen -->
         <div class="mockup-display" id="studio-preview-board">
           <div class="mockup-icon" id="mockup-icon-render">🚀</div>
           <h3 class="mockup-title" id="mockup-name-render">DesignCraft Enterprise</h3>
           <span class="mockup-badge" id="mockup-tag-render">Cloud Computing & AI Software</span>
-          <p style="font-size:12px; color:#cbd5e1; margin-top:18px;">Active Color Tone: <strong id="mockup-color-render">Indigo Tech</strong></p>
+          <p style="font-size:12px; color:#cbd5e1; margin-top:18px;">Current Tone: <strong id="mockup-color-render">Indigo Tech</strong></p>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 2: PRINT & STATIONERY (Checkboxes & Finish Selection) -->
+    <!-- SECTION 2: PRINT & STATIONERY (Checkboxes & Radios) -->
     <section id="section-cards" class="interactive-card">
       <div class="section-head">
-        <span class="section-eyebrow">Interactive Sandbox 02</span>
+        <span class="section-eyebrow">Stationery Studio</span>
         <h2 class="section-main-title">Business Card Packaging Suite</h2>
       </div>
 
       <div class="interactive-grid">
         <div>
-          <label class="label-text">Select Finishes & Physical Add-ons (Checkbox Group):</label>
+          <label class="label-text">Select Finishes & Add-ons (Checkbox Group):</label>
           <div class="tile-group">
             <label class="tile-option">
               <div class="tile-left">
@@ -341,9 +403,9 @@
 
           <div style="display:flex; gap:12px; margin-top:28px;">
             <button class="btn-action" id="btn-save-specs" onclick="saveCardSpecs()">Save Configuration</button>
-            <button class="btn-outline" id="btn-popup-alert" onclick="triggerPromoAlert()">Test Promo Alert (JS Alert)</button>
+            <button class="btn-outline" id="btn-popup-alert" onclick="triggerPromoAlert()">Test Promo (JS Alert)</button>
           </div>
-          <div id="card-toast" class="toast-panel toast-success">Card specifications saved to cart session.</div>
+          <div id="card-toast" class="toast-panel toast-success">Card specifications saved to cart session!</div>
         </div>
 
         <div style="background:#0f172a; border-radius:14px; padding:28px; color:#fff; display:flex; flex-direction:column; justify-content:space-between; height:240px; box-shadow:0 12px 24px rgba(0,0,0,0.2);">
@@ -360,17 +422,17 @@
       </div>
     </section>
 
-    <!-- SECTION 3: PRICING COMPARISON (Long page scroll target) -->
+    <!-- SECTION 3: PRICING COMPARISON -->
     <section id="section-pricing">
       <div class="section-head">
-        <span class="section-eyebrow">Pricing Architecture</span>
-        <h2 class="section-main-title">Transparent Commercial Tiers</h2>
+        <span class="section-eyebrow">Transparent Pricing</span>
+        <h2 class="section-main-title">Flexible Plans for Growing Teams</h2>
       </div>
 
       <div class="pricing-grid">
         <div class="pricing-card" id="pricing-starter">
           <h3>Starter Launch</h3>
-          <p style="font-size:13px; color:var(--slate-500); margin-top:4px;">Solo founders & new domains</p>
+          <p style="font-size:13px; color:var(--slate-500); margin-top:4px;">Solo founders & bootstrappers</p>
           <div class="plan-price">₹1,499</div>
           <ul style="list-style:none; text-align:left; font-size:14px; display:flex; flex-direction:column; gap:10px; margin-bottom:24px;">
             <li>✓ 1 High-Res Vector SVG</li>
@@ -383,7 +445,7 @@
         <div class="pricing-card featured" id="pricing-growth">
           <span class="plan-tag">MOST POPULAR</span>
           <h3>Growth Suite</h3>
-          <p style="font-size:13px; color:var(--slate-500); margin-top:4px;">Fast-growing companies</p>
+          <p style="font-size:13px; color:var(--slate-500); margin-top:4px;">Scaleups and expanding teams</p>
           <div class="plan-price" style="color:var(--primary);">₹3,499</div>
           <ul style="list-style:none; text-align:left; font-size:14px; display:flex; flex-direction:column; gap:10px; margin-bottom:24px;">
             <li>✓ Full Vector Master Kit</li>
@@ -395,7 +457,7 @@
 
         <div class="pricing-card" id="pricing-enterprise">
           <h3>Enterprise Pro</h3>
-          <p style="font-size:13px; color:var(--slate-500); margin-top:4px;">Full brand governance & teams</p>
+          <p style="font-size:13px; color:var(--slate-500); margin-top:4px;">Full brand governance</p>
           <div class="plan-price">₹7,999</div>
           <ul style="list-style:none; text-align:left; font-size:14px; display:flex; flex-direction:column; gap:10px; margin-bottom:24px;">
             <li>✓ Dedicated Brand Guidelines</li>
@@ -407,11 +469,11 @@
       </div>
     </section>
 
-    <!-- SECTION 4: CLIENT TESTIMONIALS -->
+    <!-- SECTION 4: TESTIMONIALS -->
     <section style="margin-bottom:60px;">
       <div class="section-head">
         <span class="section-eyebrow">Client Feedback</span>
-        <h2 class="section-main-title">Trusted by Thousands of Teams</h2>
+        <h2 class="section-main-title">Trusted by Modern Founders</h2>
       </div>
       <div class="testimonial-grid">
         <div class="testimonial-card">
@@ -421,13 +483,13 @@
         </div>
         <div class="testimonial-card">
           <div class="star-rating">★★★★★</div>
-          <p style="font-size:14px; color:var(--slate-700); margin-bottom:14px;">"The business cards arrived with exceptional gold foil debossing. Perfect for our test workflows and live marketing."</p>
+          <p style="font-size:14px; color:var(--slate-700); margin-bottom:14px;">"The business cards arrived with exceptional gold foil debossing. Perfect for our live marketing."</p>
           <strong>Rahul Verma</strong><br/><span style="font-size:12px; color:var(--slate-500);">Founder, FinScale</span>
         </div>
         <div class="testimonial-card">
           <div class="star-rating">★★★★★</div>
-          <p style="font-size:14px; color:var(--slate-700); margin-bottom:14px;">"Outstanding platform stability. Clean element IDs made our entire web verification suite reliable."</p>
-          <strong>Sarah Jenkins</strong><br/><span style="font-size:12px; color:var(--slate-500);">QA Director, CloudGrid</span>
+          <p style="font-size:14px; color:var(--slate-700); margin-bottom:14px;">"Outstanding platform stability. Clean element IDs made our entire automated testing flow reliable."</p>
+          <strong>Sarah Jenkins</strong><br/><span style="font-size:12px; color:var(--slate-500);">QA Lead, CloudGrid</span>
         </div>
       </div>
     </section>
@@ -443,7 +505,7 @@
           <span>Can I export vectors in infinite resolution?</span>
           <span>+</span>
         </div>
-        <div class="faq-answer">Yes, all logos are exported in mathematical SVG and EPS formats, allowing billboard-scale scaling with zero pixelation.</div>
+        <div class="faq-answer">Yes, all logos are exported in SVG and EPS formats, allowing billboard-scale scaling with zero pixelation.</div>
       </div>
       <div class="faq-item">
         <div class="faq-question" onclick="toggleFaq(this)">
@@ -457,56 +519,60 @@
           <span>Are interactive JavaScript alerts supported?</span>
           <span>+</span>
         </div>
-        <div class="faq-answer">Yes, our coupon and order verification triggers trigger standard browser <code>alert()</code> and <code>confirm()</code> dialogs.</div>
+        <div class="faq-answer">Yes, our coupon and order triggers invoke native browser <code>alert()</code> and <code>confirm()</code> dialogs.</div>
       </div>
     </section>
 
   </main>
 
-  <!-- DEEP 5-COLUMN CORPORATE FOOTER (Selenium JavascriptExecutor scrolling target) -->
+  <!-- 100% CLICKABLE DEEP CORPORATE FOOTER -->
   <footer id="page-footer">
     <div class="footer-container">
       <div>
-        <a class="brand-logo" style="color:#fff; margin-bottom:14px;">
+        <div class="brand-logo" style="color:#fff; margin-bottom:14px;" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
           <span class="logo-badge">DC</span> DesignCraft Studio
-        </a>
+        </div>
         <p style="font-size:13px; line-height:1.7; max-width:320px;">
           Empowering engineering teams, creative directors, and founders with automated brand infrastructure and high-performance digital vector creation.
         </p>
       </div>
 
+      <!-- Column 1: Services -->
       <div>
-        <h5>Platform</h5>
+        <h5>Studio Suite</h5>
         <ul class="footer-list">
-          <li><a onclick="scrollToElement('section-studio')">Vector Studio</a></li>
-          <li><a onclick="scrollToElement('section-cards')">Print & Cards</a></li>
-          <li><a onclick="openStudioChildWindow()">Child Workspace Tab ↗</a></li>
-          <li><a onclick="scrollToElement('section-pricing')">Commercial Tiers</a></li>
+          <li><button class="footer-item-btn" id="footer-btn-studio" onclick="handleFooterAction('Navigating to Logo Studio', 'section-studio')">AI Vector Maker <span>⚡</span></button></li>
+          <li><button class="footer-item-btn" id="footer-btn-cards" onclick="handleFooterAction('Navigating to Print Stationery', 'section-cards')">Luxury Print Cards <span>✨</span></button></li>
+          <li><button class="footer-item-btn" id="footer-btn-pricing" onclick="handleFooterAction('Viewing Pricing Tiers', 'section-pricing')">Commercial Plans</button></li>
+          <li><button class="footer-item-btn" id="footer-btn-tab-col1" onclick="openStudioChildWindow()">Child Workspace Tab <span class="arrow-box">↗</span></button></li>
         </ul>
       </div>
 
+      <!-- Column 2: Selenium QA Hub -->
       <div>
-        <h5>Selenium Hub</h5>
+        <h5>QA Testing Hub</h5>
         <ul class="footer-list">
-          <li><a id="footer-explicit-waits">Wait Conditions (1.5s)</a></li>
-          <li><a id="footer-dialog-alerts">Alerts & Prompts</a></li>
-          <li><a id="footer-window-handles">Window Handles</a></li>
-          <li><a id="footer-actions-hover">Hover Actions</a></li>
+          <li><button class="footer-item-btn" id="footer-btn-waits" onclick="handleFooterAction('Testing 1.5s Explicit Waits', 'section-studio')">Explicit Waits (1.5s)</button></li>
+          <li><button class="footer-item-btn" id="footer-btn-alerts" onclick="triggerPromoAlert()">JavaScript Alerts Trigger</button></li>
+          <li><button class="footer-item-btn" id="footer-btn-tab-col2" onclick="openStudioChildWindow()">Window Handles Tab <span class="arrow-box">↗</span></button></li>
+          <li><button class="footer-item-btn" id="footer-btn-swatches" onclick="applyColorTheme('#f43f5e', 'Rose Elegance')">Trigger Theme Hover</button></li>
         </ul>
       </div>
 
+      <!-- Column 3: Corporate Info -->
       <div>
         <h5>Company</h5>
         <ul class="footer-list">
-          <li><a id="footer-link-about">About DesignCraft</a></li>
-          <li><a id="footer-link-careers">Careers (Hiring)</a></li>
-          <li><a id="footer-link-privacy">Privacy Policy</a></li>
-          <li><a id="footer-link-terms">Terms of Service</a></li>
+          <li><button class="footer-item-btn" id="footer-btn-about" onclick="handleFooterAction('Opening Company Architecture Docs')">About Platform</button></li>
+          <li><button class="footer-item-btn" id="footer-btn-careers" onclick="handleFooterAction('Opening Careers: SDET positions available')">Careers (Hiring)</button></li>
+          <li><button class="footer-item-btn" id="footer-btn-terms" onclick="handleFooterAction('Terms of Service: Standard SaaS')">Terms of Service</button></li>
+          <li><button class="footer-item-btn" id="footer-btn-privacy" onclick="handleFooterAction('Privacy: Strict sandbox isolation')">Privacy Policy</button></li>
         </ul>
       </div>
 
+      <!-- Column 4: Newsletter -->
       <div>
-        <h5>Stay Connected</h5>
+        <h5>Release Radar</h5>
         <p style="font-size:13px; margin-bottom:12px;">Get weekly design tokens and locator maps:</p>
         <div class="footer-input-group">
           <input type="email" id="footer-newsletter-input" class="footer-input" placeholder="qa.engineer@company.com" />
@@ -516,18 +582,21 @@
       </div>
     </div>
 
+    <!-- Interactive Status Tracker for Selenium Verification -->
+    <div id="footer-action-banner" class="footer-action-status"></div>
+
     <!-- Bottom Copyright & Scroll To Top -->
     <div class="footer-bottom">
-      <p>© 2026 DesignCraft Studio Technologies, Inc. All rights reserved. Configured for Selenium test automation suites.</p>
+      <p id="copyright-text">© 2026 DesignCraft Studio Technologies, Inc. All rights reserved. Configured for Selenium test automation.</p>
       <button class="scroll-top-btn" id="btn-scroll-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
         ↑ Back to Top
       </button>
     </div>
   </footer>
 
-  <!-- JAVASCRIPT LOGIC & CHILD WINDOW ROUTING -->
+  <!-- JAVASCRIPT LOGIC & CHILD WINDOW ROUTER -->
   <script>
-    // CHILD WINDOW CHECK: If ?view=studio-sandbox is in URL, render dedicated Child Workspace
+    // CHILD WINDOW CHECK: If ?view=studio-sandbox is in the URL, render the rich child workspace
     if (window.location.search.includes('view=studio-sandbox')) {
       renderChildWindowSandbox();
     }
@@ -537,57 +606,153 @@
       window.open(childUrl, '_blank');
     }
 
+    // Comprehensive Child Window Sandbox
     function renderChildWindowSandbox() {
       document.title = "DesignCraft Studio | Child Workspace Sandbox";
       document.body.className = "sandbox-body";
       document.body.innerHTML = `
-        <div class="sandbox-card">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; border-bottom:1px solid #334155; padding-bottom:18px;">
+        <div class="sandbox-container">
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:18px;">
             <div style="display:flex; align-items:center; gap:10px;">
-              <span style="background:#4f46e5; padding:6px 12px; border-radius:8px; font-weight:800;">DC-SANDBOX</span>
-              <h2 style="font-size:20px; font-weight:700;">Isolated Child Window Tab</h2>
+              <span style="background:var(--primary); padding:6px 12px; border-radius:8px; font-weight:800; font-size:12px;">DC-CHILD-WINDOW</span>
+              <h2 style="font-size:20px; font-weight:700;">Child Window Automation Sandbox</h2>
             </div>
-            <button onclick="window.close()" style="background:#ef4444; color:#fff; border:none; padding:8px 14px; border-radius:6px; font-weight:600; cursor:pointer;">Close Window</button>
+            <button id="btn-close-child-window" onclick="window.close()" style="background:#ef4444; color:#fff; border:none; padding:8px 16px; border-radius:8px; font-weight:700; cursor:pointer;">Close Window</button>
           </div>
 
-          <p style="color:#94a3b8; font-size:14px; margin-bottom:24px;">
-            You have switched to the new window handle via <code>driver.switchTo().window(...)</code>. Perform actions here and switch back!
+          <p style="color:#94a3b8; font-size:14px; margin:16px 0 24px;">
+            Active window handle switched via <code>driver.switchTo().window(...)</code>. Interact with the rich web elements below!
           </p>
 
-          <div style="margin-bottom:20px;">
-            <label style="display:block; font-size:13px; margin-bottom:6px;">Canvas Scale Slider (Test Actions Drag/Slide):</label>
-            <input type="range" id="sandbox-slider" min="50" max="200" value="100" style="width:100%; accent-color:#06b6d4;" oninput="updateSandboxScale(this.value)" />
-            <span id="sandbox-scale-label" style="font-size:12px; color:#38bdf8;">Scale: 100%</span>
-          </div>
+          <div class="sandbox-grid">
+            <!-- Left Panel -->
+            <div>
+              <div style="margin-bottom:20px;">
+                <label style="display:block; font-size:13px; font-weight:700; margin-bottom:6px;">Canvas Zoom Level (Range Slider):</label>
+                <input type="range" id="child-zoom-slider" min="50" max="200" value="100" style="width:100%; accent-color:#06b6d4;" oninput="updateChildZoom(this.value)" />
+                <span id="child-zoom-label" style="font-size:12px; color:#38bdf8;">Current Zoom: 100%</span>
+              </div>
 
-          <div style="display:flex; gap:12px; margin-bottom:24px;">
-            <button id="btn-child-alert" onclick="window.alert('Child Window JS Alert Verified!')" style="background:#4f46e5; color:#fff; border:none; padding:10px 18px; border-radius:8px; font-weight:600; cursor:pointer;">Trigger Child Alert</button>
-            <button id="btn-child-confirm" onclick="testChildConfirm()" style="background:#06b6d4; color:#fff; border:none; padding:10px 18px; border-radius:8px; font-weight:600; cursor:pointer;">Trigger Confirm Dialog</button>
-          </div>
+              <div style="margin-bottom:20px;">
+                <label style="display:block; font-size:13px; font-weight:700; margin-bottom:6px;">Vector Accent Color Picker:</label>
+                <input type="color" id="child-color-picker" value="#4f46e5" style="width:100%; height:44px; border:none; border-radius:8px; cursor:pointer;" onchange="updateChildColor(this.value)" />
+              </div>
 
-          <div id="child-window-status" style="background:#0f172a; padding:16px; border-radius:8px; border:1px solid #334155; font-size:13px; color:#a7f3d0;">
-            ✓ Child Window Ready. Handle active.
+              <div style="margin-bottom:20px;">
+                <label style="display:block; font-size:13px; font-weight:700; margin-bottom:6px;">Multi-Select Supported Formats:</label>
+                <select id="child-format-select" multiple style="width:100%; padding:10px; background:#0f172a; color:#fff; border:1px solid #334155; border-radius:8px; height:80px;">
+                  <option value="svg" selected>Vector SVG (.svg)</option>
+                  <option value="pdf">Print PDF (.pdf)</option>
+                  <option value="png">Transparent PNG (.png)</option>
+                  <option value="eps">Vector EPS (.eps)</option>
+                </select>
+              </div>
+
+              <div style="margin-bottom:20px;">
+                <label style="display:block; font-size:13px; font-weight:700; margin-bottom:6px;">Upload Custom Vector Asset (File Input):</label>
+                <input type="file" id="child-file-input" style="font-size:13px; color:#94a3b8;" onchange="handleFileUpload(this)" />
+                <div id="file-upload-status" style="font-size:12px; color:#10b981; margin-top:4px;"></div>
+              </div>
+            </div>
+
+            <!-- Right Panel: Live Child Canvas & Dialog Triggers -->
+            <div>
+              <div id="child-canvas-preview" style="background:#0f172a; border:2px dashed #475569; border-radius:12px; padding:28px; text-align:center; min-height:180px; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                <span id="child-canvas-icon" style="font-size:48px;">🎨</span>
+                <h4 id="child-canvas-title" style="font-size:18px; margin-top:8px;">Studio Workspace Active</h4>
+                <p style="font-size:12px; color:#94a3b8;">Rendered in separate process</p>
+              </div>
+
+              <h4 style="font-size:14px; margin:24px 0 10px;">JavaScript Dialog Suite:</h4>
+              <div style="display:flex; flex-direction:column; gap:10px;">
+                <button id="btn-child-alert" onclick="window.alert('Child Window JS Alert verified!')" style="background:#4f46e5; color:#fff; border:none; padding:10px; border-radius:8px; font-weight:700; cursor:pointer;">Trigger Alert</button>
+                <button id="btn-child-confirm" onclick="triggerChildConfirm()" style="background:#06b6d4; color:#fff; border:none; padding:10px; border-radius:8px; font-weight:700; cursor:pointer;">Trigger Confirm Dialog</button>
+                <button id="btn-child-prompt" onclick="triggerChildPrompt()" style="background:#334155; color:#fff; border:none; padding:10px; border-radius:8px; font-weight:700; cursor:pointer;">Trigger Prompt Dialog</button>
+              </div>
+
+              <div id="child-dialog-feedback" style="background:#0f172a; padding:14px; border-radius:8px; border:1px solid #334155; font-size:13px; color:#38bdf8; margin-top:14px;">
+                Ready for user interactions.
+              </div>
+            </div>
           </div>
         </div>
       `;
     }
 
-    function updateSandboxScale(val) {
-      document.getElementById('sandbox-scale-label').innerText = 'Scale: ' + val + '%';
+    function updateChildZoom(val) {
+      document.getElementById('child-zoom-label').innerText = 'Current Zoom: ' + val + '%';
+      document.getElementById('child-canvas-preview').style.transform = `scale(${val/100})`;
     }
 
-    function testChildConfirm() {
-      const res = window.confirm('Finalize child workspace settings?');
-      document.getElementById('child-window-status').innerText = res ? '✓ User Accepted child dialog.' : '✕ User Dismissed child dialog.';
+    function updateChildColor(color) {
+      document.getElementById('child-canvas-preview').style.borderColor = color;
+      document.getElementById('child-dialog-feedback').innerText = 'Selected Color: ' + color;
     }
 
-    // Scroll helper
+    function handleFileUpload(input) {
+      if (input.files.length > 0) {
+        document.getElementById('file-upload-status').innerText = '✓ Selected: ' + input.files[0].name;
+      }
+    }
+
+    function triggerChildConfirm() {
+      const res = window.confirm('Do you confirm child workspace export?');
+      document.getElementById('child-dialog-feedback').innerText = res ? '✓ Confirm: Accepted' : '✕ Confirm: Dismissed';
+    }
+
+    function triggerChildPrompt() {
+      const res = window.prompt('Enter your company brand name:');
+      if (res) {
+        document.getElementById('child-canvas-title').innerText = res;
+        document.getElementById('child-dialog-feedback').innerText = '✓ Prompt Entered: ' + res;
+      }
+    }
+
+    // Modal Handlers
+    function openLoginModal() {
+      document.getElementById('login-modal').style.display = 'flex';
+      setTimeout(() => document.getElementById('login-email').focus(), 100);
+    }
+
+    function openSignupModal() {
+      document.getElementById('signup-modal').style.display = 'flex';
+      setTimeout(() => document.getElementById('signup-name').focus(), 100);
+    }
+
+    function closeModals() {
+      document.getElementById('login-modal').style.display = 'none';
+      document.getElementById('signup-modal').style.display = 'none';
+    }
+
+    function handleLoginSubmit() {
+      const email = document.getElementById('login-email').value;
+      if (email) {
+        const msg = document.getElementById('login-status-msg');
+        msg.style.display = 'block';
+        setTimeout(() => closeModals(), 1200);
+      } else {
+        window.alert('Please enter an email address.');
+      }
+    }
+
+    function handleSignupSubmit() {
+      const name = document.getElementById('signup-name').value;
+      if (name) {
+        const msg = document.getElementById('signup-status-msg');
+        msg.style.display = 'block';
+        setTimeout(() => closeModals(), 1200);
+      } else {
+        window.alert('Please fill out your name.');
+      }
+    }
+
+    // Scroll Helper
     function scrollToElement(id) {
       const elem = document.getElementById(id);
       if (elem) elem.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // 1.5-Second Asynchronous Delay Simulator for WebDriverWait testing
+    // 1.5s Async Latency Simulator for Selenium WebDriverWait
     function simulateServerWait() {
       const spinner = document.getElementById('async-spinner');
       const text = document.getElementById('btn-generate-text');
@@ -610,7 +775,7 @@
       }, 1500);
     }
 
-    // Dynamic Swatch Theme Changer
+    // Theme Swatch Switcher
     function applyColorTheme(colorHex, colorName) {
       document.getElementById('studio-preview-board').style.background = `linear-gradient(135deg, ${colorHex} 0%, #0f172a 100%)`;
       document.getElementById('mockup-color-render').innerText = colorName;
@@ -633,16 +798,24 @@
     function selectPricing(planName, price) {
       const choice = window.confirm(`Proceed with ${planName} package at ₹${price}?`);
       if (choice) {
-        window.alert(`Thank you! ${planName} plan selected. Invoice sent to your active session.`);
+        window.alert(`Thank you! ${planName} plan selected. Invoice sent to your session.`);
       }
     }
 
-    // FAQ Accordion Toggle
+    // FAQ Accordion
     function toggleFaq(el) {
       const ans = el.nextElementSibling;
       const isOpen = ans.style.display === 'block';
       ans.style.display = isOpen ? 'none' : 'block';
       el.querySelector('span:last-child').innerText = isOpen ? '+' : '−';
+    }
+
+    // Footer Interactive Tracker
+    function handleFooterAction(msg, targetId) {
+      const banner = document.getElementById('footer-action-banner');
+      banner.style.display = 'block';
+      banner.innerText = '⚡ Footer Event Triggered: ' + msg;
+      if (targetId) scrollToElement(targetId);
     }
 
     function handleFooterSubscribe() {
