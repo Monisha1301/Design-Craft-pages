@@ -43,5 +43,189 @@
     }, 3000); // 3-second delay
   }, true);
 </script>
+    <!-- REAL-TIME PLATFORM SIMULATOR: MULTI-PAGE & SELENIUM SUITE -->
+<div id="designcraft-app-wrapper" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; border-top: 3px solid #2563eb; margin-top: 40px; padding-bottom: 50px;">
+  
+  <!-- 1. Real-time Navigation Bar -->
+  <header style="background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100;">
+    <div style="font-size: 20px; font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 8px;">
+      <span style="background: #2563eb; color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 14px;">DC</span>
+      DesignCraft Studio
+    </div>
+    <nav style="display: flex; gap: 12px;">
+      <button class="dc-nav-tab" onclick="navigatePage('page-home')" style="padding: 8px 14px; border: none; background: #2563eb; color: #fff; border-radius: 6px; cursor: pointer; font-weight: 500;">Overview</button>
+      <button class="dc-nav-tab" onclick="navigatePage('page-logomaker')" style="padding: 8px 14px; border: none; background: #e2e8f0; color: #334155; border-radius: 6px; cursor: pointer; font-weight: 500;">Logo Maker</button>
+      <button class="dc-nav-tab" onclick="navigatePage('page-cards')" style="padding: 8px 14px; border: none; background: #e2e8f0; color: #334155; border-radius: 6px; cursor: pointer; font-weight: 500;">Business Cards</button>
+      <button class="dc-nav-tab" onclick="navigatePage('page-pricing')" style="padding: 8px 14px; border: none; background: #e2e8f0; color: #334155; border-radius: 6px; cursor: pointer; font-weight: 500;">Pricing & Checkout</button>
+    </nav>
+  </header>
+
+  <main style="max-width: 980px; margin: 30px auto; padding: 0 16px;">
+    
+    <!-- PAGE 1: OVERVIEW & SYNCHRONIZATION -->
+    <section id="page-home" class="dc-page-view" style="display: block;">
+      <div style="background: white; padding: 24px; border-radius: 8px; border: 1px solid #e2e8f0;">
+        <h3 style="margin-top: 0; color: #0f172a;">Welcome to DesignCraft Portal</h3>
+        <p style="color: #64748b; line-height: 1.6;">Design custom logos, business cards, and brand kits with instant mockups. Use the navigation bar above to explore the services.</p>
+        
+        <div style="margin-top: 20px; padding: 16px; background: #eff6ff; border-radius: 6px; border: 1px solid #bfdbfe;">
+          <h4 style="margin: 0 0 8px 0; color: #1d4ed8;">Quick Action: Launch Studio in New Window</h4>
+          <p style="font-size: 13px; color: #1e40af; margin-bottom: 12px;">Test Selenium window switching (<code>driver.switchTo().window(...)</code>).</p>
+          <button id="open-studio-window-btn" onclick="window.open('https://design-craft.onrender.com', '_blank')" style="background: #2563eb; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
+            Open Live Studio Tab
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 2: LOGO MAKER (Select & Text Inputs) -->
+    <section id="page-logomaker" class="dc-page-view" style="display: none;">
+      <div style="background: white; padding: 24px; border-radius: 8px; border: 1px solid #e2e8f0;">
+        <h3 style="margin-top: 0; color: #0f172a;">Custom Logo Generator</h3>
+        <p style="color: #64748b; font-size: 14px;">Select your company category and preview templates.</p>
+        
+        <div style="display: grid; gap: 16px; margin-top: 20px;">
+          <div>
+            <label for="logo-industry-select" style="display: block; font-weight: 500; margin-bottom: 6px; color: #334155;">Industry Sector (Select Class):</label>
+            <select id="logo-industry-select" style="width: 100%; max-width: 360px; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;">
+              <option value="">-- Choose Industry --</option>
+              <option value="tech">Information Technology & Software</option>
+              <option value="realestate">Real Estate & Construction</option>
+              <option value="healthcare">Healthcare & Medical</option>
+              <option value="consulting">Finance & Business Consulting</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="company-brand-input" style="display: block; font-weight: 500; margin-bottom: 6px; color: #334155;">Brand Name:</label>
+            <input type="text" id="company-brand-input" placeholder="e.g. Apex Innovations" style="width: 100%; max-width: 360px; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;" />
+          </div>
+
+          <button id="generate-preview-btn" onclick="generateLogoPreview()" style="width: fit-content; background: #0f172a; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 500;">
+            Generate Templates
+          </button>
+
+          <div id="logo-preview-output" style="display: none; padding: 16px; border: 1px dashed #10b981; background: #ecfdf5; border-radius: 6px; margin-top: 10px;">
+            <p id="logo-preview-text" style="color: #065f46; margin: 0; font-weight: 600;"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 3: BUSINESS CARDS (Radio buttons & Checkboxes) -->
+    <section id="page-cards" class="dc-page-view" style="display: none;">
+      <div style="background: white; padding: 24px; border-radius: 8px; border: 1px solid #e2e8f0;">
+        <h3 style="margin-top: 0; color: #0f172a;">Business Card Configuration</h3>
+        <p style="color: #64748b; font-size: 14px;">Select finishes, paper thickness, and bundle packs.</p>
+
+        <!-- Radio Buttons -->
+        <div style="margin-top: 20px;">
+          <h4 style="margin-bottom: 8px; color: #334155;">Card Paper Finish (Radio Handling):</h4>
+          <div style="display: flex; gap: 20px;">
+            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+              <input type="radio" name="card-finish" id="finish-matte" value="matte" checked /> Matte Finish
+            </label>
+            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+              <input type="radio" name="card-finish" id="finish-gloss" value="gloss" /> High Gloss
+            </label>
+            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+              <input type="radio" name="card-finish" id="finish-linen" value="linen" /> Premium Linen
+            </label>
+          </div>
+        </div>
+
+        <!-- Checkboxes -->
+        <div style="margin-top: 24px;">
+          <h4 style="margin-bottom: 8px; color: #334155;">Add-on Assets (Checkbox Handling):</h4>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" id="chk-foil" name="addons" value="gold-foil" />
+              Add Metallic Gold Foil Accent (+₹350)
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" id="chk-rounded" name="addons" value="rounded-edges" />
+              Custom Die-Cut Rounded Edges (+₹150)
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" id="chk-digital" name="addons" value="digital-card" />
+              NFC Contactless Digital Card Profile (+₹499)
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 4: PRICING & CHECKOUT (Alerts & Submission) -->
+    <section id="page-pricing" class="dc-page-view" style="display: none;">
+      <div style="background: white; padding: 24px; border-radius: 8px; border: 1px solid #e2e8f0;">
+        <h3 style="margin-top: 0; color: #0f172a;">Order Summary & Checkout</h3>
+        <p style="color: #64748b; font-size: 14px;">Review your selection and trigger verification alerts.</p>
+        
+        <div style="margin: 20px 0; padding: 16px; background: #fffbeb; border: 1px solid #fef3c7; border-radius: 6px;">
+          <p style="margin: 0 0 8px 0; font-weight: 500; color: #92400e;">Cart Items Ready for Confirmation</p>
+          <span style="font-size: 13px; color: #b45309;">Verify your package details before payment dispatch.</span>
+        </div>
+
+        <div style="display: flex; gap: 12px;">
+          <button id="alert-discount-btn" onclick="triggerPromoAlert()" style="background: #f59e0b; color: white; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: 500;">
+            Apply Promo (Trigger Alert)
+          </button>
+          <button id="checkout-confirm-btn" onclick="confirmOrder()" style="background: #16a34a; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 500;">
+            Place Order
+          </button>
+        </div>
+
+        <p id="checkout-status-msg" style="margin-top: 14px; font-weight: 600; color: #16a34a; display: none;"></p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- CLIENT INTERACTIONS & TIMING LOGIC -->
+<script>
+  // Page Navigation Switcher
+  function navigatePage(targetPageId) {
+    const pages = document.querySelectorAll('.dc-page-view');
+    pages.forEach(page => page.style.display = 'none');
+    
+    const target = document.getElementById(targetPageId);
+    if (target) target.style.display = 'block';
+
+    const buttons = document.querySelectorAll('.dc-nav-tab');
+    buttons.forEach(btn => {
+      btn.style.background = '#e2e8f0';
+      btn.style.color = '#334155';
+    });
+    event.target.style.background = '#2563eb';
+    event.target.style.color = '#ffffff';
+  }
+
+  // Logo Preview Logic (simulates 1s loading)
+  function generateLogoPreview() {
+    const brand = document.getElementById('company-brand-input').value || 'My Brand';
+    const sector = document.getElementById('logo-industry-select').value || 'General';
+    const output = document.getElementById('logo-preview-output');
+    const text = document.getElementById('logo-preview-text');
+
+    output.style.display = 'block';
+    text.innerText = 'Creating mockup for ' + brand + ' (' + sector + ')...';
+    
+    setTimeout(() => {
+      text.innerText = '✓ Design Template #42 Ready for: ' + brand;
+    }, 1000);
+  }
+
+  // JS Alert Handling
+  function triggerPromoAlert() {
+    window.alert('Promo Code APEX20 applied! 20% discount added to cart.');
+  }
+
+  function confirmOrder() {
+    const statusMsg = document.getElementById('checkout-status-msg');
+    statusMsg.style.display = 'block';
+    statusMsg.innerText = 'Order placed successfully! Confirmation email dispatched.';
+  }
+</script>
   </body>
 </html>
