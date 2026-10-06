@@ -1,231 +1,446 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>DesignMantic</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script>
-    (function() {
-      var redirect = sessionStorage.getItem('spaRedirect');
-      if (redirect) {
-        sessionStorage.removeItem('spaRedirect');
-        window.history.replaceState(null, '', redirect);
-      }
-    })();
-  </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    <script>
-  // Adds artificial delay to real website interactions for Selenium wait synchronization
-  document.addEventListener('click', function(e) {
-    // Intercept clicks on links, buttons, or inputs
-    const target = e.target.closest('button, a, input[type="submit"]');
-    if (!target || target.dataset.delayed) return;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DesignCraft | Free AI Logo Maker & Branding Suite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --slate-900: #0f172a;
+      --slate-700: #334155;
+      --slate-500: #64748b;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --border: #e2e8f0;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--slate-50); color: var(--slate-900); }
 
-    // Show a loading cursor and delay the actual action by 3 seconds
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    document.body.style.cursor = 'wait';
-    target.style.opacity = '0.5';
+    /* Header & Nav */
+    header { background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50; }
+    .nav-container { max-width: 1240px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; }
+    .brand-logo { font-size: 20px; font-weight: 800; color: var(--slate-900); display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .brand-badge { background: var(--primary); color: #fff; padding: 4px 8px; border-radius: 6px; font-size: 13px; font-weight: 700; }
+    .nav-links { display: flex; gap: 8px; list-style: none; }
+    .nav-btn { padding: 8px 16px; border: 1px solid transparent; background: transparent; color: var(--slate-700); font-weight: 600; font-size: 14px; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+    .nav-btn:hover { background: var(--slate-100); }
+    .nav-btn.active { background: var(--primary); color: #fff; }
 
-    setTimeout(() => {
-      document.body.style.cursor = 'default';
-      target.style.opacity = '1';
-      target.dataset.delayed = 'true';
-      target.click(); // resume normal action after wait
-      delete target.dataset.delayed;
-    }, 3000); // 3-second delay
-  }, true);
-</script>
-    <!-- REAL-TIME PLATFORM SIMULATOR: MULTI-PAGE & SELENIUM SUITE -->
-<div id="designcraft-app-wrapper" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; border-top: 3px solid #2563eb; margin-top: 40px; padding-bottom: 50px;">
-  
-  <!-- 1. Real-time Navigation Bar -->
-  <header style="background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100;">
-    <div style="font-size: 20px; font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 8px;">
-      <span style="background: #2563eb; color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 14px;">DC</span>
-      DesignCraft Studio
+    /* Top Utility Bar */
+    .top-banner { background: var(--slate-900); color: #fff; font-size: 13px; padding: 8px; text-align: center; font-weight: 500; }
+    .top-banner a { color: #93c5fd; text-decoration: underline; margin-left: 6px; cursor: pointer; }
+
+    .main-wrap { max-width: 1240px; margin: 0 auto; padding: 32px 24px; }
+
+    /* Tab Page Container */
+    .page-section { display: none; }
+    .page-section.active-page { display: block; animation: fadeIn 0.25s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Hero Section */
+    .hero { text-align: center; padding: 48px 20px 40px; background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%); border-radius: 16px; border: 1px solid var(--border); margin-bottom: 36px; }
+    .hero h1 { font-size: 38px; font-weight: 800; margin-bottom: 12px; color: var(--slate-900); }
+    .hero p { font-size: 16px; color: var(--slate-500); max-width: 600px; margin: 0 auto 28px; }
+
+    /* Search & Filter Bar */
+    .generator-box { background: #fff; border: 1px solid var(--border); padding: 12px; border-radius: 12px; max-width: 720px; margin: 0 auto; display: flex; gap: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .generator-box input, .generator-box select { padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; outline: none; }
+    .generator-box input { flex: 2; }
+    .generator-box select { flex: 1.5; }
+    .btn-generate { background: var(--primary); color: #fff; font-weight: 600; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; }
+    .btn-generate:hover { background: var(--primary-dark); }
+
+    /* Grid Templates */
+    .template-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-top: 24px; }
+    .template-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px; text-align: center; transition: all 0.2s; position: relative; }
+    .template-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-color: var(--primary); }
+    .template-preview { height: 130px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--slate-50); border-radius: 8px; margin-bottom: 14px; border: 1px dashed var(--border); }
+    .template-icon { font-size: 38px; margin-bottom: 6px; }
+    .template-title { font-weight: 700; font-size: 15px; color: var(--slate-900); }
+
+    /* Configuration Panels */
+    .config-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 28px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: 24px; }
+    .section-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; color: var(--slate-900); }
+    .section-desc { font-size: 14px; color: var(--slate-500); margin-bottom: 20px; }
+
+    /* Form UI Elements */
+    .field-label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 8px; color: var(--slate-700); }
+    .custom-select { width: 100%; max-width: 400px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; background: #fff; }
+    .checkbox-group, .radio-group { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+    .option-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: 0.15s; }
+    .option-item:hover { background: var(--slate-50); border-color: #cbd5e1; }
+    .option-item input { accent-color: var(--primary); width: 16px; height: 16px; cursor: pointer; }
+
+    /* Buttons */
+    .action-btn { background: var(--primary); color: #fff; padding: 10px 20px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+    .action-btn:hover { background: var(--primary-dark); }
+    .action-btn-secondary { background: #fff; color: var(--slate-700); border: 1px solid var(--border); padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+    .action-btn-secondary:hover { background: var(--slate-50); }
+
+    /* Notification Modal / Box */
+    .toast-box { display: none; padding: 14px 18px; border-radius: 8px; margin-top: 16px; font-weight: 600; font-size: 14px; }
+    .toast-success { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+    .toast-info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+    
+    /* Footer */
+    footer { border-top: 1px solid var(--border); background: #fff; padding: 28px; text-align: center; color: var(--slate-500); font-size: 13px; margin-top: 60px; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Real-time Ribbon -->
+  <div class="top-banner">
+    ✨ Free Vector Export included with all new Business Profiles this week.
+    <a id="banner-window-link" onclick="openStudioTab()">Open Preview Sandbox in New Window ↗</a>
+  </div>
+
+  <!-- Header Navigation -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand-logo" onclick="switchTab('page-home', this)">
+        <span class="brand-badge">DC</span> DesignCraft
+      </a>
+      <ul class="nav-links">
+        <li><button class="nav-btn active" id="nav-btn-home" onclick="switchTab('page-home', this)">Home & Gallery</button></li>
+        <li><button class="nav-btn" id="nav-btn-maker" onclick="switchTab('page-maker', this)">Logo Studio</button></li>
+        <li><button class="nav-btn" id="nav-btn-cards" onclick="switchTab('page-cards', this)">Business Cards</button></li>
+        <li><button class="nav-btn" id="nav-btn-pricing" onclick="switchTab('page-pricing', this)">Pricing & Checkout</button></li>
+      </ul>
     </div>
-    <nav style="display: flex; gap: 12px;">
-      <button class="dc-nav-tab" onclick="navigatePage('page-home')" style="padding: 8px 14px; border: none; background: #2563eb; color: #fff; border-radius: 6px; cursor: pointer; font-weight: 500;">Overview</button>
-      <button class="dc-nav-tab" onclick="navigatePage('page-logomaker')" style="padding: 8px 14px; border: none; background: #e2e8f0; color: #334155; border-radius: 6px; cursor: pointer; font-weight: 500;">Logo Maker</button>
-      <button class="dc-nav-tab" onclick="navigatePage('page-cards')" style="padding: 8px 14px; border: none; background: #e2e8f0; color: #334155; border-radius: 6px; cursor: pointer; font-weight: 500;">Business Cards</button>
-      <button class="dc-nav-tab" onclick="navigatePage('page-pricing')" style="padding: 8px 14px; border: none; background: #e2e8f0; color: #334155; border-radius: 6px; cursor: pointer; font-weight: 500;">Pricing & Checkout</button>
-    </nav>
   </header>
 
-  <main style="max-width: 980px; margin: 30px auto; padding: 0 16px;">
-    
-    <!-- PAGE 1: OVERVIEW & SYNCHRONIZATION -->
-    <section id="page-home" class="dc-page-view" style="display: block;">
-      <div style="background: white; padding: 24px; border-radius: 8px; border: 1px solid #e2e8f0;">
-        <h3 style="margin-top: 0; color: #0f172a;">Welcome to DesignCraft Portal</h3>
-        <p style="color: #64748b; line-height: 1.6;">Design custom logos, business cards, and brand kits with instant mockups. Use the navigation bar above to explore the services.</p>
-        
-        <div style="margin-top: 20px; padding: 16px; background: #eff6ff; border-radius: 6px; border: 1px solid #bfdbfe;">
-          <h4 style="margin: 0 0 8px 0; color: #1d4ed8;">Quick Action: Launch Studio in New Window</h4>
-          <p style="font-size: 13px; color: #1e40af; margin-bottom: 12px;">Test Selenium window switching (<code>driver.switchTo().window(...)</code>).</p>
-          <button id="open-studio-window-btn" onclick="window.open('https://design-craft.onrender.com', '_blank')" style="background: #2563eb; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
-            Open Live Studio Tab
-          </button>
+  <div class="main-wrap">
+
+    <!-- PAGE 1: HOME & REAL-TIME TEMPLATES GALLERY -->
+    <section id="page-home" class="page-section active-page">
+      <div class="hero">
+        <h1>AI-Powered Brand & Logo Identity</h1>
+        <p>Type your business name, pick your sector, and browse authentic design concepts instantly.</p>
+        <div class="generator-box">
+          <input type="text" id="quick-brand-input" placeholder="Enter Company Name (e.g. Nexus Labs)" />
+          <select id="quick-category-select">
+            <option value="All">All Categories</option>
+            <option value="Tech">Technology & SaaS</option>
+            <option value="Health">Healthcare & Clinic</option>
+            <option value="RealEstate">Real Estate & Living</option>
+            <option value="Food">Cafe & Restaurant</option>
+          </select>
+          <button class="btn-generate" id="quick-search-btn" onclick="filterGallery()">Explore Logos</button>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
+        <h3 style="font-size: 18px; font-weight: 700;">Featured Design Templates</h3>
+        <span id="gallery-counter" style="font-size: 13px; color: var(--slate-500); font-weight: 600;">Showing 4 Templates</span>
+      </div>
+
+      <div class="template-grid" id="template-collection">
+        <div class="template-card" data-category="Tech">
+          <div class="template-preview">
+            <span class="template-icon">⚡</span>
+            <span class="template-title" id="card-title-1">Nexus Cybernetics</span>
+          </div>
+          <p style="font-size: 12px; color: var(--slate-500); margin-bottom: 12px;">Vector SVG • Modern Minimalist</p>
+          <button class="action-btn-secondary" style="width: 100%;" onclick="selectTemplate('Nexus Cybernetics', 'Tech')">Customize Template</button>
+        </div>
+
+        <div class="template-card" data-category="RealEstate">
+          <div class="template-preview">
+            <span class="template-icon">🏛️</span>
+            <span class="template-title" id="card-title-2">Apex Living Infra</span>
+          </div>
+          <p style="font-size: 12px; color: var(--slate-500); margin-bottom: 12px;">Architectural Monogram</p>
+          <button class="action-btn-secondary" style="width: 100%;" onclick="selectTemplate('Apex Living Infra', 'RealEstate')">Customize Template</button>
+        </div>
+
+        <div class="template-card" data-category="Health">
+          <div class="template-preview">
+            <span class="template-icon">🩺</span>
+            <span class="template-title" id="card-title-3">CarePulse Diagnostics</span>
+          </div>
+          <p style="font-size: 12px; color: var(--slate-500); margin-bottom: 12px;">Clinical Emblem • Pastel Blue</p>
+          <button class="action-btn-secondary" style="width: 100%;" onclick="selectTemplate('CarePulse Diagnostics', 'Health')">Customize Template</button>
+        </div>
+
+        <div class="template-card" data-category="Food">
+          <div class="template-preview">
+            <span class="template-icon">☕</span>
+            <span class="template-title" id="card-title-4">Roast & Timber Cafe</span>
+          </div>
+          <p style="font-size: 12px; color: var(--slate-500); margin-bottom: 12px;">Artisan Badge • Rustic</p>
+          <button class="action-btn-secondary" style="width: 100%;" onclick="selectTemplate('Roast & Timber Cafe', 'Food')">Customize Template</button>
         </div>
       </div>
     </section>
 
-    <!-- PAGE 2: LOGO MAKER (Select & Text Inputs) -->
-    <section id="page-logomaker" class="dc-page-view" style="display: none;">
-      <div style="background: white; padding: 24px; border-radius: 8px; border: 1px solid #e2e8f0;">
-        <h3 style="margin-top: 0; color: #0f172a;">Custom Logo Generator</h3>
-        <p style="color: #64748b; font-size: 14px;">Select your company category and preview templates.</p>
-        
-        <div style="display: grid; gap: 16px; margin-top: 20px;">
+    <!-- PAGE 2: LOGO STUDIO (Interactive Automation Elements) -->
+    <section id="page-maker" class="page-section">
+      <div class="config-card">
+        <h2 class="section-title">Logo Studio & Vector Customizer</h2>
+        <p class="section-desc">Configure typography, industry vectors, and layout positioning.</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
           <div>
-            <label for="logo-industry-select" style="display: block; font-weight: 500; margin-bottom: 6px; color: #334155;">Industry Sector (Select Class):</label>
-            <select id="logo-industry-select" style="width: 100%; max-width: 360px; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;">
-              <option value="">-- Choose Industry --</option>
-              <option value="tech">Information Technology & Software</option>
-              <option value="realestate">Real Estate & Construction</option>
-              <option value="healthcare">Healthcare & Medical</option>
-              <option value="consulting">Finance & Business Consulting</option>
+            <label class="field-label" for="studio-brand-name">Brand Name:</label>
+            <input type="text" id="studio-brand-name" value="DesignCraft Enterprise" style="width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 18px;" />
+
+            <label class="field-label" for="studio-industry-select">Industry Category (Select Class):</label>
+            <select id="studio-industry-select" class="custom-select" style="margin-bottom: 18px;">
+              <option value="tech">Technology, AI & Cloud</option>
+              <option value="finance">Banking, Finance & Tax</option>
+              <option value="logistics">Logistics & Supply Chain</option>
+              <option value="retail">E-Commerce & Retail</option>
             </select>
+
+            <label class="field-label">Layout Positioning (Radio):</label>
+            <div class="radio-group" style="margin-bottom: 18px;">
+              <label class="option-item">
+                <input type="radio" name="layout-pos" id="layout-horizontal" value="horizontal" checked />
+                Horizontal Icon + Text
+              </label>
+              <label class="option-item">
+                <input type="radio" name="layout-pos" id="layout-stacked" value="stacked" />
+                Stacked Centered Emblem
+              </label>
+              <label class="option-item">
+                <input type="radio" name="layout-pos" id="layout-badge" value="badge" />
+                Circular Badge Style
+              </label>
+            </div>
+
+            <button class="action-btn" id="studio-render-btn" onclick="renderStudioMockup()">Generate Live Mockup</button>
           </div>
 
+          <!-- Live Mockup Screen -->
+          <div style="background: var(--slate-100); border: 2px dashed #cbd5e1; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; min-height: 280px;">
+            <div id="mockup-canvas" style="background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; width: 85%;">
+              <span id="mockup-icon" style="font-size: 42px; display: block; margin-bottom: 8px;">🚀</span>
+              <h2 id="mockup-display-name" style="font-size: 20px; font-weight: 800; color: var(--slate-900);">DesignCraft Enterprise</h2>
+              <p id="mockup-category-tag" style="font-size: 12px; color: var(--primary); font-weight: 600; text-transform: uppercase;">Technology, AI & Cloud</p>
+            </div>
+            <p id="mockup-status" style="margin-top: 14px; font-size: 13px; color: var(--slate-500);">Instant Canvas Preview Active</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 3: BUSINESS CARDS (Checkboxes, Options, Window Switches) -->
+    <section id="page-cards" class="page-section">
+      <div class="config-card">
+        <h2 class="section-title">Business Card Mockup & Add-on Bundles</h2>
+        <p class="section-desc">Select premium printing finishes, paper textures, and physical cards.</p>
+
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px;">
           <div>
-            <label for="company-brand-input" style="display: block; font-weight: 500; margin-bottom: 6px; color: #334155;">Brand Name:</label>
-            <input type="text" id="company-brand-input" placeholder="e.g. Apex Innovations" style="width: 100%; max-width: 360px; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;" />
+            <label class="field-label">Finishing Option (Radio):</label>
+            <div class="radio-group" style="margin-bottom: 20px;">
+              <label class="option-item">
+                <input type="radio" name="card-coating" id="coat-matte" value="matte" checked />
+                <span><strong>Velvet Matte Finish</strong> (Non-reflective, scratch resistant)</span>
+              </label>
+              <label class="option-item">
+                <input type="radio" name="card-coating" id="coat-gloss" value="gloss" />
+                <span><strong>High-Gloss UV</strong> (Vibrant color accent)</span>
+              </label>
+            </div>
+
+            <label class="field-label">Included Add-ons (Checkbox Handling):</label>
+            <div class="checkbox-group" style="margin-bottom: 24px;">
+              <label class="option-item">
+                <input type="checkbox" id="chk-gold-foil" name="card-addons" value="gold-foil" />
+                <span>Gold Foil Stamping (+₹450)</span>
+              </label>
+              <label class="option-item">
+                <input type="checkbox" id="chk-rounded" name="card-addons" value="rounded" />
+                <span>Rounded Corner Die-cut (+₹150)</span>
+              </label>
+              <label class="option-item">
+                <input type="checkbox" id="chk-nfc" name="card-addons" value="nfc-chip" />
+                <span>Embedded Smart NFC Chip (+₹899)</span>
+              </label>
+            </div>
+
+            <div style="display: flex; gap: 12px;">
+              <button class="action-btn" id="btn-save-card" onclick="saveCardConfiguration()">Save & Add to Cart</button>
+              <button class="action-btn-secondary" id="btn-open-guide" onclick="openStudioTab()">Print Spec Guide (New Tab)</button>
+            </div>
+            <div id="card-saved-toast" class="toast-box toast-success">Card specifications updated successfully!</div>
           </div>
 
-          <button id="generate-preview-btn" onclick="generateLogoPreview()" style="width: fit-content; background: #0f172a; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 500;">
-            Generate Templates
-          </button>
-
-          <div id="logo-preview-output" style="display: none; padding: 16px; border: 1px dashed #10b981; background: #ecfdf5; border-radius: 6px; margin-top: 10px;">
-            <p id="logo-preview-text" style="color: #065f46; margin: 0; font-weight: 600;"></p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PAGE 3: BUSINESS CARDS (Radio buttons & Checkboxes) -->
-    <section id="page-cards" class="dc-page-view" style="display: none;">
-      <div style="background: white; padding: 24px; border-radius: 8px; border: 1px solid #e2e8f0;">
-        <h3 style="margin-top: 0; color: #0f172a;">Business Card Configuration</h3>
-        <p style="color: #64748b; font-size: 14px;">Select finishes, paper thickness, and bundle packs.</p>
-
-        <!-- Radio Buttons -->
-        <div style="margin-top: 20px;">
-          <h4 style="margin-bottom: 8px; color: #334155;">Card Paper Finish (Radio Handling):</h4>
-          <div style="display: flex; gap: 20px;">
-            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-              <input type="radio" name="card-finish" id="finish-matte" value="matte" checked /> Matte Finish
-            </label>
-            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-              <input type="radio" name="card-finish" id="finish-gloss" value="gloss" /> High Gloss
-            </label>
-            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-              <input type="radio" name="card-finish" id="finish-linen" value="linen" /> Premium Linen
-            </label>
-          </div>
-        </div>
-
-        <!-- Checkboxes -->
-        <div style="margin-top: 24px;">
-          <h4 style="margin-bottom: 8px; color: #334155;">Add-on Assets (Checkbox Handling):</h4>
-          <div style="display: flex; flex-direction: column; gap: 10px;">
-            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-              <input type="checkbox" id="chk-foil" name="addons" value="gold-foil" />
-              Add Metallic Gold Foil Accent (+₹350)
-            </label>
-            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-              <input type="checkbox" id="chk-rounded" name="addons" value="rounded-edges" />
-              Custom Die-Cut Rounded Edges (+₹150)
-            </label>
-            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-              <input type="checkbox" id="chk-digital" name="addons" value="digital-card" />
-              NFC Contactless Digital Card Profile (+₹499)
-            </label>
+          <!-- Card Mockup Visual -->
+          <div style="background: #1e293b; color: #fff; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; height: 220px; box-shadow: 0 10px 20px rgba(0,0,0,0.15);">
+            <div>
+              <span style="background: var(--primary); padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 700;">PRO PRINT</span>
+              <h3 id="card-preview-name" style="margin-top: 14px; font-size: 18px;">DesignCraft Enterprise</h3>
+              <p style="font-size: 12px; color: #94a3b8;">contact@designcraft.local • +91 98765 43210</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+              <span style="font-size: 11px; color: #94a3b8;">Standard 3.5" x 2.0" Horizontal</span>
+              <span id="foil-indicator" style="font-size: 12px; color: #fbbf24; display: none;">★ Metallic Foil</span>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- PAGE 4: PRICING & CHECKOUT (Alerts & Submission) -->
-    <section id="page-pricing" class="dc-page-view" style="display: none;">
-      <div style="background: white; padding: 24px; border-radius: 8px; border: 1px solid #e2e8f0;">
-        <h3 style="margin-top: 0; color: #0f172a;">Order Summary & Checkout</h3>
-        <p style="color: #64748b; font-size: 14px;">Review your selection and trigger verification alerts.</p>
-        
-        <div style="margin: 20px 0; padding: 16px; background: #fffbeb; border: 1px solid #fef3c7; border-radius: 6px;">
-          <p style="margin: 0 0 8px 0; font-weight: 500; color: #92400e;">Cart Items Ready for Confirmation</p>
-          <span style="font-size: 13px; color: #b45309;">Verify your package details before payment dispatch.</span>
+    <!-- PAGE 4: PRICING & CHECKOUT (Alerts & Confirmations) -->
+    <section id="page-pricing" class="page-section">
+      <div class="config-card">
+        <h2 class="section-title">Order Summary & Checkout Verification</h2>
+        <p class="section-desc">Validate promo vouchers and trigger JavaScript alerts for Selenium automation.</p>
+
+        <div style="background: var(--slate-50); border: 1px solid var(--border); border-radius: 8px; padding: 18px; margin-bottom: 24px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom: 8px; font-size: 14px;">
+            <span>Brand Identity Core License:</span>
+            <span style="font-weight: 700;">₹1,499.00</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom: 8px; font-size: 14px;">
+            <span>Vector SVG & High-Res PNG Package:</span>
+            <span style="font-weight: 700;">₹499.00</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; border-top: 1px solid var(--border); padding-top: 10px; font-size: 16px;">
+            <span style="font-weight: 700;">Total Payable:</span>
+            <span style="font-weight: 800; color: var(--primary);" id="total-price-text">₹1,998.00</span>
+          </div>
         </div>
 
-        <div style="display: flex; gap: 12px;">
-          <button id="alert-discount-btn" onclick="triggerPromoAlert()" style="background: #f59e0b; color: white; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: 500;">
-            Apply Promo (Trigger Alert)
-          </button>
-          <button id="checkout-confirm-btn" onclick="confirmOrder()" style="background: #16a34a; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 500;">
-            Place Order
-          </button>
+        <div style="display:flex; gap: 12px; align-items: center; margin-bottom: 20px;">
+          <input type="text" id="coupon-code-input" placeholder="Promo code (try 'FREEDOM20')" style="padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; width: 240px;" />
+          <button class="action-btn-secondary" id="apply-promo-btn" onclick="applyPromoAlert()">Apply Coupon (Alert)</button>
         </div>
 
-        <p id="checkout-status-msg" style="margin-top: 14px; font-weight: 600; color: #16a34a; display: none;"></p>
+        <div style="display: flex; gap: 14px;">
+          <button class="action-btn" id="confirm-order-btn" style="background: var(--emerald);" onclick="completeOrderAlert()">Place Order (Confirm Alert)</button>
+          <button class="action-btn-secondary" id="reset-order-btn" onclick="resetForm()">Reset Cart</button>
+        </div>
+
+        <div id="checkout-order-toast" class="toast-box toast-success"></div>
       </div>
     </section>
 
-  </main>
-</div>
+  </div>
 
-<!-- CLIENT INTERACTIONS & TIMING LOGIC -->
-<script>
-  // Page Navigation Switcher
-  function navigatePage(targetPageId) {
-    const pages = document.querySelectorAll('.dc-page-view');
-    pages.forEach(page => page.style.display = 'none');
-    
-    const target = document.getElementById(targetPageId);
-    if (target) target.style.display = 'block';
+  <!-- Standard Footer -->
+  <footer>
+    <p>© 2026 DesignCraft Studio Inc. All rights reserved. Built for reliable automated test suites.</p>
+  </footer>
 
-    const buttons = document.querySelectorAll('.dc-nav-tab');
-    buttons.forEach(btn => {
-      btn.style.background = '#e2e8f0';
-      btn.style.color = '#334155';
-    });
-    event.target.style.background = '#2563eb';
-    event.target.style.color = '#ffffff';
-  }
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // Tab & Page Switcher
+    function switchTab(targetPageId, triggerBtn) {
+      document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active-page'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 
-  // Logo Preview Logic (simulates 1s loading)
-  function generateLogoPreview() {
-    const brand = document.getElementById('company-brand-input').value || 'My Brand';
-    const sector = document.getElementById('logo-industry-select').value || 'General';
-    const output = document.getElementById('logo-preview-output');
-    const text = document.getElementById('logo-preview-text');
+      const target = document.getElementById(targetPageId);
+      if (target) target.classList.add('active-page');
+      if (triggerBtn) triggerBtn.classList.add('active');
+    }
 
-    output.style.display = 'block';
-    text.innerText = 'Creating mockup for ' + brand + ' (' + sector + ')...';
-    
-    setTimeout(() => {
-      text.innerText = '✓ Design Template #42 Ready for: ' + brand;
-    }, 1000);
-  }
+    // New Window / Tab Spawner (for Selenium driver.switchTo().window())
+    function openStudioTab() {
+      window.open(window.location.href, '_blank');
+    }
 
-  // JS Alert Handling
-  function triggerPromoAlert() {
-    window.alert('Promo Code APEX20 applied! 20% discount added to cart.');
-  }
+    // Gallery Filter
+    function filterGallery() {
+      const query = document.getElementById('quick-brand-input').value.trim();
+      const cat = document.getElementById('quick-category-select').value;
+      const cards = document.querySelectorAll('.template-card');
+      let visible = 0;
 
-  function confirmOrder() {
-    const statusMsg = document.getElementById('checkout-status-msg');
-    statusMsg.style.display = 'block';
-    statusMsg.innerText = 'Order placed successfully! Confirmation email dispatched.';
-  }
-</script>
-  </body>
+      cards.forEach(card => {
+        const matchesCategory = (cat === 'All' || card.getAttribute('data-category') === cat);
+        if (matchesCategory) {
+          card.style.display = 'block';
+          visible++;
+          if (query) {
+            const titleElem = card.querySelector('.template-title');
+            if (titleElem) titleElem.innerText = query + ' Brand';
+          }
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      document.getElementById('gallery-counter').innerText = 'Showing ' + visible + ' Templates';
+    }
+
+    // Direct Template Selector
+    function selectTemplate(name, category) {
+      document.getElementById('studio-brand-name').value = name;
+      const select = document.getElementById('studio-industry-select');
+      if (category === 'Tech') select.value = 'tech';
+      renderStudioMockup();
+      switchTab('page-maker', document.getElementById('nav-btn-maker'));
+    }
+
+    // Logo Studio Render Logic
+    function renderStudioMockup() {
+      const name = document.getElementById('studio-brand-name').value || 'DesignCraft';
+      const category = document.getElementById('studio-industry-select').value;
+      const displayName = document.getElementById('mockup-display-name');
+      const categoryTag = document.getElementById('mockup-category-tag');
+      const icon = document.getElementById('mockup-icon');
+
+      displayName.innerText = name;
+      categoryTag.innerText = category;
+      document.getElementById('card-preview-name').innerText = name;
+
+      if (category === 'tech') icon.innerText = '⚡';
+      else if (category === 'finance') icon.innerText = '📈';
+      else if (category === 'logistics') icon.innerText = '📦';
+      else icon.innerText = '🛍️';
+    }
+
+    // Card Addons Logic
+    function saveCardConfiguration() {
+      const goldFoil = document.getElementById('chk-gold-foil').checked;
+      const foilIndicator = document.getElementById('foil-indicator');
+      foilIndicator.style.display = goldFoil ? 'inline' : 'none';
+
+      const toast = document.getElementById('card-saved-toast');
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    }
+
+    // Selenium Alert Handlers
+    function applyPromoAlert() {
+      const code = document.getElementById('coupon-code-input').value.trim();
+      if (!code) {
+        window.alert('Please enter a voucher code before applying.');
+      } else if (code.toUpperCase() === 'FREEDOM20') {
+        window.alert('Success: Coupon FREEDOM20 applied! 20% discount subtracted.');
+        document.getElementById('total-price-text').innerText = '₹1,598.40';
+      } else {
+        window.alert('Invalid voucher code entered. Try FREEDOM20.');
+      }
+    }
+
+    function completeOrderAlert() {
+      const confirmed = window.confirm('Are you sure you want to finalize this branding package order?');
+      const toast = document.getElementById('checkout-order-toast');
+      if (confirmed) {
+        window.alert('Order DC-2026-8819 confirmed! Invoices sent to billing.');
+        toast.style.display = 'block';
+        toast.innerText = '✓ Order #8819 successfully processed.';
+      } else {
+        toast.style.display = 'block';
+        toast.innerText = 'Order was cancelled by user.';
+      }
+    }
+
+    function resetForm() {
+      document.getElementById('coupon-code-input').value = '';
+      document.getElementById('total-price-text').innerText = '₹1,998.00';
+      document.getElementById('checkout-order-toast').style.display = 'none';
+    }
+  </script>
+</body>
 </html>
