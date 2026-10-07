@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms & Conditions | DesignCraft Studio</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:#f8fafc;color:#0f172a;line-height:1.6}
+a{color:#4f46e5}
+header{background:#fff;border-bottom:1px solid #e2e8f0;padding:14px 24px;display:flex;align-items:center;gap:28px;position:sticky;top:0;z-index:5}
+.brand{font-weight:800;font-size:20px;color:#0f172a;text-decoration:none;display:flex;align-items:center;gap:10px}
+.mark{background:linear-gradient(135deg,#4f46e5,#06b6d4);color:#fff;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:14px}
+header nav a{margin-right:18px;font-weight:600;font-size:14px;color:#334155;text-decoration:none}
+header nav a:hover{color:#4f46e5}
+.hero{text-align:center;padding:48px 24px 34px;background:#eef2ff;border-bottom:1px solid #e2e8f0}
+.hero h1{font-size:38px}
+.hero p{color:#475569;margin-top:8px}
+.wrap{max-width:1100px;margin:0 auto;padding:40px 24px 70px;display:grid;grid-template-columns:240px 1fr;gap:36px;align-items:start}
+.toc{position:sticky;top:90px;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:16px}
+.toc h4{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:#64748b;margin-bottom:8px}
+.toc a{display:block;padding:7px 10px;border-radius:8px;color:#334155;font-size:14px;font-weight:600;text-decoration:none;border-left:3px solid transparent}
+.toc a:hover{background:#f1f5f9}
+.toc a.on{background:#e0e7ff;color:#4f46e5;border-left-color:#4f46e5}
+.meta{color:#64748b;font-size:14px;margin-bottom:24px}
+section{margin-bottom:30px;scroll-margin-top:90px}
+h2{font-size:21px;margin-bottom:8px}
+p{color:#334155;margin-bottom:10px}
+.accept{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px;display:grid;gap:12px}
+.accept label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+button{background:#4f46e5;color:#fff;border:0;border-radius:10px;padding:11px 20px;font-weight:700;font-size:14px;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+.ok{color:#047857;font-weight:700}
+footer{background:#020617;color:#94a3b8;text-align:center;padding:28px;font-size:14px}
+footer a{color:#94a3b8;margin:0 8px;text-decoration:none}
+@media(max-width:800px){.wrap{grid-template-columns:1fr}.toc{position:static}}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="index.html"><span class="mark">DC</span>DesignCraft</a>
+  <nav><a href="index.html">Home</a><a href="terms.html">Terms</a></nav>
+</header>
+<div class="hero">
+  <h1>Terms &amp; Conditions</h1>
+  <p>Please read these terms carefully before using DesignCraft Studio.</p>
+</div>
+<div class="wrap">
+  <nav class="toc" aria-label="On this page">
+    <h4>On this page</h4>
+    <a href="#s1">1. Acceptance of terms</a>
+    <a href="#s2">2. Our services</a>
+    <a href="#s3">3. Accounts and security</a>
+    <a href="#s4">4. Orders and payments</a>
+    <a href="#s5">5. Refunds</a>
+  </nav>
+  <article>
+    <p class="meta">Last updated: 1 September 2026 &nbsp;•&nbsp; Version 3.2</p>
+    <section id="s1"><h2>1. Acceptance of terms</h2>
+      <p>By creating an account, placing an order or using any DesignCraft Studio tool, you agree to these Terms &amp; Conditions. If you do not agree, please do not use our services.</p></section>
+    <section id="s2"><h2>2. Our services</h2>
+      <p>DesignCraft Studio provides online tools to create logos, business cards and brand kits, along with printing and digital delivery of the resulting files.</p></section>
+    <section id="s3"><h2>3. Accounts and security</h2>
+      <p>You must provide accurate information when you register and keep your login details confidential. You are responsible for all activity under your account.</p></section>
+    <section id="s4"><h2>4. Orders and payments</h2>
+      <p>Prices are shown in Indian Rupees and include applicable taxes. An order is confirmed only after successful payment and a confirmation email from us.</p></section>
+    <section id="s5"><h2>5. Refunds</h2>
+      <p>Digital packages can be refunded within 7 days of purchase if the final files have not been downloaded. Printed items are reprinted free of charge if they arrive with a print defect.</p></section>
+    <div class="accept" id="accept-box">
+      <label><input type="checkbox" id="read-ok"> <span>I have read and understood the Terms &amp; Conditions.</span></label>
+      <button id="accept-btn" type="button" disabled>Accept and continue</button>
+      <div class="ok" id="accept-msg" role="status"></div>
+    </div>
+  </article>
+</div>
+<footer><a href="index.html">Home</a> | <a href="terms.html">Terms &amp; Conditions</a><br>© 2026 DesignCraft Studio Technologies Pvt. Ltd.</footer>
+<script>
+(function(){
+  var links=document.querySelectorAll('.toc a');
+  var secs=Array.prototype.map.call(links,function(a){return document.querySelector(a.getAttribute('href'))});
+  function spy(){
+    var cur=0;
+    secs.forEach(function(s,i){ if(s.getBoundingClientRect().top<140) cur=i; });
+    links.forEach(function(a,i){ a.classList.toggle('on',i===cur); });
+  }
+  window.addEventListener('scroll',spy);
+  spy();
+  var chk=document.getElementById('read-ok'),btn=document.getElementById('accept-btn'),msg=document.getElementById('accept-msg');
+  chk.addEventListener('change',function(){ btn.disabled=!chk.checked; });
+  btn.addEventListener('click',function(){
+    btn.disabled=true; btn.textContent='Saving...';
+    setTimeout(function(){
+      try{ localStorage.setItem('dc_terms_accepted',String(Date.now())); }catch(e){}
+      btn.textContent='Accepted';
+      msg.textContent='Thank you. Your acceptance has been recorded.';
+    },1000);
+  });
+})();
+</script>
+</body>
+</html>
