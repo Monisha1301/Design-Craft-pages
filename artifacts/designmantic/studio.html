@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logo Studio | DesignCraft Studio</title>
+<meta name="description" content="DesignCraft Studio - create logos, business cards and complete brand kits online.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%234f46e5'/><path d='M25 30 L50 70 L75 30' stroke='white' stroke-width='14' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='50' cy='30' r='8' fill='%2338bdf8'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="promo" id="promo-bar"><span>🎉 <b>Launch offer:</b> 20% off every logo package</span><span>Ends in <span class="timer" id="promo-timer">03:20:00</span></span><button id="promo-copy" type="button">Copy code LAUNCH20</button></div>
+<header class="site-header">
+<div class="nav-wrap">
+<a class="brand" href="index.html" id="brand-link"><span class="brand-mark">DC</span>DesignCraft</a>
+<ul class="nav" id="main-nav">
+<li class="has-menu"><button class="nav-link" id="nav-tools" type="button" aria-haspopup="true">Design tools ▾</button>
+<div class="menu">
+<a href="studio.html" target="_blank" id="menu-studio">Logo Studio<small>Design a logo with live preview</small></a>
+<a href="cards.html" target="_blank" id="menu-cards">Business Card Designer<small>Print-ready cards with live pricing</small></a>
+<a href="brandkit.html" target="_blank" id="menu-brandkit">Brand Kit Builder<small>Colours, fonts and variations</small></a>
+<a href="orders.html" target="_blank" id="menu-orders">Orders &amp; Tracking<small>Follow your order live</small></a>
+</div></li>
+<li><a class="nav-link" href="index.html#templates" id="nav-templates">Templates</a></li>
+<li><a class="nav-link" href="index.html#pricing" id="nav-pricing">Pricing</a></li>
+<li><a class="nav-link" href="index.html#reviews" id="nav-reviews">Reviews</a></li>
+<li><a class="nav-link" href="support.html" target="_blank" id="nav-help">Help</a></li>
+<li><a class="nav-link" href="about.html" id="nav-about">About</a></li>
+</ul>
+<div class="nav-actions">
+<button class="icon-btn" id="cart-btn" type="button" aria-label="Open cart">🛒<span class="badge" id="cart-count" hidden>0</span></button>
+<div id="auth-guest" style="display:flex;gap:8px"><button class="btn btn-outline btn-sm" id="btn-header-login" type="button" data-open="login-modal">Log in</button><button class="btn btn-dark btn-sm" id="btn-header-signup" type="button" data-open="signup-modal">Get started</button></div>
+<div id="auth-user" hidden><div class="user-chip"><span id="user-name">User</span><span class="avatar" id="user-avatar">U</span><button class="btn btn-outline btn-sm" id="logout-btn" type="button" style="padding:3px 10px">Log out</button></div></div>
+<button class="icon-btn" id="nav-toggle" type="button" aria-label="Menu">☰</button>
+</div>
+</div>
+</header>
+<div class="tool-bar"><div class="container">
+<h1>🎨 Logo Studio</h1>
+<span id="save-state" class="hint" role="status">All changes saved locally</span>
+<button class="btn btn-outline btn-sm" id="btn-undo" type="button" disabled>↶ Undo</button>
+<button class="btn btn-outline btn-sm" id="btn-redo" type="button" disabled>↷ Redo</button>
+<button class="btn btn-outline btn-sm" id="btn-reset" type="button">Reset</button>
+<button class="btn btn-dark btn-sm" id="btn-save" type="button">Save design</button>
+<button class="btn btn-outline btn-sm" id="btn-close-tab" type="button">Close tab</button>
+</div></div>
+<main><div class="container"><div class="workspace">
+<aside class="panel" aria-label="Design controls">
+<div class="field"><label for="f-name">Business name</label><input class="input" id="f-name" maxlength="28" value="Your Brand"></div>
+<div class="field"><label for="f-tag">Tagline (optional)</label><input class="input" id="f-tag" maxlength="34" placeholder="e.g. Fresh ideas daily"></div>
+<div class="field"><label for="f-industry">Industry</label><select class="input" id="f-industry"><option value="">Select industry</option><option value="tech">Technology</option><option value="food">Food &amp; Beverage</option><option value="fashion">Fashion &amp; Beauty</option><option value="health">Health &amp; Wellness</option><option value="education">Education</option></select><div class="hint" id="icon-hint" role="status"></div></div>
+<div class="field"><span class="label">Icon</span><div class="icon-grid" id="icon-grid"></div></div>
+<div class="field"><label for="f-font">Typeface</label><select class="input" id="f-font"><option value="grotesk">Modern Grotesk</option><option value="jakarta">Clean Sans</option><option value="serif">Classic Serif</option><option value="round">Friendly Round</option><option value="mono">Typewriter</option></select></div>
+<div class="row"><div class="field"><label for="f-c1">Primary colour</label><input type="color" id="f-c1" value="#4f46e5"></div><div class="field"><label for="f-c2">Accent colour</label><input type="color" id="f-c2" value="#06b6d4"></div></div>
+<div class="field"><span class="label">Quick palettes</span><div class="swatches" style="justify-content:flex-start" id="pal"><button class="sw" type="button" data-c1="#4f46e5" data-c2="#06b6d4" style="background:linear-gradient(135deg,#4f46e5,#06b6d4)" aria-label="Indigo to cyan"></button><button class="sw" type="button" data-c1="#be123c" data-c2="#f59e0b" style="background:linear-gradient(135deg,#be123c,#f59e0b)" aria-label="Rose to amber"></button><button class="sw" type="button" data-c1="#047857" data-c2="#84cc16" style="background:linear-gradient(135deg,#047857,#84cc16)" aria-label="Green"></button><button class="sw" type="button" data-c1="#0f172a" data-c2="#64748b" style="background:linear-gradient(135deg,#0f172a,#64748b)" aria-label="Slate"></button><button class="sw" type="button" data-c1="#7c3aed" data-c2="#f43f5e" style="background:linear-gradient(135deg,#7c3aed,#f43f5e)" aria-label="Violet to rose"></button></div></div>
+<div class="field"><label for="f-size">Icon size: <b id="size-val">64</b> px</label><input type="range" id="f-size" min="36" max="100" value="64"></div>
+<div class="field"><span class="label">Layout</span><div class="tile-list">
+<label class="tile"><span><input type="radio" name="layout" id="lay-h" value="horizontal" checked> Horizontal</span><span>▭</span></label>
+<label class="tile"><span><input type="radio" name="layout" id="lay-s" value="stacked"> Stacked</span><span>▯</span></label>
+<label class="tile"><span><input type="radio" name="layout" id="lay-e" value="emblem"> Emblem</span><span>◯</span></label></div></div>
+<div class="field"><span class="label">Background</span><select class="input" id="f-bg"><option value="none">Transparent</option><option value="light">White</option><option value="dark">Dark</option></select></div>
+</aside>
+<section>
+<div class="tabs" role="tablist"><button class="tab" role="tab" id="tab-prev" aria-selected="true" data-tab="preview">Preview</button><button class="tab" role="tab" id="tab-mock" aria-selected="false" data-tab="mock">Mockups</button><button class="tab" role="tab" id="tab-saved" aria-selected="false" data-tab="saved">My designs <span class="chip gray" id="saved-count">0</span></button></div>
+<div id="pane-preview">
+<div style="display:flex;gap:10px;align-items:center;margin-bottom:12px"><button class="btn btn-outline btn-sm" id="zoom-out" type="button">−</button><span id="zoom-val" style="font-weight:700;min-width:48px;text-align:center">100%</span><button class="btn btn-outline btn-sm" id="zoom-in" type="button">+</button><span class="hint" style="margin-left:auto">Tip: Ctrl+Z to undo</span></div>
+<div class="canvas" id="canvas"><div id="logo-stage" style="width:min(520px,100%)"></div></div>
+<div class="panel" style="margin-top:20px"><h3>Download &amp; purchase</h3>
+<div class="row"><div class="field"><label for="dl-format">File format</label><select class="input" id="dl-format"><option value="svg">SVG (vector)</option><option value="png">PNG (image)</option></select></div><div class="field"><label for="dl-pkg">Package</label><select class="input" id="dl-pkg"><option value="1499">Basic - ₹1,499</option><option value="2499">Standard - ₹2,499</option><option value="3499">Premium - ₹3,499</option></select></div></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-prepare" type="button">Prepare download</button><button class="btn btn-grad" id="btn-buy" type="button">Add to cart</button></div>
+<div id="prep" hidden style="margin-top:16px"><div class="progress"><i id="prep-bar"></i></div><div class="hint" id="prep-text" role="status">Preparing files...</div></div>
+<a class="btn btn-dark" id="dl-link" hidden style="margin-top:14px" download="logo.svg">⬇ Download ready</a></div>
+</div>
+<div id="pane-mock" hidden>
+<div class="pills" style="margin-bottom:16px" role="group"><button class="pill" type="button" data-mock="card" aria-pressed="true">Business card</button><button class="pill" type="button" data-mock="tee" aria-pressed="false">T-shirt</button><button class="pill" type="button" data-mock="sign" aria-pressed="false">Shop sign</button></div>
+<div class="mock" id="mock-area"></div></div>
+<div id="pane-saved" hidden><div id="saved-list" class="grid g3"></div></div>
+</section></div></div></main>
+<script>
+document.addEventListener('dc:ready',()=>{
+const {$,$$,sleep,money,logoSVG,CATALOG,ICONS,store,toast,cart,setBusy,esc,debounce}=DC;
+const P=new URLSearchParams(location.search);
+let S={name:'Your Brand',tagline:'',industry:'',icon:'bolt',font:'grotesk',c1:'#4f46e5',c2:'#06b6d4',size:64,layout:'horizontal',bg:'none'};
+const t=CATALOG.find(x=>x.id==P.get('t'));if(t)S=Object.assign(S,{name:t.name,icon:t.icon,font:t.font,c1:t.c1,c2:t.c2,industry:t.cat});
+['name','icon','c1','c2','font','layout'].forEach(k=>{if(P.get(k))S[k]=P.get(k)});
+let hist=[],fut=[],zoom=100;
+const KEYS=Object.keys(ICONS);
+$('#icon-grid').innerHTML=KEYS.map(k=>`<button class="icon-opt" type="button" data-icon="${k}" aria-pressed="false" aria-label="${k} icon"><svg viewBox="0 0 24 24"><path d="${ICONS[k]}"/></svg></button>`).join('');
+function render(){$('#logo-stage').innerHTML=logoSVG(S);const cv=$('#canvas');cv.className='canvas'+(S.bg==='dark'?' dark':S.bg==='light'?' light':'');
+ $$('.icon-opt').forEach(b=>b.setAttribute('aria-pressed',b.dataset.icon===S.icon));$('#size-val').textContent=S.size;
+ $('#f-name').value=S.name;$('#f-tag').value=S.tagline;$('#f-industry').value=S.industry;$('#f-font').value=S.font;$('#f-c1').value=S.c1;$('#f-c2').value=S.c2;$('#f-size').value=S.size;$('#f-bg').value=S.bg;
+ $$('input[name=layout]').forEach(r=>r.checked=r.value===S.layout);$('#btn-undo').disabled=!hist.length;$('#btn-redo').disabled=!fut.length;
+ if(!$('#pane-mock').hidden)renderMock()}
+function commit(patch,quiet){hist.push(JSON.stringify(S));if(hist.length>50)hist.shift();fut=[];S=Object.assign({},S,patch);render();if(!quiet){const st=$('#save-state');st.textContent='Unsaved changes';}}
+function undo(){if(!hist.length)return;fut.push(JSON.stringify(S));S=JSON.parse(hist.pop());render()}
+function redo(){if(!fut.length)return;hist.push(JSON.stringify(S));S=JSON.parse(fut.pop());render()}
+$('#btn-undo').addEventListener('click',undo);$('#btn-redo').addEventListener('click',redo);
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?redo():undo()}});
+$('#btn-reset').addEventListener('click',()=>{if(window.confirm('Reset the design to its defaults? Unsaved changes will be lost.')){commit({name:'Your Brand',tagline:'',industry:'',icon:'bolt',font:'grotesk',c1:'#4f46e5',c2:'#06b6d4',size:64,layout:'horizontal',bg:'none'});toast('Design reset')}});
+$('#btn-close-tab').addEventListener('click',()=>{window.close();setTimeout(()=>{location.href='index.html'},300)});
+const typing=debounce((k,v)=>commit({[k]:v}),250);
+$('#f-name').addEventListener('input',e=>typing('name',e.target.value||'Your Brand'));$('#f-tag').addEventListener('input',e=>typing('tagline',e.target.value));
+['font','c1','c2','bg'].forEach(k=>$('#f-'+k).addEventListener('change',e=>commit({[k]:e.target.value})));
+$('#f-size').addEventListener('input',e=>{$('#size-val').textContent=e.target.value});$('#f-size').addEventListener('change',e=>commit({size:+e.target.value}));
+$('#icon-grid').addEventListener('click',e=>{const b=e.target.closest('.icon-opt');if(b)commit({icon:b.dataset.icon})});
+$$('input[name=layout]').forEach(r=>r.addEventListener('change',()=>commit({layout:r.value})));
+$('#pal').addEventListener('click',e=>{const b=e.target.closest('.sw');if(b)commit({c1:b.dataset.c1,c2:b.dataset.c2})});
+const SUG={tech:['bolt','hex','diamond'],food:['leaf','heart','star'],fashion:['heart','diamond','leaf'],health:['shield','heart','leaf'],education:['star','shield','bolt']};
+$('#f-industry').addEventListener('change',async e=>{const v=e.target.value;S.industry=v;const h=$('#icon-hint');$$('.icon-opt').forEach(b=>b.style.outline='');if(!v){h.textContent='';return}h.innerHTML='<span class="spinner" style="width:12px;height:12px"></span> Finding icons that suit this industry...';await sleep(900);h.textContent='Suggested icons are highlighted.';SUG[v].forEach(k=>{const b=$('.icon-opt[data-icon="'+k+'"]');if(b)b.style.outline='2px solid #10b981'})});
+const zs=d=>{zoom=Math.max(50,Math.min(200,zoom+d));$('#zoom-val').textContent=zoom+'%';$('#logo-stage').style.transform='scale('+zoom/100+')'};
+$('#zoom-in').addEventListener('click',()=>zs(10));$('#zoom-out').addEventListener('click',()=>zs(-10));
+$$('.tab').forEach(b=>b.addEventListener('click',()=>{$$('.tab').forEach(x=>x.setAttribute('aria-selected',x===b));$('#pane-preview').hidden=b.dataset.tab!=='preview';$('#pane-mock').hidden=b.dataset.tab!=='mock';$('#pane-saved').hidden=b.dataset.tab!=='saved';if(b.dataset.tab==='mock')renderMock();if(b.dataset.tab==='saved')renderSaved()}));
+let mock='card';
+function renderMock(){const a=$('#mock-area');const small=logoSVG(Object.assign({},S,{bg:'none',layout:'horizontal'}));
+ if(mock==='card')a.innerHTML=`<div class="biz-card"><div style="width:150px">${logoSVG(Object.assign({},S,{bg:'none',layout:'horizontal',tagline:''}))}</div><div style="font-size:12px;color:#475569"><b style="color:#0f172a">Alex Morgan</b><br>Founder • hello@${esc(S.name.toLowerCase().replace(/[^a-z0-9]/g,''))||'brand'}.com</div></div>`;
+ else if(mock==='tee')a.innerHTML=`<div class="tee">${logoSVG(Object.assign({},S,{bg:'none',layout:'stacked',tagline:'',iconSize:Math.min(S.size,56)}))}</div>`;
+ else a.innerHTML=`<div class="sign"><div style="width:320px">${logoSVG(Object.assign({},S,{bg:'dark',layout:'horizontal'}))}</div></div>`}
+$$('[data-mock]').forEach(b=>b.addEventListener('click',()=>{$$('[data-mock]').forEach(x=>x.setAttribute('aria-pressed',x===b));mock=b.dataset.mock;renderMock()}));
+/* saved designs */
+const saved=()=>store.get('designs',[]);
+function renderSaved(){const a=saved();$('#saved-count').textContent=a.length;$('#saved-list').innerHTML=a.length?a.map(d=>`<article class="logo-tile"><div class="art">${logoSVG(d.s)}</div><div class="info"><div><h4>${esc(d.s.name)}</h4><small>${new Date(d.at).toLocaleString()}</small></div><div class="acts"><button class="btn btn-primary btn-sm" data-load="${d.id}" type="button">Open</button><button class="btn btn-danger btn-sm" data-del="${d.id}" type="button">Delete</button></div></div></article>`).join(''):'<p style="grid-column:1/-1;text-align:center;color:#64748b;padding:40px">No saved designs yet. Click "Save design" to keep your work.</p>'}
+$('#saved-list').addEventListener('click',e=>{const l=e.target.closest('[data-load]'),d=e.target.closest('[data-del]');if(l){const x=saved().find(v=>v.id==l.dataset.load);if(x){commit(x.s);$('#tab-prev').click();toast('Design loaded')}}if(d&&window.confirm('Delete this saved design?')){store.set('designs',saved().filter(v=>v.id!=d.dataset.del));renderSaved();toast('Design deleted')}});
+$('#btn-save').addEventListener('click',async e=>{if(!DC.requireLogin('Log in to save your design'))return;const b=e.currentTarget;setBusy(b,true,'Saving...');await sleep(1200);const a=saved();a.unshift({id:Date.now(),at:Date.now(),s:Object.assign({},S)});store.set('designs',a.slice(0,12));setBusy(b,false);$('#save-state').textContent='Saved just now';$('#saved-count').textContent=saved().length;toast('Design saved to My designs','success')});
+/* download */
+let url=null;
+$('#btn-prepare').addEventListener('click',async e=>{if(!DC.requireLogin('Log in to download your logo'))return;const b=e.currentTarget,fmt=$('#dl-format').value;b.disabled=true;$('#dl-link').hidden=true;$('#prep').hidden=false;const bar=$('#prep-bar'),tx=$('#prep-text');
+ const steps=['Rendering vector paths...','Embedding fonts...','Optimising for '+fmt.toUpperCase()+'...','Finalising your file...'];
+ for(let i=0;i<steps.length;i++){tx.textContent=steps[i];bar.style.width=((i+1)*25)+'%';await sleep(750)}
+ const svg=logoSVG(S);if(url)URL.revokeObjectURL(url);url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));const a=$('#dl-link');a.href=url;a.download=(S.name.replace(/\W+/g,'-').toLowerCase()||'logo')+'.svg';a.hidden=false;tx.textContent='Your file is ready.';b.disabled=false;toast('Download is ready','success')});
+$('#btn-buy').addEventListener('click',()=>{const p=+$('#dl-pkg').value;const names={1499:'Basic',2499:'Standard',3499:'Premium'};cart.add({key:'studio-'+S.name+'-'+p,title:S.name+' logo',note:names[p]+' package',price:p,svg:logoSVG(S).replace('<svg','<svg style="width:64px"')})});
+render();renderSaved();
+});
+</script>
+<footer id="page-footer">
+<div class="container">
+<div class="foot-grid">
+<div><a class="brand" href="index.html" style="color:#fff!important"><span class="brand-mark">DC</span>DesignCraft Studio</a>
+<p style="font-size:13.5px;margin-top:14px;max-width:310px">Logos, business cards and complete brand kits for founders, creators and growing teams. Designed online, delivered fast.</p>
+<div class="social"><a href="about.html#connect" aria-label="Twitter">X</a><a href="about.html#connect" aria-label="LinkedIn">in</a><a href="about.html#connect" aria-label="Instagram">ig</a><a href="about.html#connect" aria-label="YouTube">yt</a></div></div>
+<div><h5>Products</h5><ul><li><a href="studio.html" target="_blank" id="footer-studio">Logo Studio</a></li><li><a href="cards.html" target="_blank" id="footer-cards">Business Cards</a></li><li><a href="brandkit.html" target="_blank" id="footer-brandkit">Brand Kit Builder</a></li><li><a href="index.html#pricing" id="footer-pricing">Pricing</a></li></ul></div>
+<div><h5>Support</h5><ul><li><a href="support.html" target="_blank" id="footer-help">Help Centre</a></li><li><a href="orders.html" target="_blank" id="footer-orders">Track an order</a></li><li><a href="support.html#contact" id="footer-contact">Contact us</a></li><li><a href="refund.html" id="footer-refund">Refund Policy</a></li></ul></div>
+<div><h5>Company</h5><ul><li><a href="about.html" id="footer-about">About us</a></li><li><a href="careers.html" id="footer-careers">Careers</a></li><li><a href="about.html#team" id="footer-team">Our team</a></li><li><a href="about.html#connect" id="footer-press">Press</a></li></ul></div>
+<div><h5>Legal</h5><ul><li><a href="terms.html" id="footer-terms">Terms &amp; Conditions</a></li><li><a href="privacy.html" id="footer-privacy">Privacy Policy</a></li><li><a href="refund.html" id="footer-refunds2">Refunds &amp; Cancellations</a></li></ul></div>
+</div>
+<div class="foot-bottom"><span id="copyright-text">© <span id="year">2026</span> DesignCraft Studio Technologies Pvt. Ltd. All rights reserved.</span><span>🔒 Secure payments &nbsp;•&nbsp; UPI &nbsp;•&nbsp; Cards &nbsp;•&nbsp; Net banking</span><button class="btn btn-sm" id="btn-scroll-to-top" type="button" data-top style="background:#1e293b;color:#fff;border-color:#334155">↑ Back to top</button></div>
+</div>
+</footer>
+<div class="backdrop" id="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-title"><div class="modal"><button class="x" type="button" data-close="login-modal" aria-label="Close">✕</button>
+<h3 id="login-title">Welcome back</h3><p class="sub">Log in to access your designs, orders and brand kits.</p>
+<form id="login-form" novalidate>
+<div class="field"><label for="login-email">Email address</label><input class="input" id="login-email" type="email" placeholder="you@company.com" autocomplete="username"></div>
+<div class="field"><label for="login-password">Password</label><input class="input" id="login-password" type="password" placeholder="Enter your password" autocomplete="current-password"></div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><label class="check"><input type="checkbox" id="show-pass"> Show password</label><a href="#" id="forgot-link" style="font-size:13px;font-weight:700">Forgot password?</a></div>
+<button class="btn btn-primary btn-block" id="login-submit" type="submit">Log in</button>
+<div class="error" id="login-msg" role="alert" style="text-align:center;margin-top:12px"></div>
+<p style="text-align:center;font-size:13.5px;margin-top:14px;color:#64748b">New here? <a href="#" data-open="signup-modal" onclick="DC.closeModal('login-modal')">Create an account</a></p>
+</form>
+<form id="forgot-form" hidden novalidate><div class="field"><label for="forgot-email">Registered email</label><input class="input" id="forgot-email" type="email" placeholder="you@company.com"></div>
+<button class="btn btn-primary btn-block" id="forgot-submit" type="submit">Send reset link</button><div class="ok" id="forgot-msg" role="status" style="text-align:center;margin-top:12px"></div><p style="text-align:center;margin-top:12px;font-size:13.5px"><a href="#" id="back-login">← Back to log in</a></p></form>
+</div></div>
+<div class="backdrop" id="signup-modal" role="dialog" aria-modal="true" aria-labelledby="signup-title"><div class="modal"><button class="x" type="button" data-close="signup-modal" aria-label="Close">✕</button>
+<h3 id="signup-title">Create your account</h3><p class="sub">Save designs, track orders and download your files.</p>
+<form id="signup-form" novalidate>
+<div class="field"><label for="signup-name">Full name</label><input class="input" id="signup-name" type="text" placeholder="Priya Sharma" autocomplete="name"></div>
+<div class="field"><label for="signup-email">Work email</label><input class="input" id="signup-email" type="email" placeholder="priya@company.com" autocomplete="email"><div id="signup-email-status" class="hint" role="status"></div></div>
+<div class="field"><label for="signup-role">I am a</label><select class="input" id="signup-role"><option value="founder">Startup founder</option><option value="marketer">Marketing manager</option><option value="designer">Freelance designer</option><option value="agency">Agency owner</option><option value="student">Student</option></select></div>
+<div class="row"><div class="field"><label for="signup-password">Password</label><input class="input" id="signup-password" type="password" placeholder="Min. 6 characters" autocomplete="new-password"></div><div class="field"><label for="signup-confirm">Confirm password</label><input class="input" id="signup-confirm" type="password" placeholder="Repeat password" autocomplete="new-password"></div></div>
+<div style="margin:-6px 0 14px"><div class="progress" style="height:6px"><i id="pw-bar"></i></div><div class="hint" id="pw-label"></div></div>
+<label class="check" style="margin-bottom:6px"><input type="checkbox" id="signup-terms"><span>I agree to the <a href="terms.html" target="_blank" id="signup-terms-link">Terms &amp; Conditions</a> and <a href="privacy.html" target="_blank">Privacy Policy</a></span></label>
+<div class="error" id="signup-terms-err" role="alert" style="margin-bottom:12px"></div>
+<button class="btn btn-primary btn-block" id="signup-submit" type="submit">Create account</button>
+<p style="text-align:center;font-size:13.5px;margin-top:14px;color:#64748b">Already registered? <a href="#" data-open="login-modal" onclick="DC.closeModal('signup-modal')">Log in</a></p>
+</form></div></div>
+<div class="backdrop" id="order-modal" role="dialog" aria-modal="true"><div class="modal" style="text-align:center"><div style="font-size:54px">✅</div><h3 style="margin-top:6px">Order confirmed!</h3><p class="sub">Thank you for your purchase. A confirmation has been sent to your email.</p>
+<div style="background:#f1f5f9;border-radius:12px;padding:16px;margin-bottom:18px"><div class="summary-row"><span>Order ID</span><b id="order-id" style="color:#0f172a">DC-00000</b></div><div class="summary-row"><span>Amount paid</span><b id="order-total" style="color:#0f172a">₹0</b></div></div>
+<a class="btn btn-primary btn-block" id="order-track" href="orders.html" target="_blank">Track this order ↗</a><button class="btn btn-outline btn-block" type="button" data-close="order-modal" style="margin-top:10px">Continue browsing</button></div></div>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="cart-drawer" aria-label="Shopping cart"><div class="drawer-head"><h3>Your cart</h3><button class="x" id="cart-close" type="button" style="position:static" aria-label="Close cart">✕</button></div><div class="drawer-body" id="cart-body"></div>
+<div class="drawer-foot"><div class="summary-row total"><span>Total</span><span id="cart-total">₹0</span></div><button class="btn btn-primary btn-block" id="checkout-btn" type="button" style="margin-top:12px" disabled>Proceed to checkout</button><p class="hint" style="text-align:center;margin-top:8px">Taxes included. 7-day refund on digital packages.</p></div></aside>
+<button id="chat-fab" type="button" aria-label="Chat with us">💬</button>
+<div id="chat" role="dialog" aria-label="Live chat"><div class="chat-h"><div><b>DesignCraft Support</b><small>● Online now</small></div><button id="chat-close" type="button" aria-label="Close chat">✕</button></div><div id="chat-log" aria-live="polite"></div>
+<div class="chat-q" id="chat-quick"><button type="button">Track my order</button><button type="button">Pricing help</button><button type="button">Refund policy</button><button type="button">Talk to a human</button></div>
+<form class="chat-f" id="chat-form"><input class="input" id="chat-input" type="text" placeholder="Type your message..." autocomplete="off"><button class="btn btn-primary btn-sm" type="submit">Send</button></form></div>
+<div id="toast-root" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>
