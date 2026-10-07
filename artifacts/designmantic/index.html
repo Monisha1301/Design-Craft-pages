@@ -1,831 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DesignCraft Studio | Cloud Brand Architecture & Creative Suite</title>
-
-  <!-- High-Resolution Browser Tab & Taskbar SVG Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%234f46e5'/><path d='M25 30 L50 70 L75 30' stroke='white' stroke-width='14' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='50' cy='30' r='8' fill='%2338bdf8'/></svg>">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --primary: #4f46e5;
-      --primary-hover: #4338ca;
-      --primary-light: #e0e7ff;
-      --secondary: #06b6d4;
-      --accent-coral: #f43f5e;
-      --accent-amber: #f59e0b;
-      --emerald: #10b981;
-      --slate-950: #020617;
-      --slate-900: #0f172a;
-      --slate-800: #1e293b;
-      --slate-700: #334155;
-      --slate-600: #475569;
-      --slate-500: #64748b;
-      --slate-200: #e2e8f0;
-      --slate-100: #f1f5f9;
-      --slate-50: #f8fafc;
-      --gradient-brand: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background-color: var(--slate-50); color: var(--slate-900); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; scroll-behavior: smooth; }
-
-    /* Top Utility Ribbon */
-    .top-ribbon { background: linear-gradient(90deg, #0f172a, #1e1b4b, #0f172a); color: #cbd5e1; font-size: 13px; font-weight: 600; padding: 10px 24px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; }
-    .ribbon-tag { background: var(--accent-coral); color: #fff; font-size: 11px; padding: 3px 8px; border-radius: 999px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
-    .ribbon-action-btn { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.25); padding: 5px 14px; border-radius: 6px; font-size: 12px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; font-weight: 600; }
-    .ribbon-action-btn:hover { background: rgba(255,255,255,0.24); color: #38bdf8; }
-
-    /* Main Navigation Bar */
-    header { background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--slate-200); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05); }
-    .nav-container { max-width: 1320px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; }
-    .brand-logo { font-size: 22px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; color: var(--slate-900); display: flex; align-items: center; gap: 10px; text-decoration: none; cursor: pointer; }
-    .logo-badge { background: var(--gradient-brand); color: #fff; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 16px; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3); }
-
-    /* Nav Links & Hover Actions */
-    .nav-menu { display: flex; align-items: center; gap: 8px; list-style: none; }
-    .nav-item { position: relative; }
-    .nav-link { color: var(--slate-700); text-decoration: none; font-weight: 600; font-size: 14px; padding: 8px 14px; border-radius: 8px; transition: all 0.2s; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
-    .nav-link:hover { color: var(--primary); background: var(--primary-light); }
-
-    /* Multi-Level Hover Dropdown */
-    .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; min-width: 250px; background: #fff; border: 1px solid var(--slate-200); border-radius: 12px; box-shadow: 0 16px 32px -4px rgba(0,0,0,0.12); padding: 10px; z-index: 200; }
-    .nav-item:hover .dropdown-menu { display: block; animation: navPop 0.2s ease-out; }
-    @keyframes navPop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-    .dropdown-link { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; color: var(--slate-700); text-decoration: none; font-size: 13px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: 0.15s; }
-    .dropdown-link:hover { background: var(--slate-100); color: var(--primary); transform: translateX(3px); }
-
-    /* Nav Right Action Buttons (Login, Sign Up, Tab Switch) */
-    .nav-auth-group { display: flex; align-items: center; gap: 12px; }
-    .btn-nav-login { background: transparent; border: 1px solid var(--slate-200); color: var(--slate-700); font-weight: 700; font-size: 14px; padding: 8px 18px; border-radius: 8px; cursor: pointer; transition: 0.2s; }
-    .btn-nav-login:hover { background: var(--slate-100); border-color: #cbd5e1; }
-    .btn-nav-signup { background: var(--slate-900); color: #fff; font-weight: 700; font-size: 14px; padding: 9px 20px; border-radius: 8px; border: none; cursor: pointer; transition: 0.2s; }
-    .btn-nav-signup:hover { background: var(--slate-800); transform: translateY(-1px); }
-    
-    .btn-tab-launch { background: var(--gradient-brand); color: #fff !important; font-weight: 700; font-size: 13px; border-radius: 8px; padding: 9px 16px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25); transition: 0.2s; }
-    .btn-tab-launch:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(79, 70, 229, 0.35); }
-    .arrow-box { background: rgba(255,255,255,0.22); width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 11px; }
-
-    /* Modals for Login & Signup */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); z-index: 2000; align-items: center; justify-content: center; }
-    .modal-card { background: #fff; width: 100%; max-width: 440px; border-radius: 16px; padding: 32px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); position: relative; animation: modalPop 0.2s ease-out; }
-    @keyframes modalPop { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-    .modal-close-btn { position: absolute; top: 16px; right: 18px; background: #f1f5f9; border: none; font-size: 18px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: 700; }
-    .modal-input { width: 100%; padding: 11px 14px; border: 1px solid var(--slate-200); border-radius: 8px; margin: 8px 0 16px; font-size: 14px; outline: none; }
-    .modal-input:focus { border-color: var(--primary); }
-
-    /* Hero Section */
-    .hero-section { background: radial-gradient(100% 100% at 50% 0%, #ede9fe 0%, #f8fafc 100%); padding: 76px 24px 64px; text-align: center; border-bottom: 1px solid var(--slate-200); }
-    .hero-title { font-size: 46px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; line-height: 1.15; margin-bottom: 16px; color: var(--slate-900); }
-    .hero-title span { background: var(--gradient-brand); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero-subtitle { font-size: 17px; color: var(--slate-600); max-width: 720px; margin: 0 auto 32px; }
-
-    /* Live Color Palette Swatches (Hover Actions) */
-    .color-swatch-group { display: flex; justify-content: center; gap: 12px; margin-bottom: 30px; }
-    .swatch-circle { width: 36px; height: 36px; border-radius: 50%; cursor: pointer; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.2s, border-color 0.2s; position: relative; }
-    .swatch-circle:hover { transform: scale(1.24); z-index: 10; border-color: var(--slate-900); }
-    .swatch-indigo { background: #4f46e5; }
-    .swatch-cyan { background: #06b6d4; }
-    .swatch-rose { background: #f43f5e; }
-    .swatch-emerald { background: #10b981; }
-    .swatch-amber { background: #f59e0b; }
-
-    /* Content Layout */
-    .main-wrapper { max-width: 1320px; margin: 0 auto; padding: 48px 24px; flex: 1; width: 100%; }
-
-    /* Studio Card */
-    .interactive-card { background: #ffffff; border: 1px solid var(--slate-200); border-radius: 18px; box-shadow: 0 4px 20px -2px rgba(0,0,0,0.04); padding: 38px; margin-bottom: 56px; }
-    .section-head { text-align: center; margin-bottom: 40px; }
-    .section-eyebrow { color: var(--primary); text-transform: uppercase; font-size: 12px; font-weight: 800; letter-spacing: 1px; margin-bottom: 6px; }
-    .section-main-title { font-size: 30px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; }
-
-    .interactive-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
-    .label-text { display: block; font-weight: 700; font-size: 14px; margin-bottom: 8px; color: var(--slate-700); }
-    .input-box, .select-box { width: 100%; padding: 12px 16px; border: 1px solid var(--slate-200); border-radius: 10px; font-size: 14px; background: #fff; outline: none; transition: 0.2s; }
-    .input-box:focus, .select-box:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
-
-    /* Radio & Checkbox Card Tiles */
-    .tile-group { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
-    .tile-option { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; border: 1px solid var(--slate-200); border-radius: 10px; cursor: pointer; transition: all 0.2s; background: #fff; }
-    .tile-option:hover { background: var(--slate-50); border-color: var(--primary); transform: translateX(3px); }
-    .tile-left { display: flex; align-items: center; gap: 12px; }
-    .tile-option input { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
-
-    /* Action Buttons */
-    .btn-action { background: var(--primary); color: #fff; font-weight: 700; font-size: 14px; padding: 13px 26px; border-radius: 10px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; transition: 0.2s; }
-    .btn-action:hover { background: var(--primary-hover); transform: translateY(-1px); }
-    .btn-outline { background: #fff; border: 1px solid var(--slate-200); color: var(--slate-700); padding: 13px 22px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s; }
-    .btn-outline:hover { background: var(--slate-100); }
-
-    /* Asynchronous Delays / Spinners for WebDriverWait */
-    .delay-spinner { display: none; width: 18px; height: 18px; border: 2px solid #ffffff; border-top-color: transparent; border-radius: 50%; animation: spin 0.65s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .toast-panel { display: none; padding: 16px 20px; border-radius: 10px; margin-top: 20px; font-weight: 600; font-size: 14px; }
-    .toast-success { background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; }
-
-    /* Mockup Display Box */
-    .mockup-display { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); border-radius: 16px; padding: 40px; color: #fff; text-align: center; box-shadow: 0 16px 32px -8px rgba(30, 27, 75, 0.4); position: relative; overflow: hidden; min-height: 330px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-    .mockup-icon { font-size: 58px; margin-bottom: 12px; }
-    .mockup-title { font-size: 26px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; }
-    .mockup-badge { display: inline-block; background: rgba(255,255,255,0.15); padding: 4px 14px; border-radius: 999px; font-size: 12px; margin-top: 8px; color: #38bdf8; text-transform: uppercase; font-weight: 700; }
-
-    /* Pricing Plans Grid (Selenium Scrolling Target) */
-    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-bottom: 60px; }
-    .pricing-card { background: #fff; border: 1px solid var(--slate-200); border-radius: 16px; padding: 34px; text-align: center; position: relative; transition: all 0.25s; }
-    .pricing-card:hover { transform: translateY(-6px); box-shadow: 0 16px 30px -4px rgba(0,0,0,0.08); border-color: var(--primary); }
-    .pricing-card.featured { border: 2px solid var(--primary); background: #faf5ff; }
-    .plan-tag { background: var(--primary); color: #fff; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 999px; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); }
-    .plan-price { font-size: 40px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; margin: 18px 0 14px; color: var(--slate-900); }
-
-    /* Customer Reviews / Testimonials */
-    .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 60px; }
-    .testimonial-card { background: #fff; border: 1px solid var(--slate-200); border-radius: 12px; padding: 26px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
-    .star-rating { color: #f59e0b; margin-bottom: 12px; }
-
-    /* FAQ Accordion */
-    .faq-container { max-width: 840px; margin: 0 auto 60px; }
-    .faq-item { background: #fff; border: 1px solid var(--slate-200); border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
-    .faq-question { padding: 18px 24px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
-    .faq-question:hover { background: var(--slate-50); color: var(--primary); }
-    .faq-answer { display: none; padding: 0 24px 20px; font-size: 14px; color: var(--slate-600); }
-
-    /* 100% Clickable, Deep Corporate Footer */
-    footer { background: var(--slate-950); color: #94a3b8; border-top: 1px solid #1e293b; padding: 74px 24px 34px; margin-top: auto; }
-    .footer-container { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: 2.2fr 1fr 1fr 1fr 1.8fr; gap: 40px; }
-    .footer-col h5 { color: #f8fafc; font-size: 14px; font-weight: 800; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .footer-list { list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 14px; }
-    .footer-item-btn { background: none; border: none; color: #94a3b8; font-size: 14px; text-align: left; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; padding: 2px 0; }
-    .footer-item-btn:hover { color: #38bdf8; transform: translateX(4px); }
-    
-    .footer-input-group { display: flex; gap: 8px; margin-top: 14px; }
-    .footer-input { background: #1e293b; border: 1px solid #334155; color: #fff; padding: 11px 14px; border-radius: 8px; font-size: 13px; width: 100%; outline: none; }
-    .footer-input:focus { border-color: var(--primary); }
-    .footer-btn { background: var(--primary); color: #fff; border: none; padding: 11px 18px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; }
-    .footer-btn:hover { background: var(--primary-hover); }
-
-    /* Footer Feedback Banner */
-    .footer-action-status { background: #1e293b; border: 1px dashed #334155; color: #38bdf8; font-size: 13px; padding: 12px 18px; border-radius: 8px; margin-top: 30px; display: none; }
-
-    /* Footer Bottom Bar */
-    .footer-bottom { max-width: 1320px; margin: 50px auto 0; padding-top: 24px; border-top: 1px solid #1e293b; display: flex; justify-content: space-between; align-items: center; font-size: 13px; flex-wrap: wrap; gap: 14px; }
-    .scroll-top-btn { background: #1e293b; color: #fff; border: 1px solid #334155; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
-    .scroll-top-btn:hover { background: var(--primary); border-color: var(--primary); }
-
-    /* Dedicated Child Window Sandbox Styling */
-    .sandbox-body { background: #0f172a; color: #fff; padding: 36px 20px; min-height: 100vh; }
-    .sandbox-container { max-width: 960px; margin: 0 auto; background: #1e293b; border-radius: 18px; padding: 36px; border: 1px solid #334155; box-shadow: 0 25px 50px rgba(0,0,0,0.4); }
-    .sandbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 24px; }
-  </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Logo Maker, Business Cards & Brand Kits | DesignCraft Studio</title>
+<meta name="description" content="DesignCraft Studio - create logos, business cards and complete brand kits online.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%234f46e5'/><path d='M25 30 L50 70 L75 30' stroke='white' stroke-width='14' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='50' cy='30' r='8' fill='%2338bdf8'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <!-- Top Ribbon with Child Window Launchers -->
-  <div class="top-ribbon">
-    <span class="ribbon-tag">Multi-Tab Sandbox</span>
-    <span>Practicing Selenium <code>driver.switchTo().window(...)</code> and explicit element interactions.</span>
-    <a class="ribbon-action-btn" id="btn-ribbon-child-window" onclick="openStudioChildWindow()">
-      Open Isolated Studio Workspace
-      <span class="arrow-box">↗</span>
-    </a>
-  </div>
-
-  <!-- Header Navigation -->
-  <header>
-    <div class="nav-container">
-      <a href="#" class="brand-logo" id="header-brand-logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-        <span class="logo-badge">DC</span> DesignCraft
-      </a>
-
-      <!-- Menu with Hover Dropdowns -->
-      <ul class="nav-menu">
-        <li class="nav-item">
-          <a class="nav-link" id="nav-services-dropdown">Solutions ▾</a>
-          <div class="dropdown-menu">
-            <a class="dropdown-link" onclick="scrollToElement('section-studio')">AI Vector Generator <span>⚡</span></a>
-            <a class="dropdown-link" onclick="scrollToElement('section-cards')">Luxury Print Stationery <span>✨</span></a>
-            <a class="dropdown-link" onclick="openStudioChildWindow()">Open Studio Workspace <span>↗</span></a>
-          </div>
-        </li>
-        <li class="nav-item"><a class="nav-link" id="nav-link-studio" onclick="scrollToElement('section-studio')">Studio</a></li>
-        <li class="nav-item"><a class="nav-link" id="nav-link-cards" onclick="scrollToElement('section-cards')">Print Cards</a></li>
-        <li class="nav-item"><a class="nav-link" id="nav-link-pricing" onclick="scrollToElement('section-pricing')">Pricing</a></li>
-        <li class="nav-item"><a class="nav-link" id="nav-link-faq" onclick="scrollToElement('section-faq')">FAQ</a></li>
-      </ul>
-
-      <!-- Auth Controls & Secondary Window Launcher -->
-      <div class="nav-auth-group">
-        <button class="btn-nav-login" id="btn-header-login" onclick="openLoginModal()">Log In</button>
-        <button class="btn-nav-signup" id="btn-header-signup" onclick="openSignupModal()">Get Started</button>
-        <button class="btn-tab-launch" id="btn-launch-tab-header" onclick="openStudioChildWindow()">
-          <span>Launch Tab</span>
-          <span class="arrow-box">↗</span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Login Modal -->
-  <div id="login-modal" class="modal-overlay">
-    <div class="modal-card">
-      <button class="modal-close-btn" onclick="closeModals()">✕</button>
-      <h3 style="font-size:22px; font-weight:800; margin-bottom:6px;">Welcome Back</h3>
-      <p style="font-size:13px; color:var(--slate-500); margin-bottom:20px;">Access your team's vector assets and brand libraries.</p>
-      
-      <label class="label-text" for="login-email">Email Address:</label>
-      <input type="email" id="login-email" class="modal-input" placeholder="qa.tester@domain.com" />
-
-      <label class="label-text" for="login-password">Password:</label>
-      <input type="password" id="login-password" class="modal-input" placeholder="••••••••" />
-
-      <button class="btn-action" id="btn-submit-login" style="width:100%; justify-content:center;" onclick="handleLoginSubmit()">Sign In to Dashboard</button>
-      <div id="login-status-msg" style="display:none; color:var(--emerald); font-weight:700; margin-top:14px; text-align:center; font-size:13px;">✓ Authenticated successfully!</div>
-    </div>
-  </div>
-
-  <!-- Sign Up Modal -->
-  <div id="signup-modal" class="modal-overlay">
-    <div class="modal-card">
-      <button class="modal-close-btn" onclick="closeModals()">✕</button>
-      <h3 style="font-size:22px; font-weight:800; margin-bottom:6px;">Create Your Account</h3>
-      <p style="font-size:13px; color:var(--slate-500); margin-bottom:20px;">Deploy high-performance branding in seconds.</p>
-      
-      <label class="label-text" for="signup-name">Full Name:</label>
-      <input type="text" id="signup-name" class="modal-input" placeholder="Monisha Selenium" />
-
-      <label class="label-text" for="signup-email">Work Email:</label>
-      <input type="email" id="signup-email" class="modal-input" placeholder="lead.automation@company.com" />
-
-      <label class="label-text" for="signup-role">Primary Role:</label>
-      <select id="signup-role" class="modal-input" style="margin-bottom:16px;">
-        <option value="qa">QA Automation Engineer</option>
-        <option value="lead">SDET / Test Architect</option>
-        <option value="designer">Brand Designer</option>
-      </select>
-
-      <button class="btn-action" id="btn-submit-signup" style="width:100%; justify-content:center;" onclick="handleSignupSubmit()">Register Account</button>
-      <div id="signup-status-msg" style="display:none; color:var(--emerald); font-weight:700; margin-top:14px; text-align:center; font-size:13px;">✓ Registration completed! Welcome to DesignCraft.</div>
-    </div>
-  </div>
-
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <div style="display:inline-flex; align-items:center; gap:8px; background:var(--primary-light); padding:6px 14px; border-radius:999px; margin-bottom:16px;">
-      <span style="width:8px; height:8px; border-radius:50%; background:var(--emerald);"></span>
-      <span style="font-size:12px; font-weight:700; color:var(--primary);">Enterprise Brand Architecture Engine v3.0</span>
-    </div>
-    <h1 class="hero-title">Architect High-Impact Brand Identities <span>Effortlessly</span></h1>
-    <p class="hero-subtitle">Equipped with hover states, asynchronous wait conditions, multi-selection checkboxes, JavaScript dialog alerts, and secondary window tab workspaces.</p>
-
-    <!-- Color Swatches for Selenium Actions.moveToElement() -->
-    <div class="color-swatch-group">
-      <div class="swatch-circle swatch-indigo" title="Indigo Focus" onclick="applyColorTheme('#4f46e5', 'Indigo Tech')"></div>
-      <div class="swatch-circle swatch-cyan" title="Cyan Modern" onclick="applyColorTheme('#06b6d4', 'Cyan Nordic')"></div>
-      <div class="swatch-circle swatch-rose" title="Rose Luxe" onclick="applyColorTheme('#f43f5e', 'Rose Elegance')"></div>
-      <div class="swatch-circle swatch-emerald" title="Emerald Growth" onclick="applyColorTheme('#10b981', 'Emerald Organic')"></div>
-      <div class="swatch-circle swatch-amber" title="Amber Bold" onclick="applyColorTheme('#f59e0b', 'Amber Industrial')"></div>
-    </div>
-  </section>
-
-  <!-- Main Content Wrap -->
-  <main class="main-wrapper">
-
-    <!-- SECTION 1: STUDIO CUSTOMIZER -->
-    <section id="section-studio" class="interactive-card">
-      <div class="section-head">
-        <span class="section-eyebrow">Interactive Studio Sandbox</span>
-        <h2 class="section-main-title">Logo & Typography Configurator</h2>
-      </div>
-
-      <div class="interactive-grid">
-        <div>
-          <div style="margin-bottom:20px;">
-            <label class="label-text" for="studio-brand-input">Business Name (Input Element):</label>
-            <input type="text" id="studio-brand-input" class="input-box" value="DesignCraft Enterprise" />
-          </div>
-
-          <div style="margin-bottom:20px;">
-            <label class="label-text" for="studio-industry-dropdown">Industry Category (Select Class Dropdown):</label>
-            <select id="studio-industry-dropdown" class="select-box">
-              <option value="">-- Choose Category --</option>
-              <option value="tech" selected>Cloud Computing & AI Software</option>
-              <option value="finance">FinTech, Banking & Capital</option>
-              <option value="health">Medical Clinic & Diagnostics</option>
-              <option value="luxury">Luxury Hospitality & Estates</option>
-            </select>
-          </div>
-
-          <div style="margin-bottom:20px;">
-            <label class="label-text">Emblem Layout Geometry (Radio Group):</label>
-            <div class="tile-group">
-              <label class="tile-option">
-                <div class="tile-left">
-                  <input type="radio" name="layout-geo" id="radio-geo-horizontal" value="horizontal" checked />
-                  <span><strong>Horizontal Icon + Wordmark</strong></span>
-                </div>
-                <span>⚡</span>
-              </label>
-              <label class="tile-option">
-                <div class="tile-left">
-                  <input type="radio" name="layout-geo" id="radio-geo-stacked" value="stacked" />
-                  <span><strong>Stacked Centered Monogram</strong></span>
-                </div>
-                <span>🏛️</span>
-              </label>
-            </div>
-          </div>
-
-          <!-- 1.5s Asynchronous Wait Simulator for Selenium WebDriverWait -->
-          <div style="display:flex; gap:12px; margin-top:28px;">
-            <button class="btn-action" id="btn-generate-brand" onclick="simulateServerWait()">
-              <span id="async-spinner" class="delay-spinner"></span>
-              <span id="btn-generate-text">Generate Brand SVG (1.5s Wait)</span>
-            </button>
-            <button class="btn-outline" id="btn-open-workspace-tab" onclick="openStudioChildWindow()">
-              Workspace Tab <span class="arrow-box">↗</span>
-            </button>
-          </div>
-
-          <div id="async-success-toast" class="toast-panel toast-success">
-            ✓ Vector Mockup compiled successfully! Ready for download.
-          </div>
-        </div>
-
-        <!-- Live Mockup Display Screen -->
-        <div class="mockup-display" id="studio-preview-board">
-          <div class="mockup-icon" id="mockup-icon-render">🚀</div>
-          <h3 class="mockup-title" id="mockup-name-render">DesignCraft Enterprise</h3>
-          <span class="mockup-badge" id="mockup-tag-render">Cloud Computing & AI Software</span>
-          <p style="font-size:12px; color:#cbd5e1; margin-top:18px;">Current Tone: <strong id="mockup-color-render">Indigo Tech</strong></p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 2: PRINT & STATIONERY (Checkboxes & Radios) -->
-    <section id="section-cards" class="interactive-card">
-      <div class="section-head">
-        <span class="section-eyebrow">Stationery Studio</span>
-        <h2 class="section-main-title">Business Card Packaging Suite</h2>
-      </div>
-
-      <div class="interactive-grid">
-        <div>
-          <label class="label-text">Select Finishes & Add-ons (Checkbox Group):</label>
-          <div class="tile-group">
-            <label class="tile-option">
-              <div class="tile-left">
-                <input type="checkbox" id="chk-finish-foil" name="card-spec" value="foil" />
-                <span><strong>Gold Foil Embossing</strong> (+₹450)</span>
-              </div>
-              <span style="color:#f59e0b; font-weight:700;">★ Gold</span>
-            </label>
-            <label class="tile-option">
-              <div class="tile-left">
-                <input type="checkbox" id="chk-finish-diecut" name="card-spec" value="diecut" />
-                <span><strong>Custom Die-Cut Rounded Edges</strong> (+₹150)</span>
-              </div>
-              <span>Radius 8px</span>
-            </label>
-            <label class="tile-option">
-              <div class="tile-left">
-                <input type="checkbox" id="chk-finish-nfc" name="card-spec" value="nfc" />
-                <span><strong>Integrated NFC Smart Business Card</strong> (+₹899)</span>
-              </div>
-              <span>Digital Tap</span>
-            </label>
-          </div>
-
-          <div style="display:flex; gap:12px; margin-top:28px;">
-            <button class="btn-action" id="btn-save-specs" onclick="saveCardSpecs()">Save Configuration</button>
-            <button class="btn-outline" id="btn-popup-alert" onclick="triggerPromoAlert()">Test Promo (JS Alert)</button>
-          </div>
-          <div id="card-toast" class="toast-panel toast-success">Card specifications saved to cart session!</div>
-        </div>
-
-        <div style="background:#0f172a; border-radius:14px; padding:28px; color:#fff; display:flex; flex-direction:column; justify-content:space-between; height:240px; box-shadow:0 12px 24px rgba(0,0,0,0.2);">
-          <div>
-            <span style="background:var(--primary); padding:3px 8px; border-radius:4px; font-size:11px; font-weight:800;">350 GSM PREMIUM</span>
-            <h4 id="spec-card-title" style="font-size:20px; margin-top:14px;">DesignCraft Enterprise</h4>
-            <p style="font-size:12px; color:#94a3b8;">billing@designcraft.local • +91 98765 43210</p>
-          </div>
-          <div style="display:flex; justify-content:space-between; font-size:12px; color:#94a3b8;">
-            <span>Standard US 3.5" x 2.0"</span>
-            <span id="foil-badge-indicator" style="display:none; color:#fbbf24; font-weight:700;">★ Metallic Foil Active</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 3: PRICING COMPARISON -->
-    <section id="section-pricing">
-      <div class="section-head">
-        <span class="section-eyebrow">Transparent Pricing</span>
-        <h2 class="section-main-title">Flexible Plans for Growing Teams</h2>
-      </div>
-
-      <div class="pricing-grid">
-        <div class="pricing-card" id="pricing-starter">
-          <h3>Starter Launch</h3>
-          <p style="font-size:13px; color:var(--slate-500); margin-top:4px;">Solo founders & bootstrappers</p>
-          <div class="plan-price">₹1,499</div>
-          <ul style="list-style:none; text-align:left; font-size:14px; display:flex; flex-direction:column; gap:10px; margin-bottom:24px;">
-            <li>✓ 1 High-Res Vector SVG</li>
-            <li>✓ Transparent PNG Assets</li>
-            <li>✕ No NFC Integration</li>
-          </ul>
-          <button class="btn-outline" style="width:100%;" onclick="selectPricing('Starter', 1499)">Select Starter</button>
-        </div>
-
-        <div class="pricing-card featured" id="pricing-growth">
-          <span class="plan-tag">MOST POPULAR</span>
-          <h3>Growth Suite</h3>
-          <p style="font-size:13px; color:var(--slate-500); margin-top:4px;">Scaleups and expanding teams</p>
-          <div class="plan-price" style="color:var(--primary);">₹3,499</div>
-          <ul style="list-style:none; text-align:left; font-size:14px; display:flex; flex-direction:column; gap:10px; margin-bottom:24px;">
-            <li>✓ Full Vector Master Kit</li>
-            <li>✓ 500 Gold Foil Cards</li>
-            <li>✓ Smart NFC Digital Profile</li>
-          </ul>
-          <button class="btn-action" style="width:100%;" onclick="selectPricing('Growth Suite', 3499)">Select Growth</button>
-        </div>
-
-        <div class="pricing-card" id="pricing-enterprise">
-          <h3>Enterprise Pro</h3>
-          <p style="font-size:13px; color:var(--slate-500); margin-top:4px;">Full brand governance</p>
-          <div class="plan-price">₹7,999</div>
-          <ul style="list-style:none; text-align:left; font-size:14px; display:flex; flex-direction:column; gap:10px; margin-bottom:24px;">
-            <li>✓ Dedicated Brand Guidelines</li>
-            <li>✓ Unlimited Vector Variations</li>
-            <li>✓ Priority Dispatch SLA</li>
-          </ul>
-          <button class="btn-outline" style="width:100%;" onclick="selectPricing('Enterprise', 7999)">Select Enterprise</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 4: TESTIMONIALS -->
-    <section style="margin-bottom:60px;">
-      <div class="section-head">
-        <span class="section-eyebrow">Client Feedback</span>
-        <h2 class="section-main-title">Trusted by Modern Founders</h2>
-      </div>
-      <div class="testimonial-grid">
-        <div class="testimonial-card">
-          <div class="star-rating">★★★★★</div>
-          <p style="font-size:14px; color:var(--slate-700); margin-bottom:14px;">"The vector rendering process was instant, and the typography options felt like a high-end design agency."</p>
-          <strong>Kavitha Sundaram</strong><br/><span style="font-size:12px; color:var(--slate-500);">VP Product, ApexFlow</span>
-        </div>
-        <div class="testimonial-card">
-          <div class="star-rating">★★★★★</div>
-          <p style="font-size:14px; color:var(--slate-700); margin-bottom:14px;">"The business cards arrived with exceptional gold foil debossing. Perfect for our live marketing."</p>
-          <strong>Rahul Verma</strong><br/><span style="font-size:12px; color:var(--slate-500);">Founder, FinScale</span>
-        </div>
-        <div class="testimonial-card">
-          <div class="star-rating">★★★★★</div>
-          <p style="font-size:14px; color:var(--slate-700); margin-bottom:14px;">"Outstanding platform stability. Clean element IDs made our entire automated testing flow reliable."</p>
-          <strong>Sarah Jenkins</strong><br/><span style="font-size:12px; color:var(--slate-500);">QA Lead, CloudGrid</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 5: FAQ ACCORDION -->
-    <section id="section-faq" class="faq-container">
-      <div class="section-head">
-        <span class="section-eyebrow">Got Questions?</span>
-        <h2 class="section-main-title">Frequently Asked Questions</h2>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">
-          <span>Can I export vectors in infinite resolution?</span>
-          <span>+</span>
-        </div>
-        <div class="faq-answer">Yes, all logos are exported in SVG and EPS formats, allowing billboard-scale scaling with zero pixelation.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">
-          <span>How does tab switching work in automated test suites?</span>
-          <span>+</span>
-        </div>
-        <div class="faq-answer">Use <code>driver.getWindowHandles()</code> to locate the secondary window handle, then switch using <code>driver.switchTo().window(childHandle)</code>.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">
-          <span>Are interactive JavaScript alerts supported?</span>
-          <span>+</span>
-        </div>
-        <div class="faq-answer">Yes, our coupon and order triggers invoke native browser <code>alert()</code> and <code>confirm()</code> dialogs.</div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- 100% CLICKABLE DEEP CORPORATE FOOTER -->
-  <footer id="page-footer">
-    <div class="footer-container">
-      <div>
-        <div class="brand-logo" style="color:#fff; margin-bottom:14px;" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-          <span class="logo-badge">DC</span> DesignCraft Studio
-        </div>
-        <p style="font-size:13px; line-height:1.7; max-width:320px;">
-          Empowering engineering teams, creative directors, and founders with automated brand infrastructure and high-performance digital vector creation.
-        </p>
-      </div>
-
-      <!-- Column 1: Services -->
-      <div>
-        <h5>Studio Suite</h5>
-        <ul class="footer-list">
-          <li><button class="footer-item-btn" id="footer-btn-studio" onclick="handleFooterAction('Navigating to Logo Studio', 'section-studio')">AI Vector Maker <span>⚡</span></button></li>
-          <li><button class="footer-item-btn" id="footer-btn-cards" onclick="handleFooterAction('Navigating to Print Stationery', 'section-cards')">Luxury Print Cards <span>✨</span></button></li>
-          <li><button class="footer-item-btn" id="footer-btn-pricing" onclick="handleFooterAction('Viewing Pricing Tiers', 'section-pricing')">Commercial Plans</button></li>
-          <li><button class="footer-item-btn" id="footer-btn-tab-col1" onclick="openStudioChildWindow()">Child Workspace Tab <span class="arrow-box">↗</span></button></li>
-        </ul>
-      </div>
-
-      <!-- Column 2: Selenium QA Hub -->
-      <div>
-        <h5>QA Testing Hub</h5>
-        <ul class="footer-list">
-          <li><button class="footer-item-btn" id="footer-btn-waits" onclick="handleFooterAction('Testing 1.5s Explicit Waits', 'section-studio')">Explicit Waits (1.5s)</button></li>
-          <li><button class="footer-item-btn" id="footer-btn-alerts" onclick="triggerPromoAlert()">JavaScript Alerts Trigger</button></li>
-          <li><button class="footer-item-btn" id="footer-btn-tab-col2" onclick="openStudioChildWindow()">Window Handles Tab <span class="arrow-box">↗</span></button></li>
-          <li><button class="footer-item-btn" id="footer-btn-swatches" onclick="applyColorTheme('#f43f5e', 'Rose Elegance')">Trigger Theme Hover</button></li>
-        </ul>
-      </div>
-
-      <!-- Column 3: Corporate Info -->
-      <div>
-        <h5>Company</h5>
-        <ul class="footer-list">
-          <li><button class="footer-item-btn" id="footer-btn-about" onclick="handleFooterAction('Opening Company Architecture Docs')">About Platform</button></li>
-          <li><button class="footer-item-btn" id="footer-btn-careers" onclick="handleFooterAction('Opening Careers: SDET positions available')">Careers (Hiring)</button></li>
-          <li><button class="footer-item-btn" id="footer-btn-terms" onclick="handleFooterAction('Terms of Service: Standard SaaS')">Terms of Service</button></li>
-          <li><button class="footer-item-btn" id="footer-btn-privacy" onclick="handleFooterAction('Privacy: Strict sandbox isolation')">Privacy Policy</button></li>
-        </ul>
-      </div>
-
-      <!-- Column 4: Newsletter -->
-      <div>
-        <h5>Release Radar</h5>
-        <p style="font-size:13px; margin-bottom:12px;">Get weekly design tokens and locator maps:</p>
-        <div class="footer-input-group">
-          <input type="email" id="footer-newsletter-input" class="footer-input" placeholder="qa.engineer@company.com" />
-          <button class="footer-btn" id="btn-footer-subscribe" onclick="handleFooterSubscribe()">Subscribe</button>
-        </div>
-        <span id="footer-subscribe-msg" style="display:none; color:var(--emerald); font-size:12px; margin-top:8px;">✓ Subscribed to release channels!</span>
-      </div>
-    </div>
-
-    <!-- Interactive Status Tracker for Selenium Verification -->
-    <div id="footer-action-banner" class="footer-action-status"></div>
-
-    <!-- Bottom Copyright & Scroll To Top -->
-    <div class="footer-bottom">
-      <p id="copyright-text">© 2026 DesignCraft Studio Technologies, Inc. All rights reserved. Configured for Selenium test automation.</p>
-      <button class="scroll-top-btn" id="btn-scroll-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-        ↑ Back to Top
-      </button>
-    </div>
-  </footer>
-
-  <!-- JAVASCRIPT LOGIC & CHILD WINDOW ROUTER -->
-  <script>
-    // CHILD WINDOW CHECK: If ?view=studio-sandbox is in the URL, render the rich child workspace
-    if (window.location.search.includes('view=studio-sandbox')) {
-      renderChildWindowSandbox();
-    }
-
-    function openStudioChildWindow() {
-      const childUrl = window.location.origin + window.location.pathname + '?view=studio-sandbox';
-      window.open(childUrl, '_blank');
-    }
-
-    // Comprehensive Child Window Sandbox
-    function renderChildWindowSandbox() {
-      document.title = "DesignCraft Studio | Child Workspace Sandbox";
-      document.body.className = "sandbox-body";
-      document.body.innerHTML = `
-        <div class="sandbox-container">
-          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:18px;">
-            <div style="display:flex; align-items:center; gap:10px;">
-              <span style="background:var(--primary); padding:6px 12px; border-radius:8px; font-weight:800; font-size:12px;">DC-CHILD-WINDOW</span>
-              <h2 style="font-size:20px; font-weight:700;">Child Window Automation Sandbox</h2>
-            </div>
-            <button id="btn-close-child-window" onclick="window.close()" style="background:#ef4444; color:#fff; border:none; padding:8px 16px; border-radius:8px; font-weight:700; cursor:pointer;">Close Window</button>
-          </div>
-
-          <p style="color:#94a3b8; font-size:14px; margin:16px 0 24px;">
-            Active window handle switched via <code>driver.switchTo().window(...)</code>. Interact with the rich web elements below!
-          </p>
-
-          <div class="sandbox-grid">
-            <!-- Left Panel -->
-            <div>
-              <div style="margin-bottom:20px;">
-                <label style="display:block; font-size:13px; font-weight:700; margin-bottom:6px;">Canvas Zoom Level (Range Slider):</label>
-                <input type="range" id="child-zoom-slider" min="50" max="200" value="100" style="width:100%; accent-color:#06b6d4;" oninput="updateChildZoom(this.value)" />
-                <span id="child-zoom-label" style="font-size:12px; color:#38bdf8;">Current Zoom: 100%</span>
-              </div>
-
-              <div style="margin-bottom:20px;">
-                <label style="display:block; font-size:13px; font-weight:700; margin-bottom:6px;">Vector Accent Color Picker:</label>
-                <input type="color" id="child-color-picker" value="#4f46e5" style="width:100%; height:44px; border:none; border-radius:8px; cursor:pointer;" onchange="updateChildColor(this.value)" />
-              </div>
-
-              <div style="margin-bottom:20px;">
-                <label style="display:block; font-size:13px; font-weight:700; margin-bottom:6px;">Multi-Select Supported Formats:</label>
-                <select id="child-format-select" multiple style="width:100%; padding:10px; background:#0f172a; color:#fff; border:1px solid #334155; border-radius:8px; height:80px;">
-                  <option value="svg" selected>Vector SVG (.svg)</option>
-                  <option value="pdf">Print PDF (.pdf)</option>
-                  <option value="png">Transparent PNG (.png)</option>
-                  <option value="eps">Vector EPS (.eps)</option>
-                </select>
-              </div>
-
-              <div style="margin-bottom:20px;">
-                <label style="display:block; font-size:13px; font-weight:700; margin-bottom:6px;">Upload Custom Vector Asset (File Input):</label>
-                <input type="file" id="child-file-input" style="font-size:13px; color:#94a3b8;" onchange="handleFileUpload(this)" />
-                <div id="file-upload-status" style="font-size:12px; color:#10b981; margin-top:4px;"></div>
-              </div>
-            </div>
-
-            <!-- Right Panel: Live Child Canvas & Dialog Triggers -->
-            <div>
-              <div id="child-canvas-preview" style="background:#0f172a; border:2px dashed #475569; border-radius:12px; padding:28px; text-align:center; min-height:180px; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-                <span id="child-canvas-icon" style="font-size:48px;">🎨</span>
-                <h4 id="child-canvas-title" style="font-size:18px; margin-top:8px;">Studio Workspace Active</h4>
-                <p style="font-size:12px; color:#94a3b8;">Rendered in separate process</p>
-              </div>
-
-              <h4 style="font-size:14px; margin:24px 0 10px;">JavaScript Dialog Suite:</h4>
-              <div style="display:flex; flex-direction:column; gap:10px;">
-                <button id="btn-child-alert" onclick="window.alert('Child Window JS Alert verified!')" style="background:#4f46e5; color:#fff; border:none; padding:10px; border-radius:8px; font-weight:700; cursor:pointer;">Trigger Alert</button>
-                <button id="btn-child-confirm" onclick="triggerChildConfirm()" style="background:#06b6d4; color:#fff; border:none; padding:10px; border-radius:8px; font-weight:700; cursor:pointer;">Trigger Confirm Dialog</button>
-                <button id="btn-child-prompt" onclick="triggerChildPrompt()" style="background:#334155; color:#fff; border:none; padding:10px; border-radius:8px; font-weight:700; cursor:pointer;">Trigger Prompt Dialog</button>
-              </div>
-
-              <div id="child-dialog-feedback" style="background:#0f172a; padding:14px; border-radius:8px; border:1px solid #334155; font-size:13px; color:#38bdf8; margin-top:14px;">
-                Ready for user interactions.
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    function updateChildZoom(val) {
-      document.getElementById('child-zoom-label').innerText = 'Current Zoom: ' + val + '%';
-      document.getElementById('child-canvas-preview').style.transform = `scale(${val/100})`;
-    }
-
-    function updateChildColor(color) {
-      document.getElementById('child-canvas-preview').style.borderColor = color;
-      document.getElementById('child-dialog-feedback').innerText = 'Selected Color: ' + color;
-    }
-
-    function handleFileUpload(input) {
-      if (input.files.length > 0) {
-        document.getElementById('file-upload-status').innerText = '✓ Selected: ' + input.files[0].name;
-      }
-    }
-
-    function triggerChildConfirm() {
-      const res = window.confirm('Do you confirm child workspace export?');
-      document.getElementById('child-dialog-feedback').innerText = res ? '✓ Confirm: Accepted' : '✕ Confirm: Dismissed';
-    }
-
-    function triggerChildPrompt() {
-      const res = window.prompt('Enter your company brand name:');
-      if (res) {
-        document.getElementById('child-canvas-title').innerText = res;
-        document.getElementById('child-dialog-feedback').innerText = '✓ Prompt Entered: ' + res;
-      }
-    }
-
-    // Modal Handlers
-    function openLoginModal() {
-      document.getElementById('login-modal').style.display = 'flex';
-      setTimeout(() => document.getElementById('login-email').focus(), 100);
-    }
-
-    function openSignupModal() {
-      document.getElementById('signup-modal').style.display = 'flex';
-      setTimeout(() => document.getElementById('signup-name').focus(), 100);
-    }
-
-    function closeModals() {
-      document.getElementById('login-modal').style.display = 'none';
-      document.getElementById('signup-modal').style.display = 'none';
-    }
-
-    function handleLoginSubmit() {
-      const email = document.getElementById('login-email').value;
-      if (email) {
-        const msg = document.getElementById('login-status-msg');
-        msg.style.display = 'block';
-        setTimeout(() => closeModals(), 1200);
-      } else {
-        window.alert('Please enter an email address.');
-      }
-    }
-
-    function handleSignupSubmit() {
-      const name = document.getElementById('signup-name').value;
-      if (name) {
-        const msg = document.getElementById('signup-status-msg');
-        msg.style.display = 'block';
-        setTimeout(() => closeModals(), 1200);
-      } else {
-        window.alert('Please fill out your name.');
-      }
-    }
-
-    // Scroll Helper
-    function scrollToElement(id) {
-      const elem = document.getElementById(id);
-      if (elem) elem.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // 1.5s Async Latency Simulator for Selenium WebDriverWait
-    function simulateServerWait() {
-      const spinner = document.getElementById('async-spinner');
-      const text = document.getElementById('btn-generate-text');
-      const toast = document.getElementById('async-success-toast');
-
-      spinner.style.display = 'inline-block';
-      text.innerText = 'Compiling SVG Vector...';
-      toast.style.display = 'none';
-
-      setTimeout(() => {
-        spinner.style.display = 'none';
-        text.innerText = 'Generate Brand SVG (1.5s Wait)';
-        toast.style.display = 'block';
-
-        const name = document.getElementById('studio-brand-input').value || 'DesignCraft Enterprise';
-        const sector = document.getElementById('studio-industry-dropdown').options[document.getElementById('studio-industry-dropdown').selectedIndex].text;
-        document.getElementById('mockup-name-render').innerText = name;
-        document.getElementById('mockup-tag-render').innerText = sector;
-        document.getElementById('spec-card-title').innerText = name;
-      }, 1500);
-    }
-
-    // Theme Swatch Switcher
-    function applyColorTheme(colorHex, colorName) {
-      document.getElementById('studio-preview-board').style.background = `linear-gradient(135deg, ${colorHex} 0%, #0f172a 100%)`;
-      document.getElementById('mockup-color-render').innerText = colorName;
-    }
-
-    // Checkbox and Card Config
-    function saveCardSpecs() {
-      const foil = document.getElementById('chk-finish-foil').checked;
-      document.getElementById('foil-badge-indicator').style.display = foil ? 'inline' : 'none';
-      const toast = document.getElementById('card-toast');
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 3000);
-    }
-
-    // Alert Handlers
-    function triggerPromoAlert() {
-      window.alert('DesignCraft Notice: Enter coupon APEX20 during checkout for 20% discount.');
-    }
-
-    function selectPricing(planName, price) {
-      const choice = window.confirm(`Proceed with ${planName} package at ₹${price}?`);
-      if (choice) {
-        window.alert(`Thank you! ${planName} plan selected. Invoice sent to your session.`);
-      }
-    }
-
-    // FAQ Accordion
-    function toggleFaq(el) {
-      const ans = el.nextElementSibling;
-      const isOpen = ans.style.display === 'block';
-      ans.style.display = isOpen ? 'none' : 'block';
-      el.querySelector('span:last-child').innerText = isOpen ? '+' : '−';
-    }
-
-    // Footer Interactive Tracker
-    function handleFooterAction(msg, targetId) {
-      const banner = document.getElementById('footer-action-banner');
-      banner.style.display = 'block';
-      banner.innerText = '⚡ Footer Event Triggered: ' + msg;
-      if (targetId) scrollToElement(targetId);
-    }
-
-    function handleFooterSubscribe() {
-      const input = document.getElementById('footer-newsletter-input');
-      const msg = document.getElementById('footer-subscribe-msg');
-      if (input.value) {
-        msg.style.display = 'block';
-        input.value = '';
-      }
-    }
-  </script>
+<div class="promo" id="promo-bar"><span>🎉 <b>Launch offer:</b> 20% off every logo package</span><span>Ends in <span class="timer" id="promo-timer">03:20:00</span></span><button id="promo-copy" type="button">Copy code LAUNCH20</button></div>
+<header class="site-header">
+<div class="nav-wrap">
+<a class="brand" href="index.html" id="brand-link"><span class="brand-mark">DC</span>DesignCraft</a>
+<ul class="nav" id="main-nav">
+<li class="has-menu"><button class="nav-link" id="nav-tools" type="button" aria-haspopup="true">Design tools ▾</button>
+<div class="menu">
+<a href="studio.html" target="_blank" id="menu-studio">Logo Studio<small>Design a logo with live preview</small></a>
+<a href="cards.html" target="_blank" id="menu-cards">Business Card Designer<small>Print-ready cards with live pricing</small></a>
+<a href="brandkit.html" target="_blank" id="menu-brandkit">Brand Kit Builder<small>Colours, fonts and variations</small></a>
+<a href="orders.html" target="_blank" id="menu-orders">Orders &amp; Tracking<small>Follow your order live</small></a>
+</div></li>
+<li><a class="nav-link" href="index.html#templates" id="nav-templates">Templates</a></li>
+<li><a class="nav-link" href="index.html#pricing" id="nav-pricing">Pricing</a></li>
+<li><a class="nav-link" href="index.html#reviews" id="nav-reviews">Reviews</a></li>
+<li><a class="nav-link" href="support.html" id="nav-help">Help</a></li>
+<li><a class="nav-link" href="about.html" id="nav-about">About</a></li>
+</ul>
+<div class="nav-actions">
+<button class="icon-btn" id="cart-btn" type="button" aria-label="Open cart">🛒<span class="badge" id="cart-count" hidden>0</span></button>
+<div id="auth-guest" style="display:flex;gap:8px"><button class="btn btn-outline btn-sm" id="btn-header-login" type="button" data-open="login-modal">Log in</button><button class="btn btn-dark btn-sm" id="btn-header-signup" type="button" data-open="signup-modal">Get started</button></div>
+<div id="auth-user" hidden><div class="user-chip"><span id="user-name">User</span><span class="avatar" id="user-avatar">U</span><button class="btn btn-outline btn-sm" id="logout-btn" type="button" style="padding:3px 10px">Log out</button></div></div>
+<button class="icon-btn" id="nav-toggle" type="button" aria-label="Menu">☰</button>
+</div>
+</div>
+</header>
+<main>
+<section class="hero">
+<div class="container">
+<span class="live-dot">2,480 logos created this week</span>
+<h1>Design a logo your brand can <span>grow into</span></h1>
+<p class="lead">Tell us your business name and we will generate logo ideas in seconds. Customise colours, fonts and layouts, then download print-ready files.</p>
+<form class="gen-bar" id="gen-form" novalidate>
+<input class="input" id="gen-name" type="text" placeholder="Enter your business name" aria-label="Business name" maxlength="28">
+<select class="input" id="gen-industry" aria-label="Industry"><option value="">Choose industry</option><option value="tech">Technology</option><option value="food">Food &amp; Beverage</option><option value="fashion">Fashion &amp; Beauty</option><option value="health">Health &amp; Wellness</option><option value="education">Education</option></select>
+<button class="btn btn-grad" id="gen-btn" type="submit">Generate logos</button>
+</form>
+<div class="error" id="gen-err" role="alert" style="margin-top:10px"></div>
+<div class="swatches" id="gen-swatches" role="group" aria-label="Colour theme">
+<button class="sw" type="button" data-c1="#4f46e5" data-c2="#06b6d4" style="background:#4f46e5" aria-label="Indigo" aria-pressed="true"></button>
+<button class="sw" type="button" data-c1="#be123c" data-c2="#f43f5e" style="background:#f43f5e" aria-label="Rose" aria-pressed="false"></button>
+<button class="sw" type="button" data-c1="#047857" data-c2="#10b981" style="background:#10b981" aria-label="Emerald" aria-pressed="false"></button>
+<button class="sw" type="button" data-c1="#b45309" data-c2="#f59e0b" style="background:#f59e0b" aria-label="Amber" aria-pressed="false"></button>
+<button class="sw" type="button" data-c1="#0f172a" data-c2="#475569" style="background:#334155" aria-label="Slate" aria-pressed="false"></button>
+</div>
+</div>
+</section>
+
+<section class="section" id="results-section" hidden>
+<div class="container">
+<div class="section-head"><span class="eyebrow">Your results</span><h2 id="results-title">Logo ideas for your brand</h2><p id="results-sub"></p></div>
+<div class="grid g3" id="results-grid" aria-live="polite"></div>
+</div>
+</section>
+
+<section class="section alt" id="templates">
+<div class="container">
+<div class="section-head"><span class="eyebrow">Template library</span><h2>Start from a ready-made design</h2><p>Browse professionally designed logos by industry. Every template is fully editable in the Logo Studio.</p></div>
+<div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:24px;align-items:center">
+<div class="pills" id="cat-pills" role="group" aria-label="Categories"><button class="pill" type="button" data-cat="all" aria-pressed="true">All</button><button class="pill" type="button" data-cat="tech" aria-pressed="false">Technology</button><button class="pill" type="button" data-cat="food" aria-pressed="false">Food &amp; Beverage</button><button class="pill" type="button" data-cat="fashion" aria-pressed="false">Fashion</button><button class="pill" type="button" data-cat="health" aria-pressed="false">Health</button><button class="pill" type="button" data-cat="education" aria-pressed="false">Education</button></div>
+<input class="input" id="tpl-search" type="search" placeholder="Search templates..." style="max-width:260px" aria-label="Search templates">
+</div>
+<div class="grid g4" id="tpl-grid" aria-live="polite"></div>
+<div style="text-align:center;margin-top:30px"><div class="hint" id="tpl-count" style="margin-bottom:12px"></div><button class="btn btn-outline" id="tpl-more" type="button">Load more templates</button></div>
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+<div class="section-head"><span class="eyebrow">Everything in one place</span><h2>Tools that build your whole brand</h2><p>Each tool opens in its own workspace so you can keep browsing while you design.</p></div>
+<div class="grid g4">
+<div class="card"><div style="font-size:34px">🎨</div><h3 style="margin:10px 0 6px;font-size:18px">Logo Studio</h3><p style="color:#475569;font-size:14px;margin-bottom:16px">Edit icons, fonts, colours and layout with a live preview and mockups.</p><a class="btn btn-primary btn-sm" id="tool-studio" href="studio.html" target="_blank">Open studio ↗</a></div>
+<div class="card"><div style="font-size:34px">💳</div><h3 style="margin:10px 0 6px;font-size:18px">Card Designer</h3><p style="color:#475569;font-size:14px;margin-bottom:16px">Design business cards, pick finishes and see the price update live.</p><a class="btn btn-primary btn-sm" id="tool-cards" href="cards.html" target="_blank">Design cards ↗</a></div>
+<div class="card"><div style="font-size:34px">🖌️</div><h3 style="margin:10px 0 6px;font-size:18px">Brand Kit Builder</h3><p style="color:#475569;font-size:14px;margin-bottom:16px">Generate colour palettes, font pairings and logo variations.</p><a class="btn btn-primary btn-sm" id="tool-brandkit" href="brandkit.html" target="_blank">Build a kit ↗</a></div>
+<div class="card"><div style="font-size:34px">📦</div><h3 style="margin:10px 0 6px;font-size:18px">Orders &amp; Tracking</h3><p style="color:#475569;font-size:14px;margin-bottom:16px">Follow every order from design review to delivery in real time.</p><a class="btn btn-primary btn-sm" id="tool-orders" href="orders.html" target="_blank">Track orders ↗</a></div>
+</div>
+</div>
+</section>
+
+<section class="section alt">
+<div class="container">
+<div class="grid g4" id="stats">
+<div class="stat"><b data-count="52000">0</b><span>Logos created</span></div>
+<div class="stat"><b data-count="18400">0</b><span>Happy customers</span></div>
+<div class="stat"><b data-count="96">0</b><span>Countries served</span></div>
+<div class="stat"><b data-count="4.8" data-dec="1">0</b><span>Average rating</span></div>
+</div>
+</div>
+</section>
+
+<section class="section" id="pricing">
+<div class="container">
+<div class="section-head"><span class="eyebrow">Simple pricing</span><h2>Plans for every stage of growth</h2></div>
+<div class="bill"><span>Pay once</span><label class="switch"><input type="checkbox" id="bill-toggle" aria-label="Switch to yearly care plan"><span>Add yearly brand care</span></label><span class="chip green">Save 25%</span></div>
+<div class="grid g3">
+<div class="plan" id="plan-starter"><h3>Starter</h3><p style="color:#64748b;font-size:13px">One logo, ready to launch</p><div class="amt" data-base="1499">₹1,499</div><div class="hint" data-sub>one-time payment</div><ul><li>1 high-resolution logo (PNG)</li><li>Transparent background</li><li>Basic commercial licence</li><li class="no">Vector files (SVG, EPS)</li></ul><button class="btn btn-outline btn-block" type="button" data-plan="Starter" data-price="1499">Choose Starter</button></div>
+<div class="plan featured" id="plan-growth"><span class="tag">MOST POPULAR</span><h3>Growth Suite</h3><p style="color:#64748b;font-size:13px">Logo plus brand essentials</p><div class="amt" data-base="3499" style="color:#4f46e5">₹3,499</div><div class="hint" data-sub>one-time payment</div><ul><li>Full vector pack (SVG, EPS, PDF)</li><li>Brand colour and font guide</li><li>250 premium business cards</li><li>Social media profile kit</li></ul><button class="btn btn-primary btn-block" type="button" data-plan="Growth Suite" data-price="3499">Choose Growth</button></div>
+<div class="plan" id="plan-enterprise"><h3>Enterprise</h3><p style="color:#64748b;font-size:13px">Complete brand governance</p><div class="amt" data-base="7999">₹7,999</div><div class="hint" data-sub>one-time payment</div><ul><li>Everything in Growth Suite</li><li>Detailed brand guidelines</li><li>Unlimited logo variations</li><li>Priority support within 4 hours</li></ul><button class="btn btn-outline btn-block" type="button" data-plan="Enterprise" data-price="7999">Choose Enterprise</button></div>
+</div>
+</div>
+</section>
+
+<section class="section alt" id="reviews">
+<div class="container">
+<div class="section-head"><span class="eyebrow">Customer stories</span><h2>Loved by founders and creators</h2></div>
+<div class="quote" id="quote-box" aria-live="polite"></div>
+<div class="dots" id="quote-dots"><button class="btn btn-outline btn-sm" id="quote-prev" type="button" aria-label="Previous review">‹</button><span id="dot-wrap" style="display:flex;gap:8px"></span><button class="btn btn-outline btn-sm" id="quote-next" type="button" aria-label="Next review">›</button></div>
+</div>
+</section>
+
+<section class="section" id="faq">
+<div class="container">
+<div class="section-head"><span class="eyebrow">Got questions?</span><h2>Frequently asked questions</h2></div>
+<div class="faq"><input class="input" id="faq-search" type="search" placeholder="Search questions..." aria-label="Search FAQs" style="margin-bottom:18px"><div id="faq-list"></div><p class="hint" id="faq-empty" hidden style="text-align:center">No matching questions. Try the <a href="support.html">Help Centre</a>.</p></div>
+</div>
+</section>
+
+<section class="section" style="padding-top:0">
+<div class="container">
+<div class="news"><div><h3>Get design tips and offers</h3><p>One short email a month. No spam, unsubscribe anytime.</p></div>
+<div><form id="news-form" novalidate><input class="input" id="news-email" type="email" placeholder="you@company.com" aria-label="Email address"><button class="btn btn-grad" id="news-btn" type="submit">Subscribe</button></form><div class="ok" id="news-msg" role="status"></div><div class="error" id="news-err" role="alert"></div></div></div>
+</div>
+</section>
+</main>
+<script>
+document.addEventListener('dc:ready',()=>{
+const {$,$$,sleep,money,logoSVG,CATALOG,store,toast,cart,setBusy,validEmail,debounce,esc}=DC;
+/* generator */
+let theme={c1:'#4f46e5',c2:'#06b6d4'};
+$$('#gen-swatches .sw').forEach(b=>b.addEventListener('click',()=>{$$('#gen-swatches .sw').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');theme={c1:b.dataset.c1,c2:b.dataset.c2}}));
+const favs=()=>store.get('favs',[]);
+function favBtn(key){const on=favs().includes(key);return `<button class="fav" type="button" data-fav="${esc(key)}" aria-pressed="${on}" aria-label="Save to favourites">${on?'♥':'♡'}</button>`}
+document.addEventListener('click',e=>{const f=e.target.closest('[data-fav]');if(!f)return;let a=favs();const k=f.dataset.fav;if(a.includes(k)){a=a.filter(x=>x!==k);toast('Removed from favourites')}else{a.push(k);toast('Saved to favourites','success')}store.set('favs',a);f.setAttribute('aria-pressed',a.includes(k));f.textContent=a.includes(k)?'♥':'♡'});
+const STYLES=[['bolt','grotesk','horizontal'],['star','serif','stacked'],['hex','jakarta','emblem'],['diamond','round','horizontal'],['leaf','serif','stacked'],['wave','grotesk','emblem']];
+const ICON_BY={tech:['bolt','hex','diamond','wave','star','shield'],food:['leaf','heart','star','diamond','wave','hex'],fashion:['heart','diamond','star','leaf','hex','wave'],health:['shield','heart','leaf','wave','bolt','star'],education:['star','shield','hex','bolt','leaf','diamond']};
+$('#gen-form').addEventListener('submit',async e=>{e.preventDefault();const n=$('#gen-name'),ind=$('#gen-industry'),err=$('#gen-err');err.textContent='';n.classList.remove('invalid');
+ if(n.value.trim().length<2){err.textContent='Please enter your business name (at least 2 characters).';n.classList.add('invalid');return}
+ if(!ind.value){err.textContent='Please choose an industry so we can suggest the right icons.';return}
+ const btn=$('#gen-btn');setBusy(btn,true,'Generating...');const sec=$('#results-section'),grid=$('#results-grid');sec.hidden=false;
+ grid.innerHTML=Array(6).fill('<div class="logo-tile"><div class="art"><div class="skeleton" style="width:80%;height:60%"></div></div><div class="info"><div class="skeleton" style="height:16px;width:60%"></div><div class="skeleton" style="height:34px"></div></div></div>').join('');
+ $('#results-title').textContent='Creating ideas for "'+n.value.trim()+'"...';$('#results-sub').textContent='';sec.scrollIntoView({behavior:'smooth'});
+ await sleep(1600);const icons=ICON_BY[ind.value];
+ grid.innerHTML=STYLES.map((s,i)=>{const o={name:n.value.trim(),tagline:'',icon:icons[i],c1:theme.c1,c2:theme.c2,font:s[1],layout:s[2]};const key='gen-'+i+'-'+n.value.trim();
+  return `<article class="logo-tile" data-result="${i}"><div class="art">${logoSVG(o)}${favBtn(key)}</div><div class="info"><div><h4>Concept ${i+1}</h4><small>${s[2][0].toUpperCase()+s[2].slice(1)} layout</small></div><div class="acts"><a class="btn btn-primary btn-sm" target="_blank" href="studio.html?name=${encodeURIComponent(n.value.trim())}&icon=${o.icon}&c1=${encodeURIComponent(o.c1)}&c2=${encodeURIComponent(o.c2)}&font=${o.font}&layout=${o.layout}">Customise ↗</a></div></div></article>`}).join('');
+ $('#results-title').textContent='Logo ideas for "'+n.value.trim()+'"';$('#results-sub').textContent='Pick a concept to customise it in the Logo Studio.';setBusy(btn,false)});
+/* template gallery */
+let cat='all',q='',shown=0,PAGE=8,busy=false;
+const filtered=()=>CATALOG.filter(t=>(cat==='all'||t.cat===cat)&&(!q||(t.name+' '+t.cat).toLowerCase().includes(q)));
+function tile(t){const key='tpl-'+t.id;return `<article class="logo-tile" data-tpl="${t.id}"><div class="art">${logoSVG({name:t.name,icon:t.icon,c1:t.c1,c2:t.c2,font:t.font,layout:t.id%3===0?'stacked':'horizontal'})}${favBtn(key)}</div><div class="info"><div><h4>${esc(t.name)}</h4><small style="text-transform:capitalize">${t.cat}</small></div><div style="display:flex;justify-content:space-between;align-items:center"><span class="price">${money(t.price)}</span><span class="acts"><a class="btn btn-outline btn-sm" target="_blank" href="studio.html?t=${t.id}">Edit ↗</a><button class="btn btn-primary btn-sm" type="button" data-add="${t.id}">Add</button></span></div></div></article>`}
+async function renderTpl(reset){if(busy)return;busy=true;const g=$('#tpl-grid'),more=$('#tpl-more');if(reset){shown=0;g.innerHTML=Array(8).fill('<div class="logo-tile"><div class="art"><div class="skeleton" style="width:80%;height:55%"></div></div><div class="info"><div class="skeleton" style="height:14px;width:55%"></div><div class="skeleton" style="height:32px"></div></div></div>').join('');more.disabled=true;await sleep(900)}else{setBusy(more,true,'Loading...');await sleep(1000)}
+ const list=filtered();const next=list.slice(shown,shown+PAGE);if(reset)g.innerHTML='';
+ if(!list.length){g.innerHTML='<p style="grid-column:1/-1;text-align:center;color:#64748b;padding:30px">No templates match your search.</p>'}else g.insertAdjacentHTML('beforeend',next.map(tile).join(''));
+ shown+=next.length;if(!reset)setBusy(more,false);more.disabled=false;more.hidden=shown>=list.length;$('#tpl-count').textContent=list.length?'Showing '+shown+' of '+list.length+' templates':'';busy=false}
+$$('#cat-pills .pill').forEach(p=>p.addEventListener('click',()=>{$$('#cat-pills .pill').forEach(x=>x.setAttribute('aria-pressed','false'));p.setAttribute('aria-pressed','true');cat=p.dataset.cat;busy=false;renderTpl(true)}));
+$('#tpl-search').addEventListener('input',debounce(e=>{q=e.target.value.trim().toLowerCase();busy=false;renderTpl(true)},450));
+$('#tpl-more').addEventListener('click',()=>renderTpl(false));
+$('#tpl-grid').addEventListener('click',e=>{const b=e.target.closest('[data-add]');if(!b)return;const t=CATALOG.find(x=>x.id==b.dataset.add);cart.add({key:'tpl-'+t.id,title:t.name+' logo',note:'Template • PNG + SVG',price:t.price,svg:logoSVG({name:t.name,icon:t.icon,c1:t.c1,c2:t.c2,font:t.font}).replace('<svg','<svg style="width:64px"')})});
+renderTpl(true);
+/* counters */
+const io=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)return;io.unobserve(en.target);const el=en.target,end=+el.dataset.count,dec=+(el.dataset.dec||0);const t0=performance.now();(function step(t){const p=Math.min(1,(t-t0)/1600);const v=end*p;el.textContent=dec?v.toFixed(dec):Math.round(v).toLocaleString('en-IN')+(end>=1000?'+':'');if(p<1)requestAnimationFrame(step)})(t0)}),{threshold:.4});
+$$('[data-count]').forEach(el=>io.observe(el));
+/* pricing */
+$('#bill-toggle').addEventListener('change',e=>{const on=e.target.checked;$$('.plan .amt').forEach(a=>{const b=+a.dataset.base;const v=on?Math.round(b*1.25):b;a.textContent=money(v);a.nextElementSibling.textContent=on?'includes 12 months of brand care':'one-time payment';a.closest('.plan').querySelector('[data-plan]').dataset.price=v})});
+$$('[data-plan]').forEach(b=>b.addEventListener('click',()=>{const on=$('#bill-toggle').checked;cart.add({key:'plan-'+b.dataset.plan+(on?'-care':''),title:b.dataset.plan+' plan',note:on?'With yearly brand care':'One-time package',price:+b.dataset.price})}));
+/* testimonials */
+const T=[['Kavitha Sundaram','VP Product, ApexFlow','The logo generator gave us six solid directions in seconds. We shipped our rebrand in one afternoon.'],['Rahul Verma','Founder, FinScale','Our business cards arrived with beautiful gold foil. Clients ask about them at every meeting.'],['Sarah Jenkins','Marketing Lead, CloudGrid','The brand kit tool saved weeks of back and forth with agencies. Colours and fonts were ready instantly.'],['Arjun Nair','Owner, Brewline Cafe','Simple, fast and genuinely good looking. The support chat answered my questions within a minute.']];
+let ti=0,tm;const dw=$('#dot-wrap');dw.innerHTML=T.map((_,i)=>`<button class="dot" type="button" data-i="${i}" aria-label="Review ${i+1}"></button>`).join('');
+function showT(i){ti=(i+T.length)%T.length;const t=T[ti];$('#quote-box').innerHTML=`<div class="stars">★★★★★</div><p>“${esc(t[2])}”</p><p style="margin-top:16px;font-size:14px"><b>${esc(t[0])}</b> <span style="color:#64748b">• ${esc(t[1])}</span></p>`;$$('.dot').forEach((d,k)=>d.setAttribute('aria-current',k===ti))}
+function autoT(){clearInterval(tm);tm=setInterval(()=>showT(ti+1),6000)}
+$('#quote-prev').addEventListener('click',()=>{showT(ti-1);autoT()});$('#quote-next').addEventListener('click',()=>{showT(ti+1);autoT()});dw.addEventListener('click',e=>{const d=e.target.closest('.dot');if(d){showT(+d.dataset.i);autoT()}});showT(0);autoT();
+/* faq */
+const F=[['Can I download my logo in vector format?','Yes. Growth Suite and Enterprise include SVG, EPS and PDF files that scale to any size without losing quality.'],['Do I own the logo I create?','You receive a full commercial licence for the logo you purchase. Template logos are licensed to one customer only after purchase.'],['How long does card delivery take?','Standard delivery takes 3 to 6 working days. Express delivery is available at checkout for most pin codes.'],['Can I change my design after buying?','You can edit and re-download your design for 30 days from the Logo Studio at no extra cost.'],['What payment methods do you accept?','We accept UPI, major credit and debit cards and net banking. All payments are encrypted.'],['What is your refund policy?','Digital packages can be refunded within 7 days if final files have not been downloaded. Printed items are covered by our reprint guarantee. See the Refund Policy for details.']];
+function renderFaq(q){const l=$('#faq-list');const items=F.filter(f=>!q||(f[0]+f[1]).toLowerCase().includes(q));l.innerHTML=items.map((f,i)=>`<div class="faq-i"><button class="faq-q" type="button" aria-expanded="false"><span>${esc(f[0])}</span><span>+</span></button><div class="faq-a" hidden>${esc(f[1])}</div></div>`).join('');$('#faq-empty').hidden=items.length>0}
+$('#faq-list').addEventListener('click',e=>{const b=e.target.closest('.faq-q');if(!b)return;const a=b.nextElementSibling,open=!a.hidden;a.hidden=open;b.setAttribute('aria-expanded',!open);b.lastElementChild.textContent=open?'+':'−'});
+$('#faq-search').addEventListener('input',debounce(e=>renderFaq(e.target.value.trim().toLowerCase()),300));renderFaq('');
+/* newsletter */
+$('#news-form').addEventListener('submit',async e=>{e.preventDefault();const i=$('#news-email'),ok=$('#news-msg'),er=$('#news-err');ok.textContent='';er.textContent='';if(!validEmail(i.value.trim())){er.textContent='Please enter a valid email address.';return}const b=$('#news-btn');setBusy(b,true,'Subscribing...');await sleep(1400);setBusy(b,false);ok.textContent='✓ You are subscribed! Check your inbox for a welcome email.';i.value=''});
+});
+</script>
+<footer id="page-footer">
+<div class="container">
+<div class="foot-grid">
+<div><a class="brand" href="index.html" style="color:#fff!important"><span class="brand-mark">DC</span>DesignCraft Studio</a>
+<p style="font-size:13.5px;margin-top:14px;max-width:310px">Logos, business cards and complete brand kits for founders, creators and growing teams. Designed online, delivered fast.</p>
+<div class="social"><a href="about.html#connect" aria-label="Twitter">X</a><a href="about.html#connect" aria-label="LinkedIn">in</a><a href="about.html#connect" aria-label="Instagram">ig</a><a href="about.html#connect" aria-label="YouTube">yt</a></div></div>
+<div><h5>Products</h5><ul><li><a href="studio.html" target="_blank" id="footer-studio">Logo Studio</a></li><li><a href="cards.html" target="_blank" id="footer-cards">Business Cards</a></li><li><a href="brandkit.html" target="_blank" id="footer-brandkit">Brand Kit Builder</a></li><li><a href="index.html#pricing" id="footer-pricing">Pricing</a></li></ul></div>
+<div><h5>Support</h5><ul><li><a href="support.html" id="footer-help">Help Centre</a></li><li><a href="orders.html" target="_blank" id="footer-orders">Track an order</a></li><li><a href="support.html#contact" id="footer-contact">Contact us</a></li><li><a href="refund.html" id="footer-refund">Refund Policy</a></li></ul></div>
+<div><h5>Company</h5><ul><li><a href="about.html" id="footer-about">About us</a></li><li><a href="careers.html" id="footer-careers">Careers</a></li><li><a href="about.html#team" id="footer-team">Our team</a></li><li><a href="about.html#connect" id="footer-press">Press</a></li></ul></div>
+<div><h5>Legal</h5><ul><li><a href="terms.html" id="footer-terms">Terms &amp; Conditions</a></li><li><a href="privacy.html" id="footer-privacy">Privacy Policy</a></li><li><a href="refund.html" id="footer-refunds2">Refunds &amp; Cancellations</a></li></ul></div>
+</div>
+<div class="foot-bottom"><span id="copyright-text">© <span id="year">2026</span> DesignCraft Studio Technologies Pvt. Ltd. All rights reserved.</span><span>🔒 Secure payments &nbsp;•&nbsp; UPI &nbsp;•&nbsp; Cards &nbsp;•&nbsp; Net banking</span><button class="btn btn-sm" id="btn-scroll-to-top" type="button" data-top style="background:#1e293b;color:#fff;border-color:#334155">↑ Back to top</button></div>
+</div>
+</footer>
+<div class="backdrop" id="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-title"><div class="modal"><button class="x" type="button" data-close="login-modal" aria-label="Close">✕</button>
+<h3 id="login-title">Welcome back</h3><p class="sub">Log in to access your designs, orders and brand kits.</p>
+<form id="login-form" novalidate>
+<div class="field"><label for="login-email">Email address</label><input class="input" id="login-email" type="email" placeholder="you@company.com" autocomplete="username"></div>
+<div class="field"><label for="login-password">Password</label><input class="input" id="login-password" type="password" placeholder="Enter your password" autocomplete="current-password"></div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><label class="check"><input type="checkbox" id="show-pass"> Show password</label><a href="#" id="forgot-link" style="font-size:13px;font-weight:700">Forgot password?</a></div>
+<button class="btn btn-primary btn-block" id="login-submit" type="submit">Log in</button>
+<div class="error" id="login-msg" role="alert" style="text-align:center;margin-top:12px"></div>
+<p style="text-align:center;font-size:13.5px;margin-top:14px;color:#64748b">New here? <a href="#" data-open="signup-modal" onclick="DC.closeModal('login-modal')">Create an account</a></p>
+</form>
+<form id="forgot-form" hidden novalidate><div class="field"><label for="forgot-email">Registered email</label><input class="input" id="forgot-email" type="email" placeholder="you@company.com"></div>
+<button class="btn btn-primary btn-block" id="forgot-submit" type="submit">Send reset link</button><div class="ok" id="forgot-msg" role="status" style="text-align:center;margin-top:12px"></div><p style="text-align:center;margin-top:12px;font-size:13.5px"><a href="#" id="back-login">← Back to log in</a></p></form>
+</div></div>
+<div class="backdrop" id="signup-modal" role="dialog" aria-modal="true" aria-labelledby="signup-title"><div class="modal"><button class="x" type="button" data-close="signup-modal" aria-label="Close">✕</button>
+<h3 id="signup-title">Create your account</h3><p class="sub">Save designs, track orders and download your files.</p>
+<form id="signup-form" novalidate>
+<div class="field"><label for="signup-name">Full name</label><input class="input" id="signup-name" type="text" placeholder="Priya Sharma" autocomplete="name"></div>
+<div class="field"><label for="signup-email">Work email</label><input class="input" id="signup-email" type="email" placeholder="priya@company.com" autocomplete="email"><div id="signup-email-status" class="hint" role="status"></div></div>
+<div class="field"><label for="signup-role">I am a</label><select class="input" id="signup-role"><option value="founder">Startup founder</option><option value="marketer">Marketing manager</option><option value="designer">Freelance designer</option><option value="agency">Agency owner</option><option value="student">Student</option></select></div>
+<div class="row"><div class="field"><label for="signup-password">Password</label><input class="input" id="signup-password" type="password" placeholder="Min. 6 characters" autocomplete="new-password"></div><div class="field"><label for="signup-confirm">Confirm password</label><input class="input" id="signup-confirm" type="password" placeholder="Repeat password" autocomplete="new-password"></div></div>
+<div style="margin:-6px 0 14px"><div class="progress" style="height:6px"><i id="pw-bar"></i></div><div class="hint" id="pw-label"></div></div>
+<label class="check" style="margin-bottom:6px"><input type="checkbox" id="signup-terms"><span>I agree to the <a href="terms.html" target="_blank" id="signup-terms-link">Terms &amp; Conditions</a> and <a href="privacy.html" target="_blank">Privacy Policy</a></span></label>
+<div class="error" id="signup-terms-err" role="alert" style="margin-bottom:12px"></div>
+<button class="btn btn-primary btn-block" id="signup-submit" type="submit">Create account</button>
+<p style="text-align:center;font-size:13.5px;margin-top:14px;color:#64748b">Already registered? <a href="#" data-open="login-modal" onclick="DC.closeModal('signup-modal')">Log in</a></p>
+</form></div></div>
+<div class="backdrop" id="order-modal" role="dialog" aria-modal="true"><div class="modal" style="text-align:center"><div style="font-size:54px">✅</div><h3 style="margin-top:6px">Order confirmed!</h3><p class="sub">Thank you for your purchase. A confirmation has been sent to your email.</p>
+<div style="background:#f1f5f9;border-radius:12px;padding:16px;margin-bottom:18px"><div class="summary-row"><span>Order ID</span><b id="order-id" style="color:#0f172a">DC-00000</b></div><div class="summary-row"><span>Amount paid</span><b id="order-total" style="color:#0f172a">₹0</b></div></div>
+<a class="btn btn-primary btn-block" id="order-track" href="orders.html" target="_blank">Track this order ↗</a><button class="btn btn-outline btn-block" type="button" data-close="order-modal" style="margin-top:10px">Continue browsing</button></div></div>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="cart-drawer" aria-label="Shopping cart"><div class="drawer-head"><h3>Your cart</h3><button class="x" id="cart-close" type="button" style="position:static" aria-label="Close cart">✕</button></div><div class="drawer-body" id="cart-body"></div>
+<div class="drawer-foot"><div class="summary-row total"><span>Total</span><span id="cart-total">₹0</span></div><button class="btn btn-primary btn-block" id="checkout-btn" type="button" style="margin-top:12px" disabled>Proceed to checkout</button><p class="hint" style="text-align:center;margin-top:8px">Taxes included. 7-day refund on digital packages.</p></div></aside>
+<button id="chat-fab" type="button" aria-label="Chat with us">💬</button>
+<div id="chat" role="dialog" aria-label="Live chat"><div class="chat-h"><div><b>DesignCraft Support</b><small>● Online now</small></div><button id="chat-close" type="button" aria-label="Close chat">✕</button></div><div id="chat-log" aria-live="polite"></div>
+<div class="chat-q" id="chat-quick"><button type="button">Track my order</button><button type="button">Pricing help</button><button type="button">Refund policy</button><button type="button">Talk to a human</button></div>
+<form class="chat-f" id="chat-form"><input class="input" id="chat-input" type="text" placeholder="Type your message..." autocomplete="off"><button class="btn btn-primary btn-sm" type="submit">Send</button></form></div>
+<div id="toast-root" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
 </body>
 </html>
