@@ -90,6 +90,26 @@
 </div>
 </section>
 
+<section class="section" id="products">
+<div class="container">
+<div class="section-head"><span class="eyebrow">What we build</span><h2>Our product labels</h2><p>Pick a label to see what it covers. Some labels load only when you ask for more.</p></div>
+<div class="pills" id="label-list" style="justify-content:center" role="group" aria-label="Product labels">
+<button class="pill product-label" type="button" aria-pressed="false">Logo Design</button>
+<button class="pill product-label" type="button" aria-pressed="false">Web Development</button>
+<button class="pill product-label" type="button" aria-pressed="false">Brand Identity</button>
+<button class="pill product-label" type="button" aria-pressed="false">App Development</button>
+<button class="pill product-label" type="button" aria-pressed="false">Packaging Design</button>
+<button class="pill product-label" type="button" aria-pressed="false">Business Cards</button>
+<button class="pill product-label" type="button" aria-pressed="false">Brand Development</button>
+<button class="pill product-label" type="button" aria-pressed="false">Social Media Kit</button>
+<button class="pill product-label" type="button" aria-pressed="false">Software Development</button>
+<button class="pill product-label" type="button" aria-pressed="false">Print Design</button>
+</div>
+<p class="hint" id="label-result" role="status" style="text-align:center;margin-top:16px">No label selected</p>
+<div style="text-align:center;margin-top:14px"><button class="btn btn-outline" id="btn-more-labels" type="button">Show more labels</button></div>
+</div>
+</section>
+
 <section class="section alt">
 <div class="container">
 <div class="grid g4" id="stats">
@@ -169,6 +189,10 @@ $('#tpl-search').addEventListener('input',debounce(e=>{q=e.target.value.trim().t
 $('#tpl-more').addEventListener('click',()=>renderTpl(false));
 $('#tpl-grid').addEventListener('click',e=>{const b=e.target.closest('[data-add]');if(!b)return;const t=CATALOG.find(x=>x.id==b.dataset.add);cart.add({key:'tpl-'+t.id,title:t.name+' logo',note:'Template • PNG + SVG',price:t.price,svg:logoSVG({name:t.name,icon:t.icon,c1:t.c1,c2:t.c2,font:t.font}).replace('<svg','<svg style="width:64px"')})});
 renderTpl(true);
+/* product labels */
+const EXTRA_LABELS=['Game Development','Product Development','Motion Graphics','Email Templates'];
+$('#label-list').addEventListener('click',e=>{const b=e.target.closest('.product-label');if(!b)return;$$('.product-label').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#label-result').textContent='Selected label: '+b.textContent;toast(b.textContent+' selected')});
+$('#btn-more-labels').addEventListener('click',async e=>{const btn=e.currentTarget;setBusy(btn,true,'Loading labels...');await sleep(1000);EXTRA_LABELS.forEach(t=>{const x=document.createElement('button');x.className='pill product-label';x.type='button';x.setAttribute('aria-pressed','false');x.textContent=t;$('#label-list').appendChild(x)});setBusy(btn,false);btn.hidden=true});
 /* counters */
 const io=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)return;io.unobserve(en.target);const el=en.target,end=+el.dataset.count,dec=+(el.dataset.dec||0);const t0=performance.now();(function step(t){const p=Math.min(1,(t-t0)/1600);const v=end*p;el.textContent=dec?v.toFixed(dec):Math.round(v).toLocaleString('en-IN')+(end>=1000?'+':'');if(p<1)requestAnimationFrame(step)})(t0)}),{threshold:.4});
 $$('[data-count]').forEach(el=>io.observe(el));
