@@ -117,6 +117,37 @@ function initNav(){const t=$('#nav-toggle');if(t)t.addEventListener('click',()=>
  const fy=$('#year');if(fy)fy.textContent=new Date().getFullYear()}
 window.addEventListener('storage',e=>{if(!e.key||!e.key.startsWith('dc_'))return;renderCart();renderAuth();document.dispatchEvent(new CustomEvent('dc:storage',{detail:e.key}))});
 
-window.DC={$,$$,sleep,money,debounce,esc,store,toast,openModal,closeModal,logoSVG,CATALOG,ICONS,FONTS,auth,cart,orders,STAGES,stageOf,requireLogin,setBusy,validEmail,fieldErr};
+
+/* click latency: every click waits a moment, so tests need explicit waits.
+   Change the numbers to make the waits shorter or longer. Add ?fast=1 to the address to switch it off, ?fast=0 to switch it on again. */
+const LAT={click:3000,nav:3000,tab:3000};
+(function(){
+ let fast=false;try{const q=new URLSearchParams(location.search);if(q.has('fast'))sessionStorage.setItem('dc_fast',q.get('fast'));fast=sessionStorage.getItem('dc_fast')==='1'}catch(e){}
+ let bar=null,replaying=false;
+ function showBar(ms){if(!bar){bar=document.createElement('div');bar.id='dc-bar';bar.style.cssText='position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,#4f46e5,#06b6d4);z-index:5000;opacity:0;pointer-events:none';document.body.appendChild(bar)}bar.style.transition='none';bar.style.width='0';bar.style.opacity='1';void bar.offsetWidth;bar.style.transition='width '+ms+'ms linear';bar.style.width='100%'}
+ function hideBar(){if(bar)bar.style.opacity='0'}
+ document.addEventListener('click',e=>{
+  if(fast||replaying||!e.target.closest)return;
+  const t=e.target.closest('a[href],button,[role="button"],[role="tab"]');
+  if(!t||t.disabled||t.hasAttribute('data-instant'))return;
+  if(t.matches('button[type="submit"],form button:not([type])'))return;
+  if(t.getAttribute('aria-busy')==='true'){e.preventDefault();e.stopImmediatePropagation();return}
+  const href=t.tagName==='A'?t.getAttribute('href'):null;
+  const isNav=!!href&&!/^(#|javascript:|mailto:|tel:)/i.test(href);
+  const blank=isNav&&t.target==='_blank';
+  e.preventDefault();e.stopImmediatePropagation();
+  const ms=isNav?(blank?LAT.tab:LAT.nav):LAT.click;
+  t.setAttribute('aria-busy','true');document.body.style.cursor='progress';showBar(ms);
+  let w=null;if(blank){try{w=window.open('about:blank','_blank')}catch(x){}}
+  setTimeout(()=>{
+   t.removeAttribute('aria-busy');document.body.style.cursor='';hideBar();
+   if(isNav){const url=t.href;if(blank){if(w){try{w.location.href=url}catch(x){window.open(url,'_blank')}}else window.open(url,'_blank')}else window.location.href=url;return}
+   if(!t.isConnected)return;
+   replaying=true;try{t.click()}finally{replaying=false}
+  },ms);
+ },true);
+})();
+
+window.DC={LAT,$,$$,sleep,money,debounce,esc,store,toast,openModal,closeModal,logoSVG,CATALOG,ICONS,FONTS,auth,cart,orders,STAGES,stageOf,requireLogin,setBusy,validEmail,fieldErr};
 document.addEventListener('DOMContentLoaded',()=>{initNav();initAuth();initCart();initChat();initPromo();renderAuth();document.dispatchEvent(new Event('dc:ready'))});
 })();
