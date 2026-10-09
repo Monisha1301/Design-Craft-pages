@@ -118,25 +118,35 @@ function initNav(){const t=$('#nav-toggle');if(t)t.addEventListener('click',()=>
 window.addEventListener('storage',e=>{if(!e.key||!e.key.startsWith('dc_'))return;renderCart();renderAuth();document.dispatchEvent(new CustomEvent('dc:storage',{detail:e.key}))});
 
 
-/* click latency: every click waits a moment, so tests need explicit waits.
-   Change the numbers to make the waits shorter or longer. Add ?fast=1 to the address to switch it off, ?fast=0 to switch it on again. */
-const LAT={click:3000,nav:3000,tab:3000};
+/* click latency: every action takes a moment, so a test that does not wait still runs slowly and is easy to watch.
+   BLOCK MODE (block:true): the page holds each click, typing, selection and page load for the time below, so Selenium's own commands take that long.
+   WAIT MODE  (block:false): the click returns at once and the result appears after the time (tests then need explicit waits).
+   Change the numbers (milliseconds). Add ?fast=1 to the address to switch everything off, ?fast=0 to switch on again, ?block=0 for wait mode, ?block=1 for block mode. */
+const LAT={click:3000,nav:3000,tab:3000,type:300,change:3000,load:1500,block:true};
 (function(){
- let fast=false;try{const q=new URLSearchParams(location.search);if(q.has('fast'))sessionStorage.setItem('dc_fast',q.get('fast'));fast=sessionStorage.getItem('dc_fast')==='1'}catch(e){}
- let bar=null,replaying=false;
+ let fast=false,block=LAT.block;
+ try{const q=new URLSearchParams(location.search);if(q.has('fast'))sessionStorage.setItem('dc_fast',q.get('fast'));if(q.has('block'))sessionStorage.setItem('dc_block',q.get('block'));fast=sessionStorage.getItem('dc_fast')==='1';const bv=sessionStorage.getItem('dc_block');if(bv!==null)block=bv==='1'}catch(e){}
+ let bar=null,replaying=false,dispatching=false;
+ function hold(ms){const end=performance.now()+ms;while(performance.now()<end){}dispatching=true;setTimeout(()=>{dispatching=false},0)}
+ if(block&&!fast&&LAT.load)hold(LAT.load);
+ const T1='a[href],button,[role="button"],[role="tab"]';
+ const T2=T1+',input[type="checkbox"],input[type="radio"]';
+ const TEXT='input[type="text"],input[type="email"],input[type="password"],input[type="search"],input[type="tel"],input[type="url"],input[type="number"],input:not([type]),textarea';
+ const CHG='select,input[type="file"],input[type="range"],input[type="color"]';
  function showBar(ms){if(!bar){bar=document.createElement('div');bar.id='dc-bar';bar.style.cssText='position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,#4f46e5,#06b6d4);z-index:5000;opacity:0;pointer-events:none';document.body.appendChild(bar)}bar.style.transition='none';bar.style.width='0';bar.style.opacity='1';void bar.offsetWidth;bar.style.transition='width '+ms+'ms linear';bar.style.width='100%'}
  function hideBar(){if(bar)bar.style.opacity='0'}
  document.addEventListener('click',e=>{
   if(fast||replaying||!e.target.closest)return;
-  const t=e.target.closest('a[href],button,[role="button"],[role="tab"]');
+  const t=e.target.closest(block?T2:T1);
   if(!t||t.disabled||t.hasAttribute('data-instant'))return;
-  if(t.matches('button[type="submit"],form button:not([type])'))return;
-  if(t.getAttribute('aria-busy')==='true'){e.preventDefault();e.stopImmediatePropagation();return}
   const href=t.tagName==='A'?t.getAttribute('href'):null;
   const isNav=!!href&&!/^(#|javascript:|mailto:|tel:)/i.test(href);
   const blank=isNav&&t.target==='_blank';
-  e.preventDefault();e.stopImmediatePropagation();
   const ms=isNav?(blank?LAT.tab:LAT.nav):LAT.click;
+  if(block){if(dispatching)return;hold(ms);return}
+  if(t.matches('button[type="submit"],form button:not([type])'))return;
+  if(t.getAttribute('aria-busy')==='true'){e.preventDefault();e.stopImmediatePropagation();return}
+  e.preventDefault();e.stopImmediatePropagation();
   t.setAttribute('aria-busy','true');document.body.style.cursor='progress';showBar(ms);
   let w=null;if(blank){try{w=window.open('about:blank','_blank')}catch(x){}}
   setTimeout(()=>{
@@ -146,6 +156,11 @@ const LAT={click:3000,nav:3000,tab:3000};
    replaying=true;try{t.click()}finally{replaying=false}
   },ms);
  },true);
+ if(block){
+  document.addEventListener('input',e=>{if(fast)return;const t=e.target;if(t&&t.matches&&t.matches(TEXT))hold(LAT.type)},true);
+  document.addEventListener('change',e=>{if(fast)return;const t=e.target;if(t&&t.matches&&t.matches(CHG))hold(LAT.change)},true);
+  document.addEventListener('submit',e=>{if(fast||dispatching)return;hold(LAT.click)},true);
+ }
 })();
 
 window.DC={LAT,$,$$,sleep,money,debounce,esc,store,toast,openModal,closeModal,logoSVG,CATALOG,ICONS,FONTS,auth,cart,orders,STAGES,stageOf,requireLogin,setBusy,validEmail,fieldErr};
