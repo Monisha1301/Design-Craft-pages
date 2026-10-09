@@ -39,40 +39,34 @@
 <section class="page-hero"><div class="container"><span class="eyebrow">Careers</span><h1>Help us shape how the world builds brands</h1><p>We are a friendly team of designers, engineers and problem solvers. Join us and do the best work of your career.</p></div></section>
 <main><div class="container" style="padding-top:44px;padding-bottom:70px">
 <div class="grid g3" style="margin-bottom:44px"><div class="card"><h3 style="font-size:17px;margin-bottom:6px">🏡 Flexible work</h3><p style="color:#475569;font-size:14px">Hybrid options and flexible hours for most roles.</p></div><div class="card"><h3 style="font-size:17px;margin-bottom:6px">📚 Learning budget</h3><p style="color:#475569;font-size:14px">Yearly allowance for courses, books and conferences.</p></div><div class="card"><h3 style="font-size:17px;margin-bottom:6px">🩺 Health cover</h3><p style="color:#475569;font-size:14px">Insurance for you and your family from day one.</p></div></div>
-<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:end;margin-bottom:22px">
-<div class="field" style="margin:0;flex:1;min-width:220px"><label for="j-search">Search roles</label><input class="input" id="j-search" type="search" placeholder="e.g. designer, engineer"></div>
+<style>
+.role-list{list-style:none;padding:0;margin:0 auto;display:grid;gap:10px;max-width:900px}
+.role-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px 18px;transition:.15s}
+.role-row:hover{border-color:#4f46e5;background:#eef2ff}
+.role-link{font-weight:700;color:#0f172a;text-decoration:none!important;flex:1;min-width:200px}
+.role-row:hover .role-link{color:#4f46e5}
+.role-meta{display:flex;gap:8px;flex-wrap:wrap}
+</style>
+<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:end;margin:0 auto 22px;max-width:900px">
+<div class="field" style="margin:0;flex:1;min-width:220px"><label for="j-search">Search roles</label><input class="input" id="j-search" type="search" placeholder="e.g. developer, designer"></div>
 <div class="field" style="margin:0"><label for="j-dept">Department</label><select class="input" id="j-dept"><option value="all">All departments</option><option>Design</option><option>Engineering</option><option>Support</option><option>Marketing</option></select></div>
 <div class="field" style="margin:0"><span class="label">Location</span><div style="display:flex;gap:14px;padding:10px 0"><label class="check"><input type="checkbox" class="j-loc" value="Coimbatore" checked> Coimbatore</label><label class="check"><input type="checkbox" class="j-loc" value="Remote" checked> Remote</label></div></div></div>
-<p class="hint" id="j-count" role="status" style="margin-bottom:14px"></p>
-<div id="jobs" aria-live="polite"></div></div></main>
-<div class="backdrop" id="apply-modal" role="dialog" aria-modal="true"><div class="modal wide"><button class="x" type="button" data-close="apply-modal" aria-label="Close">✕</button>
-<h3>Apply: <span id="apply-role"></span></h3><p class="sub">Tell us a little about yourself. We review every application.</p>
-<form id="apply-form" novalidate>
-<div class="row"><div class="field"><label for="a-name">Full name</label><input class="input" id="a-name"></div><div class="field"><label for="a-email">Email</label><input class="input" id="a-email" type="email"></div></div>
-<div class="row"><div class="field"><label for="a-exp">Experience</label><select class="input" id="a-exp"><option value="">Select</option><option>0–1 years</option><option>2–4 years</option><option>5–8 years</option><option>9+ years</option></select></div><div class="field"><label for="a-notice">Notice period</label><select class="input" id="a-notice"><option>Immediate</option><option>15 days</option><option>30 days</option><option>60 days</option></select></div></div>
-<div class="field"><label for="a-resume">Resume (PDF or DOC)</label><input class="input" id="a-resume" type="file" accept=".pdf,.doc,.docx"><div class="hint" id="a-file-note"></div></div>
-<div class="field"><label for="a-note">Why do you want to join us?</label><textarea class="input" id="a-note" maxlength="400"></textarea></div>
-<div class="error" id="a-err" role="alert" style="margin-bottom:10px"></div>
-<button class="btn btn-primary btn-block" id="a-submit" type="submit">Submit application</button></form>
-<div id="a-done" hidden style="text-align:center;padding:20px 0"><div style="font-size:50px">🎉</div><h3 style="margin:8px 0">Application received</h3><p class="sub">Your reference is <b id="a-ref"></b>. Our team will get back to you within 5 working days.</p><button class="btn btn-outline" type="button" data-close="apply-modal">Close</button></div></div></div>
+<p class="hint" id="j-count" role="status" style="margin:0 auto 14px;max-width:900px"></p>
+<ul class="role-list" id="role-list" aria-live="polite"></ul>
+<div style="max-width:900px;margin:18px auto 0;text-align:center"><button class="btn btn-outline" id="btn-more-roles" type="button">Show more roles</button></div>
+</div></main>
 <script>
 document.addEventListener('dc:ready',()=>{
-const {$,$$,sleep,debounce,esc,toast,setBusy,validEmail,fieldErr}=DC;
-const J=[['Senior Brand Designer','Design','Coimbatore','Full-time','Lead logo and brand projects for growing businesses. You will own concepts end to end and mentor junior designers.'],['UI Designer','Design','Remote','Full-time','Design clean, usable interfaces for our creative tools and help evolve the design system.'],['Full-stack Engineer','Engineering','Coimbatore','Full-time','Build features across our editors, ordering flow and tracking dashboards using modern web technologies.'],['Frontend Engineer','Engineering','Remote','Full-time','Craft fast, accessible interactive editors and canvas experiences in the browser.'],['Customer Support Executive','Support','Coimbatore','Full-time','Help customers through chat, email and tickets and turn feedback into product improvements.'],['Print Operations Associate','Support','Coimbatore','Contract','Coordinate print production, quality checks and courier dispatch.'],['Content Marketing Manager','Marketing','Remote','Full-time','Plan and publish design guides, case studies and campaigns that help founders build brands.'],['Growth Marketing Analyst','Marketing','Remote','Full-time','Analyse funnels, run experiments and help us understand what customers love.']];
-let open=-1;
-function draw(){const q=$('#j-search').value.trim().toLowerCase(),d=$('#j-dept').value,locs=$$('.j-loc:checked').map(x=>x.value);const l=J.map((j,i)=>({j,i})).filter(x=>(d==='all'||x.j[1]===d)&&locs.includes(x.j[2])&&(!q||(x.j[0]+x.j[1]).toLowerCase().includes(q)));
- $('#j-count').textContent=l.length+' open role'+(l.length===1?'':'s');
- $('#jobs').innerHTML=l.length?l.map(({j,i})=>`<div class="job"><div class="job-h"><div><h3 style="font-size:18px">${esc(j[0])}</h3><div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap"><span class="chip">${j[1]}</span><span class="chip gray">📍 ${j[2]}</span><span class="chip gray">${j[3]}</span></div></div><div style="display:flex;gap:8px"><button class="btn btn-outline btn-sm" data-det="${i}" type="button">${open===i?'Hide details':'View details'}</button><button class="btn btn-primary btn-sm" data-apply="${i}" type="button">Apply now</button></div></div>${open===i?`<div style="margin-top:14px;color:#475569;font-size:14.5px"><p>${esc(j[4])}</p><ul style="margin:10px 0 0 20px"><li>Collaborate with a small, friendly cross-functional team</li><li>Own your work from idea to launch</li><li>Competitive pay with yearly learning budget</li></ul></div>`:''}</div>`).join(''):'<div class="card" style="text-align:center;color:#64748b">No roles match your filters. Try clearing the search.</div>'}
-$('#j-search').addEventListener('input',debounce(()=>{open=-1;draw()},300));$('#j-dept').addEventListener('change',()=>{open=-1;draw()});$$('.j-loc').forEach(c=>c.addEventListener('change',()=>{open=-1;draw()}));
-let cur=null;$('#jobs').addEventListener('click',e=>{const d=e.target.closest('[data-det]'),a=e.target.closest('[data-apply]');if(d){open=open===+d.dataset.det?-1:+d.dataset.det;draw()}if(a){cur=J[+a.dataset.apply];$('#apply-role').textContent=cur[0];$('#apply-form').hidden=false;$('#a-done').hidden=true;DC.openModal('apply-modal')}});
-$('#a-resume').addEventListener('change',e=>{const f=e.target.files[0],n=$('#a-file-note');if(!f){n.textContent='';return}if(f.size>3*1024*1024){n.className='error';n.textContent='Resume must be under 3 MB.';e.target.value='';return}n.className='ok';n.textContent='✓ '+f.name+' selected'});
-$('#apply-form').addEventListener('submit',async e=>{e.preventDefault();let bad=false;const g=id=>$('#'+id);
- if(g('a-name').value.trim().length<2){fieldErr(g('a-name'),'Enter your name.');bad=true}else fieldErr(g('a-name'),'');
- if(!validEmail(g('a-email').value.trim())){fieldErr(g('a-email'),'Enter a valid email.');bad=true}else fieldErr(g('a-email'),'');
- if(!bad&&!g('a-exp').value){$('#a-err').textContent='Please select your experience.';bad=true}else if(!bad&&!g('a-resume').files.length){$('#a-err').textContent='Please attach your resume.';bad=true}else if(!bad)$('#a-err').textContent='';
- if(bad)return;const b=g('a-submit');setBusy(b,true,'Submitting...');await sleep(1800);setBusy(b,false);g('a-ref').textContent='APP-'+(2000+Math.floor(Math.random()*7999));$('#apply-form').hidden=true;g('a-done').hidden=false;$('#apply-form').reset();$('#a-file-note').textContent='';toast('Application submitted','success')});
-$('#jobs').innerHTML='<div class="job"><div class="skeleton" style="height:24px;width:40%"></div></div><div class="job"><div class="skeleton" style="height:24px;width:50%"></div></div><div class="job"><div class="skeleton" style="height:24px;width:35%"></div></div>';
-sleep(1000).then(draw);
+const {$,$$,sleep,debounce,esc,setBusy}=DC;
+const J=[['Senior Brand Designer','Design','Coimbatore','Full-time'],['UI Designer','Design','Remote','Full-time'],['Full-stack Engineer','Engineering','Coimbatore','Full-time'],['Frontend Developer','Engineering','Remote','Full-time'],['Customer Support Executive','Support','Coimbatore','Full-time'],['Print Operations Associate','Support','Coimbatore','Contract'],['Content Marketing Manager','Marketing','Remote','Full-time'],['Growth Marketing Analyst','Marketing','Remote','Full-time'],['Backend Developer','Engineering','Coimbatore','Full-time'],['Mobile App Developer','Engineering','Remote','Full-time'],['Product Designer','Design','Coimbatore','Full-time'],['QA Engineer','Engineering','Coimbatore','Full-time'],['Business Development Executive','Marketing','Coimbatore','Full-time'],['Illustration Artist','Design','Remote','Contract'],['Courier Operations Lead','Support','Coimbatore','Full-time'],['SEO Specialist','Marketing','Remote','Full-time'],['Software Development Engineer','Engineering','Remote','Full-time'],['DevOps Engineer','Engineering','Remote','Full-time'],['Web Developer','Engineering','Coimbatore','Full-time'],['Motion Designer','Design','Remote','Contract'],['Customer Success Manager','Support','Remote','Full-time'],['Partnerships Manager','Marketing','Coimbatore','Full-time'],['Data Analyst','Engineering','Coimbatore','Full-time'],['Learning & Development Specialist','Support','Coimbatore','Full-time']];
+let loaded=0;
+function visible(){const q=$('#j-search').value.trim().toLowerCase(),d=$('#j-dept').value,locs=$$('.j-loc:checked').map(x=>x.value);return J.slice(0,loaded).filter(j=>(d==='all'||j[1]===d)&&locs.includes(j[2])&&(!q||j[0].toLowerCase().includes(q)))}
+function draw(){const l=visible();$('#j-count').textContent=l.length+' open role'+(l.length===1?'':'s');
+ $('#role-list').innerHTML=l.length?l.map(j=>`<li class="role-row"><a class="role-link" href="job.html?title=${encodeURIComponent(j[0])}&dept=${encodeURIComponent(j[1])}&loc=${encodeURIComponent(j[2])}&type=${encodeURIComponent(j[3])}">${esc(j[0])}</a><span class="role-meta"><span class="chip">${j[1]}</span><span class="chip gray">📍 ${j[2]}</span><span class="chip gray">${j[3]}</span></span></li>`).join(''):'<li class="card" style="text-align:center;color:#64748b">No roles match your filters. Try clearing the search.</li>'}
+$('#j-search').addEventListener('input',debounce(draw,300));$('#j-dept').addEventListener('change',draw);$$('.j-loc').forEach(c=>c.addEventListener('change',draw));
+$('#btn-more-roles').addEventListener('click',async e=>{const b=e.currentTarget;setBusy(b,true,'Loading roles...');await sleep(1000);loaded=J.length;setBusy(b,false);b.hidden=true;draw()});
+$('#role-list').innerHTML=Array(5).fill('<li><div class="skeleton" style="height:54px"></div></li>').join('');
+sleep(1000).then(()=>{loaded=16;draw()});
 });
 </script>
 <footer id="page-footer">
