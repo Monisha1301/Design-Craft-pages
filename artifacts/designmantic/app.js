@@ -118,14 +118,21 @@ function initNav(){const t=$('#nav-toggle');if(t)t.addEventListener('click',()=>
 window.addEventListener('storage',e=>{if(!e.key||!e.key.startsWith('dc_'))return;renderCart();renderAuth();document.dispatchEvent(new CustomEvent('dc:storage',{detail:e.key}))});
 
 
-/* click latency: every action takes a moment, so a test that does not wait still runs slowly and is easy to watch.
+/* click latency: when a test tool (Selenium) drives the browser, every action takes a moment, so the run is slow enough to watch.
+   A person who opens the site normally sees NO delays at all (the page checks navigator.webdriver).
    BLOCK MODE (block:true): the page holds each click, typing, selection and page load for the time below, so Selenium's own commands take that long.
    WAIT MODE  (block:false): the click returns at once and the result appears after the time (tests then need explicit waits).
-   Change the numbers (milliseconds). Add ?fast=1 to the address to switch everything off, ?fast=0 to switch on again, ?block=0 for wait mode, ?block=1 for block mode. */
-const LAT={click:3000,nav:3000,tab:3000,type:300,change:3000,load:1500,block:true};
+   Change the numbers (milliseconds). Address switches: ?auto=1 forces slow mode on for a person (to try it), ?auto=0 forces it off for tests,
+   ?fast=1 switches everything off, ?fast=0 back on, ?block=0 wait mode, ?block=1 block mode. The switches stay for the browser session.
+   Set onlyAutomation:false to slow down every visitor again. */
+const LAT={click:3000,nav:3000,tab:3000,type:300,change:3000,load:1500,block:true,onlyAutomation:true};
 (function(){
- let fast=false,block=LAT.block;
- try{const q=new URLSearchParams(location.search);if(q.has('fast'))sessionStorage.setItem('dc_fast',q.get('fast'));if(q.has('block'))sessionStorage.setItem('dc_block',q.get('block'));fast=sessionStorage.getItem('dc_fast')==='1';const bv=sessionStorage.getItem('dc_block');if(bv!==null)block=bv==='1'}catch(e){}
+ let fast=false,block=LAT.block,auto=null;
+ try{const q=new URLSearchParams(location.search);if(q.has('fast'))sessionStorage.setItem('dc_fast',q.get('fast'));if(q.has('block'))sessionStorage.setItem('dc_block',q.get('block'));if(q.has('auto'))sessionStorage.setItem('dc_auto',q.get('auto'));fast=sessionStorage.getItem('dc_fast')==='1';const bv=sessionStorage.getItem('dc_block');if(bv!==null)block=bv==='1';auto=sessionStorage.getItem('dc_auto')}catch(e){}
+ const driven=navigator.webdriver===true;
+ const active=auto==='1'?true:auto==='0'?false:(LAT.onlyAutomation?driven:true);
+ if(!active)fast=true;
+ if(!fast&&document.body){const bd=document.createElement('div');bd.id='dc-slow-badge';bd.setAttribute('aria-hidden','true');bd.textContent=block?'Slow mode on: actions are held':'Slow mode on: actions are delayed';bd.style.cssText='position:fixed;left:12px;bottom:12px;background:#0f172a;color:#fff;font:600 11px/1 sans-serif;padding:6px 10px;border-radius:99px;z-index:4000;opacity:.85;pointer-events:none';document.body.appendChild(bd)}
  let bar=null,replaying=false,dispatching=false;
  function hold(ms){const end=performance.now()+ms;while(performance.now()<end){}dispatching=true;setTimeout(()=>{dispatching=false},0)}
  if(block&&!fast&&LAT.load)hold(LAT.load);
