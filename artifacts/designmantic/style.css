@@ -261,3 +261,4 @@ footer{background:var(--s950);color:#94a3b8;padding:64px 0 28px;margin-top:auto}
  .hero h1{font-size:34px}.toc{position:static}.nav-wrap{flex-wrap:wrap}
 }
 @media(max-width:600px){.g3,.g4,.foot-grid{grid-template-columns:1fr}.news form{flex-direction:column}}
+#gen-swatches{display:none}
